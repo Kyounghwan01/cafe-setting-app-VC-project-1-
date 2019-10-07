@@ -1,4 +1,4 @@
-# 지정 카페
+# It's my seat!
 
 ## Development
 
@@ -81,7 +81,7 @@
 - [axios](https://www.npmjs.com/package/axios)
 - [socket.io](https://socket.io/)
 
-#### 2-2. 매뉴
+#### 2-2. 메뉴
 
 - 카페 메뉴를 보여줘야합니다. 메뉴 클릭시 메뉴에 대한 상세내용을 보여줘야합니다,
 - 상세내용에는 메뉴 이미지, 메뉴 이름, 메뉴 가격이 있고, 소비자는 메뉴의 갯수, 메뉴의 크기를 선택해야 합니다.
