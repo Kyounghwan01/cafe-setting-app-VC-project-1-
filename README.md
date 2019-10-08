@@ -2,23 +2,21 @@
 
 ## Development
 
-- client : react(관리자), react-native(소비자), redux
+- client : react, redux, react-router
 - server : mongodb, nodeJS, express, socket.io
 - deploy : netlify, aws
 
 ## Prerequisites
 
 - [React](https://reactjs-kr.firebaseapp.com/) - latest
-- [React-native](https://facebook.github.io/react-native/) - latest
+- [react-router](https://reacttraining.com/react-router/web/guides/quick-start) - latest
+- [redux](https://redux.js.org/) - latest
 - [Node.js](https://nodejs.org/en/download/) - latest
 - [express](https://expressjs.com/ko/) - latest
 - [mongodb](https://www.mongodb.com) - latest
 - [socket.io](https://socket.io/) - ^2.3.0
 - [axios](https://www.npmjs.com/package/axios) - latest
 - [passport.js](http://www.passportjs.org/) - ^0.4.0
-- [passport-google-oauth20](https://www.npmjs.com/package/passport-google-oauth20) - ^1.0.0
-- [iamport-react-native](https://github.com/iamport/iamport-react-native) - ^1.2.3
-
 
 ## 관리자
 
@@ -26,9 +24,9 @@
 
 ### 1. 주문확인
 
-- 실시간으로 들어온 주문을 확인해야 합니다.
-- 주문에는 주문자, 주문 메뉴명, 주문 시간 (몇 분전), 주문완료 버튼이 있어야 합니다.
-- 주문완료 버튼 클릭시 주문은 사라져야 합니다.
+- 들어온 주문을 확인해야 합니다.
+- 주문에는 주문자, 주문 메뉴명, 주문 시간 (몇 분전), 완료 버튼이 있어야 합니다.
+- 완료 버튼 클릭시 주문은 사라져야 합니다.
 
 #### Resources
 
@@ -38,38 +36,60 @@
 
 ### 2. 배치현황
 
-- 실시간으로 현재 고객이 앉거나 앉지 않은 의자 배치현황을 보여줘야 합니다.
-- 의자에 앉은 고객을 클릭시 카페 이용 만료시간을 보여줘야 합니다.
-- 이용 시간 만료시 자동으로 고객이 없는 의자 표시로 바뀌어야 합니다.
-- 만료연장이 가능해야 합니다.
+- 현재 고객이 앉거나 앉지 않은 의자 배치현황을 보여줘야 합니다.
+- 앉은 고객을 클릭시 카페 이용 만료시간을 보여줘야 합니다.
+- 관리자는 카페 이용 만료 시간을 연장할 수 있습니다.
+- 이용 시간 만료시 자동으로 의자는 고객이 없는 의자 바뀌어야 합니다.
 - 남은 의자의 갯수를 알려줘야 합니다.
 
 ### 3. 배치조정
 
 - 카페 의자의 배치를 조정해야합니다.
 
+#### Resources
+
+- [react-dnd](https://react-dnd.github.io/)
+
+### 4. 메뉴 조정
+
+- 관리자는 메뉴를 바꿀 수 있어야 합니다.
+
 ## 소비자
 
 ## TODO
 
-### 1. 로그인 페이지
+### 1. 계정 페이지
+
+#### 1-1. 로그인 페이지
 
 - 로컬 회원가입 및 로그인 또는 google 소셜 로그인을 사용해야 합니다.
 - 로그인 성공하면 메인 페이지로 이동해야 합니다.
+- 로그인은 하루 동안 유지 됩니다.
 - 로그인이 실패하면 로그인 페이지로 다시 돌아와야 합니다.
 - 로그인 하지 않은 사용자는 로그인, 회원가입 페이지 이외 어떤 패이지도 방문할 수 없습니다.
 
+#### 1-2. 회원가입 페이지
+
+- 소비자는 ID, passward, 이름을 입력합니다.
+- ID는 email 형식으로 입력하며 중복시 중복 알림을 띄웁니다.
+- passward는 중복체크 하여 다를시 두 passward가 다름을 알립니다.
+- 회원가입 완료시 로그인 페이지로 이동합니다.
+
 #### Resoures
 
-- [React-native](https://facebook.github.io/react-native/)
+- [React](https://reactjs-kr.firebaseapp.com/)
 - [passport.js](http://www.passportjs.org/)
-- [passport-google-oauth20](https://www.npmjs.com/package/passport-google-oauth20)
+- [express](https://expressjs.com/ko/)
+- [cookie-session](https://expressjs.com/en/resources/middleware/cookie-session.html)
+- [express-session](https://expressjs.com/en/resources/middleware/session.html)
+- [connect-flash](https://www.npmjs.com/package/connect-flash)
+
 
 ### 2. 메인 페이지
 
 #### 2-1. 좌석
 
-- 실시간으로 현재 고객이 앉거나 앉지 않은 의자 배치현황을 보여줘야 합니다.
+- 현재 고객이 앉거나 앉지 않은 의자 배치현황을 보여줘야 합니다.
 - 의자에 앉은 고객을 클릭시 카페 이용 만료시간을 보여줘야 합니다.
 - 이용 시간 만료시 자동으로 고객이 없는 의자 표시로 바뀌어야 합니다.
 - 남은 의자의 갯수를 알려줘야 합니다.
@@ -79,7 +99,7 @@
 #### Resoures
 
 - [axios](https://www.npmjs.com/package/axios)
-- [socket.io](https://socket.io/)
+- [ajax](https://developer.mozilla.org/ko/docs/Web/Guide/AJAX/Getting_Started)
 
 #### 2-2. 메뉴
 
@@ -96,7 +116,23 @@
 - 정상적으로 완료됬다면 좌석이 확정 및 관리자에게 주문이 들어가야 합니다.
 - 좌석 만료의 초기값은 2시간 입니다.
 - 결제가 취소되면 좌석이 원래대로 돌아와야 합니다.
+- 결제 자체에 대한 과정은 생략합니다.
 
-#### Resoures
 
-- [iamport-react-native](https://github.com/iamport/iamport-react-native)
+### 3. Extra
+
+#### 3.1 이메인 인증 후 회원가입
+
+- 소비자는 이메일 인증 후 회원가입이 가능합니다
+
+#### Resources
+
+- [nodemailer](https://victorydntmd.tistory.com/113)
+
+
+#### 3.2 관리자와 소비자간 실시간 대화
+- 관리자는 소비자와 웹을 통해 대화하여 좌석 만료시간을 늘려야 합니다.
+
+#### Resources
+
+- [socket.io](https://socket.io/)
