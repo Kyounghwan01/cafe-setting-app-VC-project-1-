@@ -1,21 +1,35 @@
-import React, { useState, useReducer } from 'react';
-import { userReducer, initialState } from '../reducers';
-import * as dispatchFunction from '../actions';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+//useReducer
+//import { userReducer, initialState } from '../reducers';
+//import * as dispatchFunction from '../actions';
 import '../assets/style/Main.scss';
-import banner from '../assets/img/bg1.png';
+//import banner from '../assets/img/bg1.png';
 import Header from './Header';
 import Footer from './Footer';
 
 const Main = props => {
   console.log(props);
   const [modal, setModal] = useState(false);
+  const [headerElement, setHeaders] = useState(['SIGN-IN', 'SIGN-UP', 'ABOUT']);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try{
+        const res = await axios.get(`/api/${props.location.search.substring(1)}`);
+        setHeaders([res.data.email, 'LOG-OUT', 'ABOUT']);
+      }catch(e) {
+        console.log(e);
+      }
+    }
+    fetchData();
+  }, []);
 
   return (
     <div className="main-container">
-      <div className="empty"></div>
-      <Header />
+      <Header element={headerElement}/>
       <div className="main-banner">
-        <img src="http://www.coffeebeankorea.com/data/banner/%EB%A9%94%EC%9D%B8_3.jpg" />
+        <img alt='banner' src="http://www.coffeebeankorea.com/data/banner/%EB%A9%94%EC%9D%B8_3.jpg" />
       </div>
       <div className="seats-order">
         <div className="current-seats"></div>

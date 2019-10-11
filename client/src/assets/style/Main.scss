@@ -8,36 +8,31 @@
   width: 100%;
   height: 100vh;
   background-color: white;
-  .empty {
-    height: 30px;
-    width: 100%;
-    background-color: rgb(238, 238, 238);
-  }
   .main-banner {
     width: 100%;
     img {
       width: 100%;
     }
   }
-  .seats-order{
+  .seats-order {
     height: 500px;
     width: 100%;
     background-color: grey;
-    .order{
+    .order {
       height: 500px;
       width: 100%;
       display: flex;
-      span{
+      span {
         font-family: 'Sunflower', sans-serif;
         font-size: 20px;
       }
-      button{
+      button {
         border: 2px solid black;
         border-radius: 5px;
-        background : none;
+        background: none;
         height: 50px;
         width: 90px;
-        span{
+        span {
           font-size: 15px;
           font-weight: bold;
         }
@@ -45,8 +40,11 @@
       button:focus {
         outline: none;
       }
-      button:hover{
+      button:hover {
         cursor: pointer;
+        background: black;
+        color: white;
+        transition: 0.5s;
       }
     }
   }
@@ -68,7 +66,11 @@
     }
   }
 }
-
+.empty {
+  height: 30px;
+  width: 100%;
+  background-color: rgb(238, 238, 238);
+}
 .header {
   width: 100%;
   height: 100px;
@@ -104,35 +106,141 @@
       margin-right: 30px;
       font-weight: bold;
       font-family: 'Shadows Into Light', cursive;
+      text-decoration: none;
+      color: black;
+    }
+    a:hover,
+    span:hover {
+      animation: shake 0.5s;
+      animation-iteration-count: infinite;
     }
   }
 }
 
-.footer{
-  background-color: rgb(44,42,41);
+.footer {
+  background-color: rgb(44, 42, 41);
   height: 100px;
   width: 100%;
   position: relative;
-  .github{
+  .github {
     position: absolute;
     top: 30px;
     left: 95%;
     width: 50px;
     height: 50px;
   }
-  .blog{
+  .blog {
     position: absolute;
     top: 35px;
     left: 90%;
     width: 40px;
     height: 40px;
-    border-radius: 50%
+    border-radius: 50%;
   }
-  .copyright{
+  .copyright {
     text-align: center;
     line-height: 100px;
-    span{
+    span {
       color: grey;
     }
+  }
+}
+
+.sign-container {
+  background-color: rgb(245, 245, 240);
+  width: 100%;
+  text-align: center;
+  padding-bottom: 100px;
+  .sign-title {
+    padding: 100px 0 40px 0;
+    span {
+      font-size: 30px;
+    }
+  }
+  .sign-body {
+    margin: 0 auto;
+    width: 40%;
+    border: 1px solid rgba(116, 116, 116, 0.5);
+    border-radius: 5px;
+    img {
+      padding: 50px 0 30px 0;
+    }
+    div {
+      padding-bottom: 30px;
+      span {
+        font-size: 20px;
+        color: rgb(116, 116, 116);
+        font-weight: bold;
+      }
+    }
+    .form-signin {
+      .group {
+        display: flex;
+        flex-direction: column;
+        input {
+          width: 40%;
+          height: 25px;
+          margin: 10px auto;
+          border-radius: 10px;
+          border: none;
+          text-align: center;
+          font-size: 12px;
+        }
+        input:focus {
+          outline: none;
+        }
+      }
+      .submit {
+        width: 80px;
+        height: 40px;
+        border: 1px solid black;
+        border-radius: 5px;
+        margin-bottom: 50px;
+        font-weight: bold;
+        background: none;
+      }
+      .submit:hover {
+        background: black;
+        cursor: pointer;
+        color: white;
+        transition: 0.5s;
+      }
+    }
+  }
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(1px, 1px) rotate(0deg);
+  }
+  10% {
+    transform: translate(-1px, -2px) rotate(-1deg);
+  }
+  20% {
+    transform: translate(-3px, 0px) rotate(1deg);
+  }
+  30% {
+    transform: translate(3px, 2px) rotate(0deg);
+  }
+  40% {
+    transform: translate(1px, -1px) rotate(1deg);
+  }
+  50% {
+    transform: translate(-1px, 2px) rotate(-1deg);
+  }
+  60% {
+    transform: translate(-3px, 1px) rotate(0deg);
+  }
+  70% {
+    transform: translate(3px, 1px) rotate(-1deg);
+  }
+  80% {
+    transform: translate(-1px, -1px) rotate(1deg);
+  }
+  90% {
+    transform: translate(1px, 2px) rotate(0deg);
+  }
+  100% {
+    transform: translate(1px, -2px) rotate(-1deg);
   }
 }

@@ -1,17 +1,19 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
-const flash = require('connect-flash');
+// const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const passport = require('passport');
-var logger = require('morgan');
-require('dotenv').config();
-
+const loginPassport = require('./routes/middleware/passport');
 var mainRouter = require('./routes/main');
-var app = express();
+var morgan = require('morgan');
+require('dotenv').config();
+const app = express();
+const port = process.env.PORT || 3001;
 
 mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
@@ -23,40 +25,53 @@ db.once('open', () => {
   console.log('connected to mongodb server');
 });
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
-
-app.use(logger('dev'));
+app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(
+  session({
+    secret: process.env.YOUR_SECRET_KEY,
+    cookie: {maxAge: 1000 * 60 * 60 * 24 * 7},
+    resave: false,
+    saveUninitialized: true
+  })
+);
 
-app.use('/', mainRouter);
+app.use(passport.initialize());
+app.use(passport.session());
+
+
+// view engine setup
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
+
+
+app.use(morgan('dev'));
+
+loginPassport(passport);
+
+// app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/api', mainRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// app.post('/newUser', function (req, res, next) {
-//   const User = require('./models/User');
-//   const newUser = new User(req.body);
-//   console.log(newUser);
-//   newVote.save();
-//   res.send(newUser);
-// })
-
-// error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.listen(port, () => {
+  console.log(`server is running on port : ${port}`);
 });
 
 module.exports = app;
