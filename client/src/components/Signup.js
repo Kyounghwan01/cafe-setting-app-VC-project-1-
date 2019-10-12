@@ -5,19 +5,17 @@ import Footer from './Footer';
 
 const Signup = props => {
   console.log(props);
-  const headerElement = ['MAIN', 'SIGN-IN', 'ABOUT'];
+
   const errorMessage = message => {
     if (message === '?dupId') {
       return <span className="error-message">중복된 id입니다</span>;
     } else if (message === '?wrongpassword') {
       return <span className="error-message">패스워드가 틀렸습니다</span>;
-    } else if (message === '?success') {
-      return <span className="error-message">성공했습니다</span>;
     }
   };
   return (
     <div className="Signup-container">
-      <Header element={headerElement} />
+      <Header element={['MAIN', 'SIGN-IN', 'ABOUT']} />
       <div className="sign-container">
         <div className="sign-title">
           <span>회원가입</span>

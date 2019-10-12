@@ -2,9 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const cafeSchema = new Schema({
-  arrangemenet: [
+  name : {
+    type : String,
+    required: true
+  },
+  arrangemenet:
     {
-      type: String,
+      type: Schema.Types.Mixed,
       default: [
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -18,7 +22,7 @@ const cafeSchema = new Schema({
         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
       ]
     }
-  ],
+  ,
   menu: [
     {
       name: {
@@ -32,7 +36,6 @@ const cafeSchema = new Schema({
       category: {
         type: Schema.Types.ObjectId,
         required: true,
-        ref: 'Category'
       }
     }
   ],
@@ -46,7 +49,6 @@ const cafeSchema = new Schema({
         {
           type: Schema.Types.ObjectId,
           required: true,
-          ref: 'Cafe'
         }
       ],
       created_at: {
@@ -57,4 +59,4 @@ const cafeSchema = new Schema({
   ]
 });
 
-module.exports = mongoose.model('Cafe', cafeSchema);
+module.exports = mongoose.model('Cafes', cafeSchema);

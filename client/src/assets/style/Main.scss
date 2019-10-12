@@ -26,21 +26,25 @@
         font-family: 'Sunflower', sans-serif;
         font-size: 20px;
       }
-      button {
+      a {
         border: 2px solid black;
         border-radius: 5px;
         background: none;
         height: 50px;
         width: 90px;
+        text-decoration: none;
+        color: black;
+        text-align: center;
+        line-height: 50px;
         span {
-          font-size: 15px;
+          font-size: 16px;
           font-weight: bold;
         }
       }
-      button:focus {
+      a:focus {
         outline: none;
       }
-      button:hover {
+      a:hover {
         cursor: pointer;
         background: black;
         color: white;
@@ -107,6 +111,9 @@
       font-weight: bold;
       font-family: 'Shadows Into Light', cursive;
       text-decoration: none;
+      color: black;
+    }
+    a {
       color: black;
     }
     a:hover,
@@ -198,6 +205,9 @@
         margin-bottom: 50px;
         font-weight: bold;
         background: none;
+      }
+      .submit:focus {
+        outline: none;
       }
       .submit:hover {
         background: black;

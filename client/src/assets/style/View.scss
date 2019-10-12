@@ -1,0 +1,25 @@
+* {
+  margin: 0;
+}
+
+.view-container{
+  width: 100%;
+  display: flex;
+  border-top: 2px solid rgba(238,238,238,0.9);
+  .left-side{
+    width: 50%;
+    border-right: 2px solid rgba(238,238,238,0.9);
+    .seats{
+      text-align: center;
+      padding: 50px 0;
+      border-bottom: 2px solid rgba(238,238,238,0.9);
+    }
+  }
+  .menu{
+    width: 50%;
+  }
+}
+
+.like{
+  background-color: #fff;
+}

@@ -1,14 +1,11 @@
 import React from 'react';
 //import FacebookLogin from 'react-facebook-login';
-// /{ useState, useReducer }
-import '../assets/style/Login.scss';
+import '../assets/style/Main.scss';
 import Header from './Header';
 import Footer from './Footer';
-// import Axios from 'axios';
 
 const Login = props => {
   console.log(props);
-  const headerElement = ['MAIN', 'SIGN-UP', 'ABOUT'];
 
   // const responseFacebook = response => {
   //   console.log(response);
@@ -19,33 +16,45 @@ const Login = props => {
       return <span className="error-message">email이 틀렸습니다.</span>;
     } else if (message === '?wrongpassword') {
       return <span className="error-message">패스워드가 틀렸습니다</span>;
-    } else if (message === '?success') {
-      return <span className="error-message">성공했습니다</span>;
     }
   };
 
   return (
     <div className="Login-container">
-      <Header element={headerElement} />
-      <div>{errorMessage(props.location.search)}</div>
-      <form className="form-signin" action="/api/login" method="POST">
-        <div className="group">
-          <input
-            type="email"
-            required
-            autoFocus
-            name="email"
-            placeholder="e-mail"
-          />
-          <input
-            type="password"
-            required
-            name="password"
-            placeholder="password"
-          />
+      <Header element={['MAIN', 'SIGN-UP', 'ABOUT']} />
+      <div className="sign-container">
+        <div className="sign-title">
+          <span>로그인</span>
         </div>
-        <input className="submit" type="submit" value="로그인" />
-      </form>
+        <div className="sign-body">
+          <img
+            alt="signup img"
+            src="http://image.istarbucks.co.kr/common/img/util/mem/icon_find_sally.png"
+          />
+          <div>
+            <span>이메일과 비밀번호를 입력해주세요.</span>
+          </div>
+          <div>{errorMessage(props.location.search)}</div>
+          <form className="form-signin" action="/api/login" method="POST">
+            <div className="group">
+              <input
+                type="email"
+                required
+                autoFocus
+                name="email"
+                placeholder="e-mail"
+              />
+              <input
+                type="password"
+                required
+                name="password"
+                placeholder="password"
+              />
+            </div>
+            <input className="submit" type="submit" value="로그인" />
+          </form>
+        </div>
+      </div>
       {/* <div className="login-body">
         <FacebookLogin
           appId="937473999950198"

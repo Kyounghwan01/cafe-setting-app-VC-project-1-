@@ -10,9 +10,17 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const loginPassport = require('./routes/middleware/passport');
 var mainRouter = require('./routes/main');
+// const viewRouter = require('./routes/view');
 var morgan = require('morgan');
 require('dotenv').config();
 const app = express();
+
+
+const Cafes = require('./models/Cafes');
+const Category = require('./models/Category');
+
+
+
 const port = process.env.PORT || 3001;
 
 mongoose.connect(process.env.DB_URL, {
@@ -41,8 +49,8 @@ app.use(
   })
 );
 
-app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 
 // view engine setup
@@ -57,6 +65,33 @@ loginPassport(passport);
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', mainRouter);
+// app.use('/api/view', viewRouter);
+
+app.post('/newCafemenu', async function (req, res, next) {
+  const test = await Cafes.findOne({});
+  // console.log(test);
+  // test.forEach
+  console.log(req.body.menu);
+  test.menu.push(req.body.menu[0]);
+  console.log(test);
+
+  await test.save();
+  // test.save();
+  // const newCategory = new Cafes(req.body);
+  // console.log(newCategory);
+  // newCategory.save();
+  res.send({})
+})
+
+//카페추가
+// app.post('/newCafemenu', async function (req, res, next) {
+//   const newCategory = new Cafes(req.body);
+//   newCategory.save();
+//   res.send({})
+// })
+
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

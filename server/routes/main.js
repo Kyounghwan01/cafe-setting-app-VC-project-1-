@@ -1,23 +1,35 @@
 var express = require('express');
 var router = express.Router();
 const User = require('../models/User');
+const Cafes = require('../models/Cafes');
+const Category = require('../models/Category');
 const {
   signup,
   loginGithub,
   githubCallback
 } = require('./controllers/authenticate');
+const {verifyToken} = require('./middleware/auth');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
-router.get('/:id', function(req, res, next) {
+router.get('/:id', async (req, res, next) => {
   const email = jwt.verify(req.params.id, process.env.YOUR_SECRET_KEY);
-  res.json({ email: email });
+  const userData = await User.find({ email: email });
+  if(userData[0].admin){
+    return res.json({ email: email, admin : true });
+  };
+  return res.json({ email: email, admin : false });
 });
+
+router.get('/view/:id', verifyToken ,async (req, res, next) => {
+  console.log(req.params.id);
+  const cafeData = await Cafes.find({});
+  return res.json({value : req.params.id, cafeData : cafeData});
+})
 
 router.post('/signup', async (req, res, next) => {
   try {
     const checkDupName = await User.find({ email: req.body.email });
-    console.log(checkDupName);
     if (checkDupName.length) {
       return res.redirect('/signup?dupId');
     }
@@ -38,6 +50,7 @@ router.post('/signup', async (req, res, next) => {
     }
   }
 });
+
 
 router.post('/login', async (req, res, next) => {
   try {
@@ -60,13 +73,6 @@ router.post('/login', async (req, res, next) => {
     return next(error);
   }
 });
-
-// router.get('/signup', signup);
-
-// app.get('/api/getUsername', function(req,res){
-//   console.log("getyser");
-//   res.send({username:"노경환"});
-// })
 
 router.get('/login/github', loginGithub);
 router.get('/login/github/callback', githubCallback, (req, res) => {
