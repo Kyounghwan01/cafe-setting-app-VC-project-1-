@@ -5,10 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
-// const flash = require('connect-flash');
 const mongoose = require('mongoose');
-const passport = require('passport');
-const loginPassport = require('./routes/middleware/passport');
 var mainRouter = require('./routes/main');
 // const viewRouter = require('./routes/view');
 var morgan = require('morgan');
@@ -49,8 +46,6 @@ app.use(
   })
 );
 
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 
 // view engine setup
@@ -60,8 +55,6 @@ app.use(
 
 app.use(morgan('dev'));
 
-loginPassport(passport);
-
 // app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', mainRouter);
@@ -69,17 +62,8 @@ app.use('/api', mainRouter);
 
 app.post('/newCafemenu', async function (req, res, next) {
   const test = await Cafes.findOne({});
-  // console.log(test);
-  // test.forEach
-  console.log(req.body.menu);
   test.menu.push(req.body.menu[0]);
-  console.log(test);
-
   await test.save();
-  // test.save();
-  // const newCategory = new Cafes(req.body);
-  // console.log(newCategory);
-  // newCategory.save();
   res.send({})
 })
 
@@ -99,6 +83,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
+  console.log(err);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);

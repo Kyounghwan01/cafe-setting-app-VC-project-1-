@@ -6,13 +6,15 @@ import Footer from './Footer';
 const Signup = props => {
   console.log(props);
 
-  const errorMessage = message => {
-    if (message === '?dupId') {
+  const errorMessage = () => {
+    let query = new URL(document.location).searchParams.get('error');
+    if (query === 'dupId') {
       return <span className="error-message">중복된 id입니다</span>;
-    } else if (message === '?wrongpassword') {
+    } else if (query === 'wrongpassword') {
       return <span className="error-message">패스워드가 틀렸습니다</span>;
     }
   };
+
   return (
     <div className="Signup-container">
       <Header element={['MAIN', 'SIGN-IN', 'ABOUT']} />
@@ -28,7 +30,7 @@ const Signup = props => {
           <div>
             <span>이메일과 비밀번호를 입력해주세요.</span>
           </div>
-          <div>{errorMessage(props.location.search)}</div>
+          <div>{errorMessage()}</div>
           <form className="form-signin" action="/api/signup" method="POST">
             <div className="group">
               <input

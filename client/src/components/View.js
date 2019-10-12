@@ -31,6 +31,11 @@ const View = props => {
     }
   };
 
+  //쇼핑카트는 우하단에 고정 쇼핑카트 누르면 내가 담은 메뉴 + 가격 총합, 최 하단 결제 버튼
+  //메뉴 담으면 어떤거 담았다고 얼랏창, dispatch 담기 state 넣기
+  //ui 자리선정 최상단
+  //아래로 매뉴 알리기
+
   const renderMenu = () => {
     if (props.menuList) {
       return props.menuList.map((el, index) => {

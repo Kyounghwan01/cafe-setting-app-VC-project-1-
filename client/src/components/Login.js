@@ -11,10 +11,11 @@ const Login = props => {
   //   console.log(response);
   //   // Axios.get()
   // };
-  const errorMessage = message => {
-    if (message === '?nonemail') {
+  const errorMessage = () => {
+    let query = new URL(document.location).searchParams.get('error');
+    if (query === 'nonemail') {
       return <span className="error-message">email이 틀렸습니다.</span>;
-    } else if (message === '?wrongpassword') {
+    } else if (query === 'wrongpassword') {
       return <span className="error-message">패스워드가 틀렸습니다</span>;
     }
   };
@@ -34,7 +35,7 @@ const Login = props => {
           <div>
             <span>이메일과 비밀번호를 입력해주세요.</span>
           </div>
-          <div>{errorMessage(props.location.search)}</div>
+          <div>{errorMessage()}</div>
           <form className="form-signin" action="/api/login" method="POST">
             <div className="group">
               <input
