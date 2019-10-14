@@ -7,18 +7,18 @@ exports.login = async (req, res, next) => {
   try {
     const checkEmail = await User.find({ email: req.body.email });
     if (!checkEmail.length) {
-      return res.redirect('/login?error=nonemail');
+      return res.status(400).redirect('/login?error=nonemail');
     }
     const result = await bcrypt.compare(
       req.body.password,
       checkEmail[0].password
     );
     if (!result) {
-      return res.redirect('/login?error=wrongpassword');
+      return res.status(400).redirect('/login?error=wrongpassword');
     } else {
       const tocken = jwt.sign(checkEmail[0].email, process.env.YOUR_SECRET_KEY);
       console.log(tocken);
-      return res.redirect(`/?${tocken}`);
+      return res.status(200).redirect(`/?${tocken}`);
     }
   } catch (error) {
     return next(error);
@@ -29,17 +29,17 @@ exports.signup = async (req, res, next) => {
   try {
     const checkDupName = await User.find({ email: req.body.email });
     if (checkDupName.length) {
-      return res.redirect('/signup?error=dupId');
+      return res.status(400).redirect('/signup?error=dupId');
     }
     if (req.body.password !== req.body.password2) {
-      return res.redirect('/signup?error=wrongpassword');
+      return res.status(400).redirect('/signup?error=wrongpassword');
     }
     const hash = await bcrypt.hash(req.body.password, bcrypt.genSaltSync(10));
     await User.create({
       email: req.body.email,
       password: hash
     });
-    return res.redirect('/login');
+    return res.status(200).redirect('/login');
   } catch (error) {
     if (error.name === 'CastError') {
       return next();
@@ -50,7 +50,8 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.sendCafeData = async (req, res, next) => {
-  console.log(req.params.id);
+  console.log(req.headers);
+  // console.log(req.params.id);
   const cafeData = await Cafes.find({});
   return res.json({ value: req.params.id, cafeData: cafeData });
 };
@@ -66,5 +67,5 @@ exports.checkAdmin = async (req, res, next) => {
 
 exports.logout = (req, res) => {
   req.logOut();
-  res.status(302).redirect('/login');
+  res.status(301).redirect('/login');
 };
