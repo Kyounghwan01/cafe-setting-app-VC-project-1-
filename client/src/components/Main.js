@@ -6,7 +6,6 @@ import Footer from './Footer';
 //import banner from '../assets/img/bg1.png';
 
 const Main = props => {
-  console.log(props);
   const orderRoute = `/view${props.tocken}`;
   return (
     <div className="main-container">
@@ -25,7 +24,7 @@ const Main = props => {
         <div className="current-seats"></div>
         <div className="order">
           <span>
-            어서오세요! <br />
+            서오세요! <br />
             오늘은 여기가 <br />
             비어있어요 <br />
           </span>

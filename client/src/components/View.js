@@ -51,19 +51,27 @@ const View = props => {
 
   return (
     <div>
+      <div className="shopping-cart">
+        <TiShoppingCart size="50" />
+      </div>
       <Header element={props.headerElement} tocken={props.tocken} />
       <div className="view-container">
-        <div className="left-side">
-          <div className="seats">{renderSeats()}</div>
-          <TiShoppingCart />
-          <div className="order-list">
-            <span>orderList</span>
+        <div className="seats-container">
+          <div className="seats-desc">
+            <span>Step 1. 앉을 자리를 선택해주세요.</span>
           </div>
+          <div className="seats">{renderSeats()}</div>
         </div>
-        <div className="menu">{renderMenu()}</div>
+        <div className="menu-container">
+          <div className="menu-desc">
+            <span>
+              Step 2. 메뉴를 고르시고 오른쪽 하단의 바구니 버튼을 클릭해주세요.
+            </span>
+          </div>
+          <div className="menu">{renderMenu()}</div>
+        </div>
       </div>
       <Footer />
-      )}
     </div>
   );
 };

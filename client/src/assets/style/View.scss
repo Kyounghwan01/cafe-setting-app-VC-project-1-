@@ -1,25 +1,56 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis|Noto+Sans+KR|Shadows+Into+Light|Sunflower:300&display=swap');
+
 * {
   margin: 0;
 }
-
+.shopping-cart{
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+}
 .view-container{
   width: 100%;
-  display: flex;
+  // display: flex;
   border-top: 2px solid rgba(238,238,238,0.9);
-  .left-side{
-    width: 50%;
-    border-right: 2px solid rgba(238,238,238,0.9);
+  .seats-container{
+    width: 100%;
+    // border-right: 2px solid rgba(238,238,238,0.9);
+    .seats-desc{
+      width: 100%;
+      padding: 50px 0 0 0;
+      text-align: center;
+      span{
+        font-family: 'Sunflower', sans-serif;
+        font-size: 20px;
+      }
+    }
     .seats{
       text-align: center;
       padding: 50px 0;
       border-bottom: 2px solid rgba(238,238,238,0.9);
     }
   }
-  .menu{
-    width: 50%;
+  .menu-container{
+    width: 100%;
+    // border-right: 2px solid rgba(238,238,238,0.9);
+    .menu-desc{
+      width: 100%;
+      padding: 50px 0 0 0;
+      text-align: center;
+      span{
+        font-family: 'Sunflower', sans-serif;
+        font-size: 20px;
+      }
+    }
+    .menu{
+      text-align: center;
+      padding: 50px 0;
+      border-bottom: 2px solid rgba(238,238,238,0.9);
+    }
   }
 }
 
 .like{
   background-color: #fff;
 }
+

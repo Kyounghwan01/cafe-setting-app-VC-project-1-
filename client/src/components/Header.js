@@ -49,6 +49,13 @@ const Header = props => {
                     <span>{ele}</span>
                   </a>
                 );
+              case 'CHANGE-SEATS':
+                const changeSeatsRoute = `/change/seats${props.tocken}`;
+                return (
+                  <a href={changeSeatsRoute}>
+                    <span>{ele}</span>
+                  </a>
+                )
               default:
                 return <span key={i}>{ele}</span>;
             }

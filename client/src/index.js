@@ -10,6 +10,7 @@ import MainContainer from '../src/containers/MainContainer';
 import Login from '../src/components/Login';
 import Signup from '../src/components/Signup';
 import ViewContainer from '../src/containers/ViewContainer';
+import ChangeSeats from '../src/containers/ChangeSeatsContainer';
 import NotFound from '../src/components/NotFound';
 
 const App = () => {
@@ -36,6 +37,13 @@ const App = () => {
             path="/view"
             render={props => (
               <ViewContainer {...props} checkUser={checkUser} user={user} />
+            )}
+          />
+          <Route
+            exact
+            path="/change/seats"
+            render={props => (
+              <ChangeSeats {...props} checkUser={checkUser} user={user} />
             )}
           />
           <Route component={NotFound} />
