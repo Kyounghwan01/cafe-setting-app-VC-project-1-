@@ -1,9 +1,12 @@
 import React from 'react';
+import uniqueId from 'lodash/uniqueId';
 import '../assets/style/View.scss';
 import Header from './Header';
 import Footer from './Footer';
 import { FaSquare } from 'react-icons/fa';
 import { TiShoppingCart } from 'react-icons/ti';
+
+let _ = require('lodash');
 
 const View = props => {
   console.log(props);
@@ -13,11 +16,11 @@ const View = props => {
       return props.arrangeMent.map((el, index1) => {
         return el.map((element, index2) => {
           let markup = (
-            <FaSquare size="50" color="black" data-set={[index1, index2]} />
+            <FaSquare key={_.uniqueId()} size="50" color="black" data-set={[index1, index2]} />
           );
           let br = (
             <>
-              <FaSquare size="50" color="black" data-set={[index1, index2]} />
+              <FaSquare key={_.uniqueId()} size="50" color="black" data-set={[index1, index2]} />
               <br />
             </>
           );

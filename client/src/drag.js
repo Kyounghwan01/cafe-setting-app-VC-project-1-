@@ -41,29 +41,6 @@ class Jigsaw extends Component {
     console.log(this.state.solved);
   }
 
-  //   this.setState({
-  //     wallTest: [...this.state.wall],
-  //     // chairTest: [...chair],
-  //   }, () => {
-  //     console.log(this.state.wallTest);
-  //   });
-  // }
-
-  plusWall = () => {
-    const walllength = this.state.wall.length;
-    let a = this.state.wall.concat();
-    a.push({ img: `ny_30.jpg`, order: walllength, board: 'wall' });
-    let b = this.state.wallTest.concat();
-    b.push({
-      img: `ny_30.jpg`,
-      order: this.state.wallTest.length,
-      board: 'wall'
-    });
-    console.log(a);
-    this.setState({ wall: a });
-    this.setState({ wallTest: b });
-  };
-
   handleDrop(e, index, targetName) {
     let target = this.state[targetName];
     if (target[index]) return;
@@ -117,7 +94,6 @@ class Jigsaw extends Component {
   render() {
     return (
       <div className="jigsaw">
-        <button onClick={this.plusWall}>벽추가</button>
         <ul className="jigsaw__wall-board">
           {this.state.wall.map((piece, i) =>
             this.renderPieceContainer(piece, i, 'wall')

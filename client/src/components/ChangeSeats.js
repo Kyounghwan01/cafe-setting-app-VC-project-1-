@@ -1,46 +1,33 @@
 import React, { Component } from 'react';
 import '../assets/style/View.scss';
-import axios from 'axios';
+import '../assets/style/Drag.scss';
 import Header from './Header';
 import Footer from './Footer';
-import { FaSquare } from 'react-icons/fa';
-import uniqueId from 'lodash/uniqueId';
-import '../assets/style/Drag.scss';
-import originalImage from '../images/ny_original.jpg';
 
 class ChangeSeats extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wall: [],
-      wallTest: [],
-      chair: [],
-      chairTest: [],
-      solved: []
+      wall: [
+        {
+          img:
+            'https://pbs.twimg.com/profile_images/953306220315619330/iYXpLJ4m.jpg',
+          order: 0,
+          board: 'wall',
+          type: 'wall'
+        }
+      ],
+      table: [
+        {
+          img:
+            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAACfCAMAAABX0UX9AAAAA1BMVEXi4uIvUCsuAAAASElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABODcYhAAEl463hAAAAAElFTkSuQmCC',
+          order: 1,
+          board: 'table',
+          type: 'table'
+        }
+      ],
+      solved: [...Array(100)]
     };
-  }
-
-  componentDidMount() {
-    const wall = [Array(1)].map((_, i) => ({
-      img: `ny_30.jpg`,
-      order: 0,
-      board: 'wall',
-      type: 'wall'
-    }));
-    const chair = [Array(1)].map((_, i) => ({
-      img: `ny_10.jpg`,
-      order: 1,
-      board: 'chair',
-      type: 'chair'
-    }));
-
-    this.setState({
-      wall,
-      wallTest: [...wall],
-      chair,
-      chairTest: [...chair],
-      solved: [...Array(40)]
-    });
   }
 
   handleDrop(e, index, targetName) {
@@ -48,9 +35,9 @@ class ChangeSeats extends Component {
     if (target[index]) return;
 
     const pieceOrder = e.dataTransfer.getData('text');
-    let pieceData = this.state.wallTest.find(p => p.order === +pieceOrder);
+    let pieceData = this.state.wall.find(p => p.order === +pieceOrder);
     if (!pieceData) {
-      pieceData = this.state.chairTest.find(p => p.order === +pieceOrder);
+      pieceData = this.state.table.find(p => p.order === +pieceOrder);
     }
     const origin = this.state[pieceData.board];
 
@@ -81,15 +68,9 @@ class ChangeSeats extends Component {
           onDrop={e => this.handleDrop(e, index, boardName)}
           onDoubleClick={e => {
             if (e.currentTarget.childNodes[0]) {
-              let a = e.currentTarget;
-              console.log(a.getAttribute('data-id'));
-              // e.currentTarget.childNodes[0].remove();
-              // let current = 
-              console.log(e.currentTarget.parentNode);
               let changeSeat = this.state.solved.concat();
-              changeSeat[a.getAttribute('data-id')] = null;
-              
-              this.setState({solved : changeSeat})
+              changeSeat[e.currentTarget.getAttribute('data-id')] = null;
+              this.setState({ solved: changeSeat });
             }
           }}
         >
@@ -97,7 +78,7 @@ class ChangeSeats extends Component {
             <img
               draggable
               onDragStart={e => this.handleDragStart(e, piece.order)}
-              src={require(`../images/${piece.img}`)}
+              src={piece.img}
             />
           )}
         </li>
@@ -110,7 +91,7 @@ class ChangeSeats extends Component {
               draggable
               onDragStart={e => this.handleDragStart(e, piece.order)}
               type={boardName}
-              src={require(`../images/${piece.img}`)}
+              src={piece.img}
             />
           )}
         </li>
@@ -119,65 +100,50 @@ class ChangeSeats extends Component {
   }
 
   render() {
+    const url = `/${this.props.tocken}`
     return (
-      <div className="jigsaw">
-        <ul className="jigsaw__wall-board">
-          {this.state.wall.map((piece, i) =>
-            this.renderPieceContainer(piece, i, 'wall')
-          )}
-        </ul>
-        <ul className="jigsaw__chair-board">
-          {this.state.chair.map((piece, i) =>
-            this.renderPieceContainer(piece, i, 'chair')
-          )}
-        </ul>
-        <ol
-          className="jigsaw__solved-board"
-          style={{ backgroundColor: 'grey' }}
-        >
-          {this.state.solved.map((piece, i) =>
-            this.renderPieceContainer(piece, i, 'solved')
-          )}
-        </ol>
+      <div>
+        <Header element={this.props.headerElement} tocken={this.props.tocken} />
+        <div className="drag">
+          <div className="drag-desc">
+            <p>아래 아이콘을 격자 영역으로 드래그 & 드랍해주세요.</p>
+            <p>격자 영역을 더블 클릭시 해당 영역의 아이콘이 삭제됩니다.</p>
+          </div>
+          <div className="drag-list">
+            <div className-="drag-non-space">
+              <ul className="drag__wall-board">
+                {this.state.wall.map((piece, i) =>
+                  this.renderPieceContainer(piece, i, 'wall')
+                )}
+                <div>
+                  <span>쓰지않는 공간</span>
+                </div>
+              </ul>
+            </div>
+            <ul className="drag__table-board">
+              {this.state.table.map((piece, i) =>
+                this.renderPieceContainer(piece, i, 'table')
+              )}
+              <div>
+                <span>테이블</span>
+              </div>
+            </ul>
+          </div>
+          <ol className="drag__solved-board">
+            {this.state.solved.map((piece, i) =>
+              this.renderPieceContainer(piece, i, 'solved')
+            )}
+          </ol>
+          <a href={url}>
+            <div className="submit" onClick={()=>{alert('정상적으로 등록되었습니다')}}>
+              <span>등록</span>
+            </div>
+          </a>
+        </div>
+        <Footer />
       </div>
     );
   }
 }
 
-// const ChangeSeats = props => {
-//   const renderSeats = () => {
-//     if (props.arrangeMent) {
-//       return props.arrangeMent.map((el, index1) => {
-//         return el.map((element, index2) => {
-//           let markup = (
-//             <FaSquare size="50" color="black" data-set={[index1, index2]} />
-//           );
-//           let br = (
-//             <>
-//               <FaSquare size="50" color="black" data-set={[index1, index2]} />
-//               <br />
-//             </>
-//           );
-//           // if(element === 0){
-//           //   markup = <FaSquare size="24" color="black" data-set={[index1,index2]}/>;
-//           //   br = <><FaSquare size="24" color="black" data-set={[index1,index2]}/><br /></>
-//           // }
-//           return index2 === el.length - 1 ? br : markup;
-//         });
-//       });
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <Header
-//         element={props.headerElement}
-//         tocken={props.tocken}
-//       />
-
-//       <div>{renderSeats()}</div>
-//       <Footer />
-//     </div>
-//   );
-// };
 export default ChangeSeats;
