@@ -11,7 +11,7 @@ import Login from '../src/components/Login';
 import Signup from '../src/components/Signup';
 import ViewContainer from '../src/containers/ViewContainer';
 import ChangeSeats from '../src/containers/ChangeSeatsContainer';
-import NotFound from '../src/components/NotFound';
+import ErrorPage from './components/ErrorPage';
 
 const App = () => {
   const [user, dispatch] = useReducer(userReducer, initialState);
@@ -46,7 +46,12 @@ const App = () => {
               <ChangeSeats {...props} checkUser={checkUser} user={user} />
             )}
           />
-          <Route component={NotFound} />
+          <Route exact path="/error" render={props => (
+              <ErrorPage {...props} checkUser={checkUser} user={user} />
+            )} />
+          <Route render={props => (
+              <ErrorPage {...props} errorstatus='404' />
+            )} />
         </Switch>
       </Router>
     </Provider>

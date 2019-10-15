@@ -17,7 +17,6 @@ exports.login = async (req, res, next) => {
       return res.status(400).redirect('/login?error=wrongpassword');
     } else {
       const tocken = jwt.sign(checkEmail[0].email, process.env.YOUR_SECRET_KEY);
-      console.log(tocken);
       return res.status(200).redirect(`/?${tocken}`);
     }
   } catch (error) {
@@ -50,8 +49,6 @@ exports.signup = async (req, res, next) => {
 };
 
 exports.sendCafeData = async (req, res, next) => {
-  console.log(req.headers);
-  // console.log(req.params.id);
   const cafeData = await Cafes.find({});
   return res.json({ value: req.params.id, cafeData: cafeData });
 };
@@ -60,7 +57,7 @@ exports.checkAdmin = async (req, res, next) => {
   const email = jwt.verify(req.params.id, process.env.YOUR_SECRET_KEY);
   const userData = await User.find({ email: email });
   if (userData[0].admin) {
-    return res.json({ email: email, admin: true });
+    return res.json({ email: email, admin: userData[0]._id });
   }
   return res.json({ email: email, admin: false });
 };

@@ -60,19 +60,35 @@ app.use(morgan('dev'));
 app.use('/api', mainRouter);
 // app.use('/api/view', viewRouter);
 
-app.post('/newCafemenu', async function (req, res, next) {
-  const test = await Cafes.findOne({});
-  test.menu.push(req.body.menu[0]);
-  await test.save();
-  res.send({})
-})
-
-//카페추가
 // app.post('/newCafemenu', async function (req, res, next) {
-//   const newCategory = new Cafes(req.body);
-//   newCategory.save();
+//   const test = await Cafes.findOne({});
+//   test.menu.push(req.body.menu[0]);
+//   await test.save();
 //   res.send({})
 // })
+// {	
+	
+// 	"menu" : [{
+// 		"name" : "sergeg",
+// 		"price":4000, 
+// 		"category":"5da17722791127279b3ea9f9"
+// 	}]
+// }
+
+//카페추가
+app.post('/newCafemenu', async function (req, res, next) {
+  const newCategory = new Cafes(req.body);
+  newCategory.save();
+  res.send({})
+})
+// {	
+// 	"name" : "nkhCafe",
+// 	"menu" : [{
+// 		"name" : "sergeg",
+// 		"price":4000, 
+// 		"category":"5da17722791127279b3ea9f9"
+// 	}]
+// }
 
 
 

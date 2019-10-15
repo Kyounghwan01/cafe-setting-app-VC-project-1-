@@ -1,5 +1,4 @@
 import React from 'react';
-import uniqueId from 'lodash/uniqueId';
 import '../assets/style/View.scss';
 import Header from './Header';
 import Footer from './Footer';

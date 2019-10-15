@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import '../assets/style/View.scss';
 import '../assets/style/Drag.scss';
 import Header from './Header';
 import Footer from './Footer';
+import axios from 'axios';
 
 class ChangeSeats extends Component {
   constructor(props) {
@@ -26,14 +28,26 @@ class ChangeSeats extends Component {
           type: 'table'
         }
       ],
-      solved: [...Array(100)]
+      solved: [],
+      errorMessage: null
     };
+  }
+
+  componentDidMount() {
+    const fetchTableData = async () => {
+      const res = await axios.get(
+        `/api/cafes/seats/${this.props.tocken.substring(1)}`
+      );
+      this.setState({ solved: res.data.cafeData[0].arrangemenet });
+    };
+    fetchTableData();
   }
 
   handleDrop(e, index, targetName) {
     let target = this.state[targetName];
-    if (target[index]) return;
-
+    if (target[index]) {
+      return;
+    }
     const pieceOrder = e.dataTransfer.getData('text');
     let pieceData = this.state.wall.find(p => p.order === +pieceOrder);
     if (!pieceData) {
@@ -44,11 +58,9 @@ class ChangeSeats extends Component {
     if (targetName === pieceData.board) {
       target = origin;
     }
-
     // origin[origin.indexOf(pieceData)] = undefined;
     target[index] = pieceData;
     pieceData.board = targetName;
-
     this.setState({ [targetName]: target });
   }
 
@@ -99,48 +111,75 @@ class ChangeSeats extends Component {
     }
   }
 
+  submitData = async () => {
+    if (window.confirm('정말 저장하시겠습니까??')) {
+      try {
+        await axios.post(`/api/cafes/seats/${this.props.tocken.substring(1)}`, {
+          cafeArrange: this.state.solved
+        });
+        alert('저장되었습니다');
+      } catch (e) {
+        this.setState({ errorMessage: e.message });
+      }
+    }
+  };
+
   render() {
-    const url = `/${this.props.tocken}`
+    const url = `/${this.props.tocken}`;
     return (
       <div>
-        <Header element={this.props.headerElement} tocken={this.props.tocken} />
-        <div className="drag">
-          <div className="drag-desc">
-            <p>아래 아이콘을 격자 영역으로 드래그 & 드랍해주세요.</p>
-            <p>격자 영역을 더블 클릭시 해당 영역의 아이콘이 삭제됩니다.</p>
-          </div>
-          <div className="drag-list">
-            <div className-="drag-non-space">
-              <ul className="drag__wall-board">
-                {this.state.wall.map((piece, i) =>
-                  this.renderPieceContainer(piece, i, 'wall')
-                )}
-                <div>
-                  <span>쓰지않는 공간</span>
-                </div>
-              </ul>
-            </div>
-            <ul className="drag__table-board">
-              {this.state.table.map((piece, i) =>
-                this.renderPieceContainer(piece, i, 'table')
-              )}
-              <div>
-                <span>테이블</span>
+        {this.state.errorMessage ? (
+          <Redirect
+            to={{
+              pathname: '/error',
+              state: this.state.errorMessage
+            }}
+          />
+        ) : (
+          <div>
+            <Header
+              element={this.props.headerElement}
+              tocken={this.props.tocken}
+            />
+            <div className="drag">
+              <div className="drag-desc">
+                <p>아래 아이콘을 격자 영역으로 드래그 & 드랍해주세요.</p>
+                <p>격자 영역을 더블 클릭시 해당 영역의 아이콘이 삭제됩니다.</p>
               </div>
-            </ul>
-          </div>
-          <ol className="drag__solved-board">
-            {this.state.solved.map((piece, i) =>
-              this.renderPieceContainer(piece, i, 'solved')
-            )}
-          </ol>
-          <a href={url}>
-            <div className="submit" onClick={()=>{alert('정상적으로 등록되었습니다')}}>
-              <span>등록</span>
+              <div className="drag-list">
+                <div className="drag-non-space">
+                  <ul className="drag__wall-board">
+                    {this.state.wall.map((piece, i) =>
+                      this.renderPieceContainer(piece, i, 'wall')
+                    )}
+                    <div>
+                      <span>쓰지않는 공간</span>
+                    </div>
+                  </ul>
+                </div>
+                <ul className="drag__table-board">
+                  {this.state.table.map((piece, i) =>
+                    this.renderPieceContainer(piece, i, 'table')
+                  )}
+                  <div>
+                    <span>테이블</span>
+                  </div>
+                </ul>
+              </div>
+              <ol className="drag__solved-board">
+                {this.state.solved.map((piece, i) =>
+                  this.renderPieceContainer(piece, i, 'solved')
+                )}
+              </ol>
+              <a href="#">
+                <div className="submit" onClick={this.submitData}>
+                  <span>등록</span>
+                </div>
+              </a>
             </div>
-          </a>
-        </div>
-        <Footer />
+            <Footer />
+          </div>
+        )}
       </div>
     );
   }
