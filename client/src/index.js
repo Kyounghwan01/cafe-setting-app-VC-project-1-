@@ -19,10 +19,13 @@ const App = () => {
 
   const checkUser = async search => {
     if (!search) {
+      console.log("qwe");
       return dispatch(dispatchFunction.checkUserOuth('unauthorized'));
     }
+    console.log("asd");
     const res = await axios.get(`/api/view/${search.substring(1)}`);
-    return dispatch(dispatchFunction.checkUserOuth(res.data.error));
+    console.log(res.data);
+    return await dispatch(dispatchFunction.checkUserOuth(res.data.error));
   };
 
   return (

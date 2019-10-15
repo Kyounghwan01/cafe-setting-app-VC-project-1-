@@ -8,17 +8,17 @@ const ChangeSeatsContainer = props => {
 
   useEffect(() => {
     props.checkUser(props.location.search);
+    const fetchData = async () => {
+      const res = await axios.get(
+        `/api/view/${props.location.search.substring(1)}`
+      );
+      if (res.data.cafeData) {
+        setArr(res.data.cafeData[0].arrangemenet);
+      }
+    };
+  
     fetchData();
   }, []);
-
-  const fetchData = async () => {
-    const res = await axios.get(
-      `/api/view/${props.location.search.substring(1)}`
-    );
-    if (res.data.cafeData) {
-      setArr(res.data.cafeData[0].arrangemenet);
-    }
-  };
 
   return (
     <>

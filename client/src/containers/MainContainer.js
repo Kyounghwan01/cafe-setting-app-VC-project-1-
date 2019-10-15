@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import Main from '../components/Main';
 import { withRouter } from 'react-router-dom';
 import { userReducer, initialState } from '../reducers';
@@ -7,6 +7,7 @@ import axios from 'axios';
 
 const MainContainer = (props) => {
   const [user, dispatch] = useReducer(userReducer, initialState);
+  const [arrange, setArrange] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +41,7 @@ const MainContainer = (props) => {
     };
     fetchData();
   }, []);
+  
 
   return(
     <Main

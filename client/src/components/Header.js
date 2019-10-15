@@ -52,7 +52,7 @@ const Header = props => {
               case 'CHANGE-SEATS':
                 const changeSeatsRoute = `/change/seats${props.tocken}`;
                 return (
-                  <a href={changeSeatsRoute}>
+                  <a href={changeSeatsRoute} key={i}>
                     <span>{ele}</span>
                   </a>
                 )

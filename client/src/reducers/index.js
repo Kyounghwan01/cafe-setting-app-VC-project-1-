@@ -6,7 +6,8 @@ export const initialState = {
   nickname: '',
   email: '',
   headerElement : ['SIGN-IN', 'SIGN-UP', 'ABOUT'],
-  checkUser : null
+  checkUser : null,
+  seats:[],
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -30,6 +31,9 @@ export const userReducer = (state = initialState, action) => {
     }
     case type.CHECK_USER_OUTH:{
       return {checkUser:action.checkUser}
+    }
+    case type.SEATS:{
+      return {seats:action.seats}
     }
     default: {
       return state;

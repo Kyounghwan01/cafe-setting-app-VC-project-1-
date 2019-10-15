@@ -36,9 +36,13 @@ class ChangeSeats extends Component {
   componentDidMount() {
     const fetchTableData = async () => {
       const res = await axios.get(
-        `/api/cafes/seats/${this.props.tocken.substring(1)}`
+        `/api/view/${this.props.tocken.substring(1)}`
       );
-      this.setState({ solved: res.data.cafeData[0].arrangemenet });
+      if(!res.data.cafeData){
+        this.setState({errorMessage : 'unauth'})
+      } else {
+        this.setState({ solved: res.data.cafeData[0].arrangemenet });
+      }
     };
     fetchTableData();
   }
@@ -88,6 +92,7 @@ class ChangeSeats extends Component {
         >
           {piece && (
             <img
+              alt="wall"
               draggable
               onDragStart={e => this.handleDragStart(e, piece.order)}
               src={piece.img}
@@ -100,6 +105,7 @@ class ChangeSeats extends Component {
         <li key={index}>
           {piece && (
             <img
+              alt="table"
               draggable
               onDragStart={e => this.handleDragStart(e, piece.order)}
               type={boardName}
@@ -125,7 +131,6 @@ class ChangeSeats extends Component {
   };
 
   render() {
-    const url = `/${this.props.tocken}`;
     return (
       <div>
         {this.state.errorMessage ? (

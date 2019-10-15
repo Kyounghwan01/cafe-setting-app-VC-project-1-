@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const {login, signup, sendCafeData, checkAdmin} = require('../routes/controllers/authenticate');
+const {login, signup, sendCafeData, checkAdmin, sendSeats} = require('../routes/controllers/authenticate');
 const {verifyToken} = require('./middleware/auth');
 const Cafes = require('../models/Cafes');
 const User = require('../models/User');
@@ -10,16 +10,18 @@ router.get('/:id', checkAdmin);
 
 router.get('/view/:id', verifyToken, sendCafeData)
 
+router.get('/views', async (req, res, next) => {
+  console.log("qwe");
+  // const cafeData = await Cafes.find({});
+  // console.log(cafeData);
+  // return res.json({ cafeData: cafeData });
+});
+
 router.post('/signup', signup);
 
 router.post('/login', login);
 
-router.get('/cafes/seats/:id',async (req, res, next)=>{
-  const cafeData = await Cafes.find({});
-  res.json({value : req.params.id, cafeData : cafeData});
-});
-
-router.post('/cafes/seats/:id',async (req, res, next) => {
+router.post('/cafes/seats/:id',verifyToken, async (req, res, next) => {
   const decoded = await jwt.verify(req.params.id, process.env.YOUR_SECRET_KEY);
   const objectId = await User.find({email:decoded});
   try{
