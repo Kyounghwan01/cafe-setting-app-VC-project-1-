@@ -6,7 +6,7 @@ const Footer = () => {
     <div className='footer'>
       <div className='copyright'>
         <span>
-          ⓒ 2019 VC Company. make by Kyoung Hwan &nbsp;All Rights Reserved.
+          ⓒ 2019 make by Kyoung Hwan.  &nbsp;All Rights Reserved.
         </span>
         <a href='https://github.com/Kyounghwan01'>
           <img

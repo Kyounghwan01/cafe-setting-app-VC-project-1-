@@ -13,11 +13,14 @@ const ChangeSeatsContainer = props => {
         `/api/view/${props.location.search.substring(1)}`
       );
       if (res.data.cafeData) {
+        console.log(res.data.cafeData);
         setArr(res.data.cafeData[0].arrangemenet);
       }
     };
-  
     fetchData();
+    return () => {
+      fetchData();
+    };
   }, []);
 
   return (

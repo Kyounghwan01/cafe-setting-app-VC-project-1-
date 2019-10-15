@@ -34,18 +34,21 @@ class ChangeSeats extends Component {
   }
 
   componentDidMount() {
-    const fetchTableData = async () => {
-      const res = await axios.get(
-        `/api/view/${this.props.tocken.substring(1)}`
-      );
-      if(!res.data.cafeData){
-        this.setState({errorMessage : 'unauth'})
-      } else {
-        this.setState({ solved: res.data.cafeData[0].arrangemenet });
-      }
-    };
-    fetchTableData();
+    this.fetchTableData();
   }
+
+  componentWillUnmount() {
+    this.fetchTableData();
+  }
+
+  fetchTableData = async () => {
+    const res = await axios.get(`/api/view/${this.props.tocken.substring(1)}`);
+    if (!res.data.cafeData) {
+      this.setState({ errorMessage: 'unauth' });
+    } else {
+      this.setState({ solved: res.data.cafeData[0].arrangemenet });
+    }
+  };
 
   handleDrop(e, index, targetName) {
     let target = this.state[targetName];
@@ -62,7 +65,6 @@ class ChangeSeats extends Component {
     if (targetName === pieceData.board) {
       target = origin;
     }
-    // origin[origin.indexOf(pieceData)] = undefined;
     target[index] = pieceData;
     pieceData.board = targetName;
     this.setState({ [targetName]: target });
@@ -176,11 +178,9 @@ class ChangeSeats extends Component {
                   this.renderPieceContainer(piece, i, 'solved')
                 )}
               </ol>
-              <a href="#">
-                <div className="submit" onClick={this.submitData}>
-                  <span>등록</span>
-                </div>
-              </a>
+              <div className="submit" onClick={this.submitData}>
+                <span>등록</span>
+              </div>
             </div>
             <Footer />
           </div>

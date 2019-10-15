@@ -2,30 +2,13 @@ import { combineReducers } from 'redux';
 import * as type from '../constants/ActionTypes';
 
 export const initialState = {
-  isAdmin: false,
-  nickname: '',
-  email: '',
   headerElement : ['SIGN-IN', 'SIGN-UP', 'ABOUT'],
   checkUser : null,
-  seats:[],
+  seatsArr:null,
 };
 
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case type.RESET: {
-      return initialState;
-    }
-    case type.TOGGLE_TO_BE_ADMIN: {
-      return { ...state, isAdmin: !state.isAdmin };
-    }
-    case type.UPDATE_NICK_NAME: {
-      return { ...state, nickname: action.nickname };
-    }
-    case type.UPDATE_EMAIL: {
-      return { ...state, email: action.email };
-    }
-
-
     case type.SET_HEADER_ELEMTNT: {
       return {headerElement:action.headerElement}
     }
@@ -33,7 +16,8 @@ export const userReducer = (state = initialState, action) => {
       return {checkUser:action.checkUser}
     }
     case type.SEATS:{
-      return {seats:action.seats}
+      console.log(action.seatsArr)
+      return {seatsArr:action.seatsArr}
     }
     default: {
       return state;

@@ -2,37 +2,44 @@ import React, { Component } from 'react';
 import '../assets/style/View.scss';
 import Header from './Header';
 import Footer from './Footer';
-import { FaSquare } from 'react-icons/fa';
 import { TiShoppingCart } from 'react-icons/ti';
 import axios from 'axios';
-
-let _ = require('lodash');
 
 class View extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arrange: []
+      arrange: [],
+      menuList: [],
+      userData : []
     };
   }
   componentDidMount() {
     const fetchTableData = async () => {
-      console.log(this.props);
       const res = await axios.get(
         `/api/view/${this.props.tocken.substring(1)}`
       );
-      if(!res.data.cafeData){
-        this.setState({errorMessage : 'unauth'})
+      if (!res.data.cafeData) {
+        this.setState({ errorMessage: 'unauth' });
       } else {
-        this.setState({ arrange: res.data.cafeData[0].arrangemenet }, function(){console.log(this.state.arrange)});
+        this.setState({
+          arrange: res.data.cafeData[0].arrangemenet,
+          menuList: res.data.cafeData[0].menu,
+          userData: res.data.userData[0]
+        });
       }
     };
     fetchTableData();
   }
 
+  componentDidUpdate(){
+    console.log(this.state.userData);
+    //전체 배열안에 _id가 있으면 그거 지우고 다른걸로 바꾼다
+  }
+
   renderMenu = () => {
-    if (this.props.menuList) {
-      return this.props.menuList.map((el, index) => {
+    if (this.state.menuList) {
+      return this.state.menuList.map((el, index) => {
         return (
           <div key={index}>
             <div>{el.name}</div>
@@ -43,25 +50,24 @@ class View extends Component {
     }
   };
 
-  renderPieceContainer(piece, index, boardName) {
-    if (boardName === 'solved') {
-      return (
-        <li
-          className="test"
-          key={index}
-          data-id={index}
-        >
-          {piece && (
-            <img
-              alt="wall"
-              type={piece.type}
-              src={piece.img}
-            />
-          )}
-        </li>
-      );
-    }
+  renderPieceContainer(piece, index) {
+    return (
+      <li
+        className="test"
+        key={index}
+        data-id={index}
+        onClick={e => {
+          this.choiceSeats(e);
+        }}
+      >
+        {piece && <img alt="wall" type={piece.type} src={piece.img} />}
+      </li>
+    );
   }
+
+  choiceSeats = e => {
+    console.log(e.currentTarget);
+  };
 
   render() {
     return (
@@ -76,11 +82,10 @@ class View extends Component {
               <span>Step 1. 앉을 자리를 선택해주세요.</span>
             </div>
             <ol className="drag__solved-board">
-                {this.state.arrange.map((piece, i) =>
-                  this.renderPieceContainer(piece, i, 'solved')
-                )}
+              {this.state.arrange.map((piece, i) =>
+                this.renderPieceContainer(piece, i)
+              )}
             </ol>
-            {/* <div className="seats">{renderSeats()}</div> */}
           </div>
           <div className="menu-container">
             <div className="menu-desc">

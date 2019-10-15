@@ -15,16 +15,19 @@
     }
   }
   .seats-order {
-    height: 500px;
     width: 100%;
-    background-color: grey;
+    background-color: white;
     .order {
-      height: 500px;
       width: 100%;
       display: flex;
+      background-color: rgb(240,233,223);
       span {
         font-family: 'Sunflower', sans-serif;
         font-size: 20px;
+      }
+      .leftseat-count{
+        font-size: 30px;
+        font-weight: bold;
       }
       a {
         border: 2px solid black;
@@ -49,6 +52,33 @@
         background: black;
         color: white;
         transition: 0.5s;
+      }
+
+      .seat {
+        position: relative;
+        background-size: cover;
+        margin: 20px auto;
+        width: 570px;
+        list-style-type: none;
+        padding: 0;
+        font-size: 0;
+        border: 1px solid #ddd;
+        background-color: rgba(255, 255, 255, 0.6);
+        .seat-list {
+          text-align: left;
+          display: inline-block;
+          width: 49px;
+          height: 49px;
+          border: 1px solid #ddd;
+          border-radius: 5px;
+          margin: 3px;
+          img {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            border-radius: 5px;
+          }
+        }
       }
     }
   }

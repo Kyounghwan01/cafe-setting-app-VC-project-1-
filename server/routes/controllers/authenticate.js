@@ -48,11 +48,6 @@ exports.signup = async (req, res, next) => {
   }
 };
 
-exports.sendCafeData = async (req, res, next) => {
-  const cafeData = await Cafes.find({});
-  return res.json({ value: req.params.id, cafeData: cafeData });
-};
-
 exports.checkAdmin = async (req, res, next) => {
   const email = jwt.verify(req.params.id, process.env.YOUR_SECRET_KEY);
   const userData = await User.find({ email: email });
@@ -60,9 +55,4 @@ exports.checkAdmin = async (req, res, next) => {
     return res.json({ email: email, admin: userData[0]._id });
   }
   return res.json({ email: email, admin: false });
-};
-
-exports.logout = (req, res) => {
-  req.logOut();
-  res.status(301).redirect('/login');
 };

@@ -1,16 +1,9 @@
 import React from 'react';
-//import FacebookLogin from 'react-facebook-login';
 import '../assets/style/Main.scss';
 import Header from './Header';
 import Footer from './Footer';
 
-const Login = props => {
-  console.log(props);
-
-  // const responseFacebook = response => {
-  //   console.log(response);
-  //   // Axios.get()
-  // };
+const Login = () => {
   const errorMessage = () => {
     let query = new URL(document.location).searchParams.get('error');
     if (query === 'nonemail') {
@@ -56,16 +49,6 @@ const Login = props => {
           </form>
         </div>
       </div>
-      {/* <div className="login-body">
-        <FacebookLogin
-          appId="937473999950198"
-          autoLoad={false}
-          fields="name,email,picture"
-          callback={responseFacebook} // 콜백함수 지정( container에 생성 )
-          icon="fa-facebook-square"
-          textButton={'Facebook으로 로그인하기'}
-        />
-      </div> */}
       <Footer />
     </div>
   );
