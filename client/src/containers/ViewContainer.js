@@ -9,7 +9,7 @@ const ViewContainer = props => {
 
   useEffect(() => {
     props.checkUser(props.location.search);
-  }, [props]);
+  }, [props.location.search]);
 
   return (
     <>

@@ -25,7 +25,9 @@ class ChangeSeats extends Component {
             'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAACfCAMAAABX0UX9AAAAA1BMVEXi4uIvUCsuAAAASElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABODcYhAAEl463hAAAAAElFTkSuQmCC',
           order: 1,
           board: 'table',
-          type: 'table'
+          type: 'table',
+          sittingTime: null,
+          userId: null
         }
       ],
       solved: [],
