@@ -5,6 +5,7 @@ import '../assets/style/Drag.scss';
 import Header from './Header';
 import Footer from './Footer';
 import axios from 'axios';
+import * as constants from '../constants/state';
 
 class ChangeSeats extends Component {
   constructor(props) {
@@ -12,8 +13,7 @@ class ChangeSeats extends Component {
     this.state = {
       wall: [
         {
-          img:
-            'https://pbs.twimg.com/profile_images/953306220315619330/iYXpLJ4m.jpg',
+          img: constants.WALL,
           order: 0,
           board: 'wall',
           type: 'wall'
@@ -21,8 +21,7 @@ class ChangeSeats extends Component {
       ],
       table: [
         {
-          img:
-            'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAACfCAMAAABX0UX9AAAAA1BMVEXi4uIvUCsuAAAASElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABODcYhAAEl463hAAAAAElFTkSuQmCC',
+          img: constants.TABLE,
           order: 1,
           board: 'table',
           type: 'table',

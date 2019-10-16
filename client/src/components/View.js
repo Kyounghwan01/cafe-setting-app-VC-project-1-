@@ -5,6 +5,7 @@ import Footer from './Footer';
 import { TiShoppingCart } from 'react-icons/ti';
 import axios from 'axios';
 import moment from 'moment';
+import * as constants from '../constants/state';
 
 
 class View extends Component {
@@ -15,8 +16,7 @@ class View extends Component {
       menuList: [],
       userData: [],
       initTable: {
-        img:
-          'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAACfCAMAAABX0UX9AAAAA1BMVEXi4uIvUCsuAAAASElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABODcYhAAEl463hAAAAAElFTkSuQmCC',
+        img:constants.TABLE,
         order: 1,
         board: 'table',
         type: 'table',
@@ -96,8 +96,7 @@ class View extends Component {
       let copyData = this.state.arrange;
       const now = moment(new Date()).format('YYYY-MM-DDTHH:mm');
       const initSeats = {
-        img:
-          'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhUSEhIVFRUVGRUVFRcXFRsXIRUiFSkXFhcXFRgYHSgsGC4lMBUXITEhJSkrOi4+Fx8zODMtSCgtLisBCgoKDQwNFQ8PFTcaExkxLSsrKysrKzcrKys3LS0rKysrKysrLSsrKysrLSsrKysrKysrKysrKysrKysrKysrK//AABEIAOEA4QMBIgACEQEDEQH/xAAYAAEBAQEBAAAAAAAAAAAAAAAAAQIDBv/EACgQAQEBAAEBBgYDAQAAAAAAAAABEQLwEjFBgaHBIVFxkbHxYdHhA//EABgBAQEAAwAAAAAAAAAAAAAAAAABAgUH/8QAFxEBAQEBAAAAAAAAAAAAAAAAABEBMf/aAAwDAQACEQMRAD8A89TUtNaR1pUxTAQMAKaYRBUmFAZqwXBVwtVmCCLSilRSCJYzY6YzeIFiVd+KBiAAYgoJi4UBOz9VXJ1+gFWVnVlUXVqQ0AqYoBQlBakKAaVFtAiLDkBKYUQIgARRICCgImKgEhqoBhIqaFXsjH2AdOUSRqsqLVxmRq0NSrUxcBMWJCAGlKgSBoC4UQFkSlADkigagoCWBQANBEUoGiUBnzGtBGrAsVVSVYCCNM4ApEAW00QFqKgNMrpgJgtSAoiwA1NNAww1KC6USAVF1AWIaUGPL1GvuoVpSGAlFxNBYhAFoagCpTAUSKAFKAlXEBUNNANTWsBksVARRNBUWoCBS0Dz/InZBHRUiwUtZb5MwBaiwEFQUtU0wRCGIDUBAWoAKlEgLgGAJigJBIsBIka0Bk0TA1Mo1l6oFbajMigWpC1QCEAVmVUwFDSgJq4AguJQLFCAkoYABqApagATuRcBAQFqaIBl+foGdfEEdUtXUFqYpKSBVA0KUKCFRUwXAUgIqYAuBEBUJQBUsNEQphQRQotNSw0EZWlQDyGtgI0AKRYLASw1IAoaQA1IuAECACEBTRIABYBQAQAF1lUAqKAiWqgiBgDtpTBVIGGACoCpFxEDFRQRGksAwsLPkQCJ19FqAqLEAOSa0DC2LUBKLgCCoCJFBGcGsAdQTVVcLSFoJi1UA0iRYAAi8AKIQIgKUhgILiYCVSgpiX9gETAoGlS0q0OM0XU0Q1WOu4FjvsEixSJDVAIi6kCCppUBQUIYJUCC6mgLCgIuBQShpgJEVIC1IlNAqpUATF1KCBoK74BqhhFkQREWkApAoqkTVQKGpIIGFoBVZqwVailERIqWCmMtYWCM1LFrIFaZ1dBKavJOQHZ/kPgA7YsrOmqq6lpqWgCLqC6lE7QKtTTQWoza1oiiSmgNSswgq1C8k0Re0mprNoNxd668mI3KKnOMryZohVQlAsEqSiNBgDrP6SdfcFU+ZfafkBUXj3AIf9PdiKIYvHuKoGscevVKArVOPioI1PBlQHNAFXn3p/vuAxPB18QFc+RfAARb3AGpzSAIyAI//9k=',
+        img:constants.SEATS,
         order: 1,
         board: 'table',
         type: 'seated',
@@ -120,8 +119,14 @@ class View extends Component {
     }
   };
 
-  submitSeat = () => {
-    
+  submitSeat = async () => {
+    try{
+      await axios.post(`/api/seats/${this.props.tocken.substring(1)}`, {
+        cafeArrange: this.state.arrange
+      });
+    } catch (e){
+      console.log(e);
+    }
   }
 
   render() {
