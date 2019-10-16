@@ -8,7 +8,8 @@ const {
 const {
   changeSeats,
   sendCafeData,
-  sendCafeDataToAll
+  sendCafeDataToAll,
+  choiceSeat
 } = require('./controllers/seat.controllers');
 const { verifyToken } = require('./middleware/auth');
 const Cafes = require('../models/Cafes');
@@ -27,15 +28,6 @@ router.post('/login', login);
 
 router.post('/cafes/seats/:id', verifyToken, changeSeats);
 
-router.post('/seats/:id', verifyToken, async (req, res, next) => {
-  try {
-    const cafes = await Cafes.findOne({});
-    cafes.arrangemenet = req.body.cafeArrange;
-    await cafes.save();
-    res.status(200).send({status : 'success'});
-  } catch (e) {
-    res.status(500).send({ status: 'remote db server error' });
-  }
-});
+router.post('/seats/:id', verifyToken, choiceSeat);
 
 module.exports = router;

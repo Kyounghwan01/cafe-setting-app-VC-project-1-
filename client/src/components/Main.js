@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../assets/style/Main.scss';
 import Header from './Header';
 import Footer from './Footer';
+import * as constants from '../constants/state';
 //import banner from '../assets/img/bg1.png';
 
 class Main extends Component {
@@ -13,17 +14,9 @@ class Main extends Component {
   renderPieceContainer(piece, index, boardName) {
     if (boardName === 'solved') {
       return (
-        <li
-          className="seat-list"
-          key={index}
-          data-id={index}
-        >
+        <li className="seat-list" key={index} data-id={index}>
           {piece && (
-            <img
-              alt="wall"
-              type={piece.type}
-              src={piece.img}
-            />
+            <img alt={constants.TYPE_WALL} type={piece.type} src={piece.img} />
           )}
         </li>
       );
@@ -35,7 +28,10 @@ class Main extends Component {
     return (
       <div className="main-container">
         {this.props.tocken ? (
-          <Header element={this.props.headerElement} tocken={this.props.tocken} />
+          <Header
+            element={this.props.headerElement}
+            tocken={this.props.tocken}
+          />
         ) : (
           <Header element={this.props.headerElement} />
         )}
@@ -48,18 +44,20 @@ class Main extends Component {
         <div className="seats-order">
           <div className="order">
             <ol className="seat">
-                {this.props.seats.map((piece, i) =>
-                  this.renderPieceContainer(piece, i, 'solved')
-                )}
+              {this.props.seats.map((piece, i) =>
+                this.renderPieceContainer(piece, i, 'solved')
+              )}
             </ol>
             <span>
               어서오세요! <br />
-              오늘은&nbsp;&nbsp;
+              오늘은 자리가&nbsp;&nbsp;
               <span className="leftseat-count">{this.props.leftSeat}</span>
-              &nbsp;&nbsp;개의 자리가 <br />
-              비어있어요 <br />
+              &nbsp;&nbsp;개 있어요! <br />
+              <br />
             </span>
-            {this.props.tocken ? (
+            {!this.props.leftSeat ? (
+              <span></span>
+            ) : this.props.tocken ? (
               <a href={orderRoute}>
                 <span>주문하기</span>
               </a>
@@ -68,6 +66,7 @@ class Main extends Component {
                 <span>주문하기</span>
               </a>
             )}
+            {}
           </div>
         </div>
         {/* <div className="main-banner">

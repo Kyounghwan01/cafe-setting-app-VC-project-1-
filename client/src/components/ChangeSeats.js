@@ -15,16 +15,16 @@ class ChangeSeats extends Component {
         {
           img: constants.WALL,
           order: 0,
-          board: 'wall',
-          type: 'wall'
+          board: constants.TYPE_WALL,
+          type: constants.TYPE_WALL
         }
       ],
       table: [
         {
           img: constants.TABLE,
           order: 1,
-          board: 'table',
-          type: 'table',
+          board: constants.TYPE_TABLE,
+          type: constants.TYPE_TABLE,
           sittingTime: null,
           userId: null
         }
@@ -47,7 +47,7 @@ class ChangeSeats extends Component {
     if (!res.data.cafeData) {
       this.setState({ errorMessage: 'unauth' });
     } else {
-      this.setState({ solved: res.data.cafeData[0].arrangemenet });
+      this.setState({ solved: res.data.cafeData.arrangemenet });
     }
   };
 
@@ -95,7 +95,7 @@ class ChangeSeats extends Component {
         >
           {piece && (
             <img
-              alt="wall"
+              alt={constants.TYPE_WALL}
               draggable
               onDragStart={e => this.handleDragStart(e, piece.order)}
               src={piece.img}
@@ -108,7 +108,7 @@ class ChangeSeats extends Component {
         <li key={index}>
           {piece && (
             <img
-              alt="table"
+              alt={constants.TYPE_TABLE}
               draggable
               onDragStart={e => this.handleDragStart(e, piece.order)}
               type={boardName}

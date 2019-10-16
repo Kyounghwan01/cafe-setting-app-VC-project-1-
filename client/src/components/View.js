@@ -34,8 +34,8 @@ class View extends Component {
         this.setState({ errorMessage: 'unauth' });
       } else {
         this.setState({
-          arrange: res.data.cafeData[0].arrangemenet,
-          menuList: res.data.cafeData[0].menu,
+          arrange: res.data.cafeData.arrangemenet,
+          menuList: res.data.cafeData.menu,
           userData: res.data.userData[0]
         });
       }
@@ -94,7 +94,7 @@ class View extends Component {
   choiceSeats = e => {
     if (e.currentTarget.childNodes[0].getAttribute('type') === 'table') {
       let copyData = this.state.arrange;
-      const now = moment(new Date()).format('YYYY-MM-DDTHH:mm');
+      const now = moment(new Date(Date.parse(new Date) + 1000 * 60 * 120)).format('YYYY-MM-DDTHH:mm');
       const initSeats = {
         img:constants.SEATS,
         order: 1,

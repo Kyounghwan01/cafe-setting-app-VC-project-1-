@@ -4,11 +4,12 @@ import { withRouter } from 'react-router-dom';
 import { userReducer, initialState } from '../reducers';
 import * as dispatchFunction from '../actions';
 import axios from 'axios';
+import * as constants from '../constants/state';
 
 const MainContainer = props => {
   const [user, dispatch] = useReducer(userReducer, initialState);
   const [arrangement, setArr] = useState(null);
-  const [leftSeat, setCount] = useState(null);
+  const [leftSeat, setCount] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,12 +45,12 @@ const MainContainer = props => {
     const fetchArr = async () => {
       const res = await axios.get('/api/view');
       if (res.data.cafeData) {
-        setArr(res.data.cafeData[0].arrangemenet);
+        setArr(res.data.cafeData.arrangemenet);
         let count = 0;
-        for (let i = 0; i < res.data.cafeData[0].arrangemenet.length; i++) {
+        for (let i = 0; i < res.data.cafeData.arrangemenet.length; i++) {
           if (
-            res.data.cafeData[0].arrangemenet[i] &&
-            res.data.cafeData[0].arrangemenet[i].order === 1
+            res.data.cafeData.arrangemenet[i] &&
+            res.data.cafeData.arrangemenet[i].type === constants.TYPE_TABLE
           ) {
             count++;
           }
@@ -59,15 +60,15 @@ const MainContainer = props => {
     };
     fetchArr();
     fetchData();
-    return(()=>{
+    return () => {
       fetchArr();
       fetchData();
-    })
-  }, [props.location.search]);
+    };
+  }, [props.location]);
 
   return (
     <>
-      {arrangement && leftSeat? (
+      {arrangement ? (
         <Main
           headerElement={user.headerElement}
           tocken={props.location.search}

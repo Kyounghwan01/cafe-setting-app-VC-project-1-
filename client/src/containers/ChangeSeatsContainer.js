@@ -14,7 +14,7 @@ const ChangeSeatsContainer = props => {
       );
       if (res.data.cafeData) {
         console.log(res.data.cafeData);
-        setArr(res.data.cafeData[0].arrangemenet);
+        setArr(res.data.cafeData.arrangemenet);
       }
     };
     fetchData();
