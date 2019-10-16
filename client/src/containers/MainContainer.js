@@ -10,6 +10,7 @@ const MainContainer = props => {
   const [user, dispatch] = useReducer(userReducer, initialState);
   const [arrangement, setArr] = useState(null);
   const [leftSeat, setCount] = useState(0);
+  const [userId, setUserId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,8 +44,26 @@ const MainContainer = props => {
     };
 
     const fetchArr = async () => {
-      const res = await axios.get('/api/view');
-      if (res.data.cafeData) {
+      if (!props.location.search) {
+        const res = await axios.get('/api/view');
+        if (res.data.cafeData) {
+          setArr(res.data.cafeData.arrangemenet);
+          let count = 0;
+          for (let i = 0; i < res.data.cafeData.arrangemenet.length; i++) {
+            if (
+              res.data.cafeData.arrangemenet[i] &&
+              res.data.cafeData.arrangemenet[i].type === constants.TYPE_TABLE
+            ) {
+              count++;
+            }
+          }
+          setCount(count);
+        }
+      } else {
+        const res = await axios.get(
+          `/api/view/${props.location.search.substring(1)}`
+        );
+        setUserId(res.data.userData[0]._id);
         setArr(res.data.cafeData.arrangemenet);
         let count = 0;
         for (let i = 0; i < res.data.cafeData.arrangemenet.length; i++) {
@@ -74,6 +93,7 @@ const MainContainer = props => {
           tocken={props.location.search}
           seats={arrangement}
           leftSeat={leftSeat}
+          userId={userId}
         />
       ) : (
         <></>

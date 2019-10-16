@@ -7,7 +7,6 @@ import axios from 'axios';
 import moment from 'moment';
 import * as constants from '../constants/state';
 
-
 class View extends Component {
   constructor(props) {
     super(props);
@@ -16,7 +15,7 @@ class View extends Component {
       menuList: [],
       userData: [],
       initTable: {
-        img:constants.TABLE,
+        img: constants.TABLE,
         order: 1,
         board: 'table',
         type: 'table',
@@ -94,13 +93,14 @@ class View extends Component {
   choiceSeats = e => {
     if (e.currentTarget.childNodes[0].getAttribute('type') === 'table') {
       let copyData = this.state.arrange;
-      const now = moment(new Date(Date.parse(new Date) + 1000 * 60 * 120)).format('YYYY-MM-DDTHH:mm');
+      const nowDates = Date.parse(new Date());
+      const afterTwoHours = moment(new Date(nowDates) + 1000 * 60 * 120).format('YYYY-MM-DDTHH:mm');
       const initSeats = {
-        img:constants.SEATS,
+        img: constants.SEATS,
         order: 1,
         board: 'table',
         type: 'seated',
-        sittingTime: now,
+        sittingTime: afterTwoHours,
         userId: this.state.userData._id
       };
 
@@ -110,24 +110,24 @@ class View extends Component {
           this.state.arrange[i].userId === this.state.userData._id
         ) {
           copyData[i] = this.state.initTable;
-          this.setState({arrange : copyData});
+          this.setState({ arrange: copyData });
         }
       }
 
       copyData[e.currentTarget.getAttribute('data-id')] = initSeats;
-      this.setState({arrange : copyData});
+      this.setState({ arrange: copyData });
     }
   };
 
   submitSeat = async () => {
-    try{
+    try {
       await axios.post(`/api/seats/${this.props.tocken.substring(1)}`, {
         cafeArrange: this.state.arrange
       });
-    } catch (e){
+    } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   render() {
     return (

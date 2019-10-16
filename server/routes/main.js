@@ -30,4 +30,9 @@ router.post('/cafes/seats/:id', verifyToken, changeSeats);
 
 router.post('/seats/:id', verifyToken, choiceSeat);
 
+router.post('/extend/:id', verifyToken, async (req, res, next) => {
+  console.log(req.body);
+  res.send({value:'qwe'});
+})
+
 module.exports = router;
