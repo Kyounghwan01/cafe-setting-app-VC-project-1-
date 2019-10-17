@@ -5,6 +5,7 @@ import axios from 'axios';
 
 const ChangeSeatsContainer = props => {
   const [arrangement, setArr] = useState(null);
+  const [category, setCategory] = useState([]);
 
   useEffect(() => {
     props.checkUser(props.location.search);
@@ -13,7 +14,6 @@ const ChangeSeatsContainer = props => {
         `/api/view/${props.location.search.substring(1)}`
       );
       if (res.data.cafeData) {
-        console.log(res.data.cafeData);
         setArr(res.data.cafeData.arrangemenet);
       }
     };
@@ -29,7 +29,7 @@ const ChangeSeatsContainer = props => {
         <Redirect to="/" />
       ) : (
         <ChangeSeats
-          headerElement={['MAIN', 'CHANGE-MENU', 'Order/SEATS', 'LOG-OUT']}
+          headerElement={['MAIN', 'CHANGE-MENU', 'ORDER/SEATS', 'LOG-OUT']}
           tocken={props.location.search}
           arrangeMent={arrangement}
         />

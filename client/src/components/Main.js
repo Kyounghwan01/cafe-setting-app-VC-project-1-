@@ -12,7 +12,7 @@ class Main extends Component {
     super(props);
     console.log(this.props);
     this.state = {
-      expireTime: null
+      extendTime: { time: null, arrangeIndex: null }
     };
   }
 
@@ -27,9 +27,14 @@ class Main extends Component {
                 alt={constants.TYPE_WALL}
                 type={piece.type}
                 src={constants.MY_SEATS}
-                onClick={() => {
+                onClick={e => {
                   this.setState({
-                    expireTime: this.props.seats[index].sittingTime
+                    extendTime: {
+                      time: this.props.seats[index].sittingTime,
+                      arrangeIndex: e.currentTarget.parentNode.getAttribute(
+                        'data-id'
+                      )
+                    }
                   });
                 }}
               />
@@ -47,10 +52,14 @@ class Main extends Component {
     }
   }
 
-  async extendTime(that){
-    const a = await axios.post(`/api/extend/${that.props.tocken.substring(1)}`,{
-      value : 'qweklawemaweaw'
-    });
+  async extendTimes(that) {
+    const a = await axios.post(
+      `/api/extend/${that.props.tocken.substring(1)}`,
+      {
+        //시간연장
+        index: this.state.extendTime.arrangeIndex
+      }
+    );
     console.log(a);
   }
 
@@ -66,7 +75,6 @@ class Main extends Component {
   //     }
   //   }
   // };
-
 
   render() {
     const orderRoute = `/view${this.props.tocken}`;
@@ -88,55 +96,55 @@ class Main extends Component {
             src="http://www.coffeebeankorea.com/data/banner/%EB%A9%94%EC%9D%B8_3.jpg"
           />
         </div>
-        <div className="seats-order">
-          <div className="order">
-            <ol className="seat">
-              {this.props.seats.map((piece, i) =>
-                this.renderPieceContainer(piece, i, 'solved')
-              )}
-            </ol>
-            <div>
-              <span>
-                어서오세요! <br />
-                오늘은 자리가&nbsp;&nbsp;
-                <span className="leftseat-count">{this.props.leftSeat}</span>
-                &nbsp;&nbsp;개 있어요! <br />
-                <br />
-              </span>
-              {this.state.expireTime ? (
-                <div>
-                  <span>
-                    {this.state.expireTime.slice(11)} 까지 이용 가능합니다
-                    <br />
-                  </span>
-                  <span>
-                    이용 종료시간 50분 전부터 <br />
-                    2시간씩 연장 가능 합니다
-                  </span>
-                  {moment
-                    .duration(time.diff(this.state.expireTime))
-                    .asMinutes() > -50 ? (
-                    <div
-                      onClick={()=>{this.extendTime(that)}}
-                    >
-                      연장하기
-                    </div>
-                  ) : null}
-                </div>
-              ) : null}
-            </div>
-            {!this.props.leftSeat ? (
-              <span></span>
-            ) : this.props.tocken ? (
-              <a href={orderRoute}>
-                <span>주문하기</span>
-              </a>
-            ) : (
-              <a href="/login">
-                <span>주문하기</span>
-              </a>
+        <div className="content">
+          <ol className="seat">
+            {this.props.seats.map((piece, i) =>
+              this.renderPieceContainer(piece, i, 'solved')
             )}
+          </ol>
+          <div className="content-desc">
+            <span>
+              어서오세요! <br />
+              오늘은 자리가&nbsp;&nbsp;
+              <span className="leftseat-count">{this.props.leftSeat}</span>
+              &nbsp;&nbsp;개 있어요! <br />
+              <br />
+            </span>
+            {this.state.extendTime.time ? (
+              <div>
+                <span>
+                  {this.state.extendTime.time.slice(11)} 까지 이용 가능합니다
+                  <br />
+                </span>
+                <span>
+                  이용 종료시간 50분 전부터 <br />
+                  2시간씩 연장 가능 합니다
+                </span>
+                {moment
+                  .duration(time.diff(this.state.extendTime.time))
+                  .asMinutes() > -50 ? (
+                  <div
+                    onClick={() => {
+                      this.extendTimes(that);
+                    }}
+                  >
+                    연장하기
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
           </div>
+          {!this.props.leftSeat ? (
+            <span></span>
+          ) : this.props.tocken ? (
+            <a href={orderRoute}>
+              <span>주문하기</span>
+            </a>
+          ) : (
+            <a href="/login">
+              <span>주문하기</span>
+            </a>
+          )}
         </div>
         {/* <div className="main-banner">
         <img src={banner} />

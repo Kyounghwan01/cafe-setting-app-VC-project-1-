@@ -9,12 +9,14 @@ const {
   changeSeats,
   sendCafeData,
   sendCafeDataToAll,
-  choiceSeat
+  choiceSeat,
+  extendTime
 } = require('./controllers/seat.controllers');
 const { verifyToken } = require('./middleware/auth');
 const Cafes = require('../models/Cafes');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
+var moment = require('moment');
 
 router.get('/view', sendCafeDataToAll);
 
@@ -30,9 +32,8 @@ router.post('/cafes/seats/:id', verifyToken, changeSeats);
 
 router.post('/seats/:id', verifyToken, choiceSeat);
 
-router.post('/extend/:id', verifyToken, async (req, res, next) => {
-  console.log(req.body);
-  res.send({value:'qwe'});
-})
+router.post('/extend/:id', verifyToken, extendTime);
+
+// router.get()
 
 module.exports = router;

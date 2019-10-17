@@ -93,8 +93,7 @@ class View extends Component {
   choiceSeats = e => {
     if (e.currentTarget.childNodes[0].getAttribute('type') === 'table') {
       let copyData = this.state.arrange;
-      const nowDates = Date.parse(new Date());
-      const afterTwoHours = moment(new Date(nowDates) + 1000 * 60 * 120).format('YYYY-MM-DDTHH:mm');
+      const afterTwoHours = moment(Date.parse(new Date()) + 1000 * 60 * 120).format('YYYY-MM-DDTHH:mm');
       const initSeats = {
         img: constants.SEATS,
         order: 1,

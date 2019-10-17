@@ -1,0 +1,21 @@
+.fa {
+  font-size: 18px;
+  padding: 2px 4px;
+}
+ul {
+  list-style: none;
+  padding: 6px 20px;
+  li.open {
+    > .fa:before {
+      content: '\f0d7';
+    }
+  }
+  li.close {
+    > .fa:before {
+      content: '\f0da';
+    }
+    ul {
+      display: none;
+    }
+  }
+}

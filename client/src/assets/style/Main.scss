@@ -14,13 +14,11 @@
       width: 100%;
     }
   }
-  .seats-order {
+  .content {
     width: 100%;
-    background-color: white;
-    .order {
-      width: 100%;
-      display: flex;
-      background-color: rgb(240, 233, 223);
+    display: flex;
+    background-color: rgb(240, 233, 223);
+    .content-desc{
       span {
         font-family: 'Sunflower', sans-serif;
         font-size: 20px;
@@ -29,84 +27,85 @@
         font-size: 30px;
         font-weight: bold;
       }
-      a {
-        border: 2px solid black;
-        border-radius: 5px;
-        background: none;
-        height: 50px;
-        width: 90px;
-        text-decoration: none;
-        color: black;
-        text-align: center;
-        line-height: 50px;
-        span {
-          font-size: 16px;
-          font-weight: bold;
-        }
-      }
-      a:focus {
-        outline: none;
-      }
-      a:hover {
-        cursor: pointer;
-        background: black;
-        color: white;
-        transition: 0.5s;
-      }
-
-      .seat {
-        position: relative;
-        background-size: cover;
-        margin: 20px auto;
-        width: 570px;
-        list-style-type: none;
-        padding: 0;
-        font-size: 0;
-        border: 1px solid #ddd;
-        background-color: rgba(255, 255, 255, 0.6);
-        .seat-list {
-          text-align: left;
-          display: inline-block;
-          width: 49px;
-          height: 49px;
-          border: 1px solid #ddd;
-          border-radius: 5px;
-          margin: 3px;
-          .my-seat {
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            border-radius: 5px;
-            cursor: pointer;
-          }
-          .other {
-            width: 50px;
-            height: 50px;
-            position: absolute;
-            border-radius: 5px;
-          }
-        }
+    }
+    a {
+      border: 2px solid black;
+      border-radius: 5px;
+      background: none;
+      height: 50px;
+      width: 90px;
+      text-decoration: none;
+      color: black;
+      text-align: center;
+      line-height: 50px;
+      span {
+        font-size: 16px;
+        font-weight: bold;
       }
     }
-  }
-  .main-announce {
-    background-color: #fff;
-    width: 100%;
-    height: 500px;
-    position: relative;
-    .announce {
-      background: url('https://image.istarbucks.co.kr/upload/common/img/main/2019/19_autumn2_fav.png')
-        no-repeat;
-      height: 500px;
-      span {
-        position: absolute;
-        bottom: 22%;
-        left: 65%;
-        font-family: 'Noto Sans KR', sans-serif;
+    a:focus {
+      outline: none;
+    }
+    a:hover {
+      cursor: pointer;
+      background: black;
+      color: white;
+      transition: 0.5s;
+    }
+
+    .seat {
+      position: relative;
+      background-size: cover;
+      margin: 20px auto;
+      width: 570px;
+      list-style-type: none;
+      padding: 0;
+      font-size: 0;
+      border: 1px solid #ddd;
+      background-color: rgba(255, 255, 255, 0.6);
+      .seat-list {
+        text-align: left;
+        display: inline-block;
+        width: 49px;
+        height: 49px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        margin: 3px;
+        .my-seat {
+          width: 50px;
+          height: 50px;
+          position: absolute;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        .other {
+          width: 50px;
+          height: 50px;
+          position: absolute;
+          border-radius: 5px;
+        }
       }
     }
   }
 }
+.main-announce {
+  background-color: #fff;
+  width: 100%;
+  height: 500px;
+  position: relative;
+  .announce {
+    background: url('https://image.istarbucks.co.kr/upload/common/img/main/2019/19_autumn2_fav.png')
+      no-repeat;
+    height: 500px;
+    span {
+      position: absolute;
+      bottom: 22%;
+      left: 65%;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+  }
+}
+
 .empty {
   height: 30px;
   width: 100%;

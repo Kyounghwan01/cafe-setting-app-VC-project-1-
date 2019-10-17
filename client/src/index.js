@@ -1,5 +1,6 @@
 import React, { useReducer } from 'react';
 import ReactDOM from 'react-dom';
+import './App.scss';
 import axios from 'axios';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -9,8 +10,9 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MainContainer from '../src/containers/MainContainer';
 import Login from '../src/components/Login';
 import Signup from '../src/components/Signup';
+import ChangeMenuContainer from '../src/containers/ChangeMenuContainer';
 import ViewContainer from '../src/containers/ViewContainer';
-import ChangeSeats from '../src/containers/ChangeSeatsContainer';
+import ChangeSeatsContainer from '../src/containers/ChangeSeatsContainer';
 import ErrorPage from './components/ErrorPage';
 
 const App = () => {
@@ -43,12 +45,17 @@ const App = () => {
             exact
             path="/change/seats"
             render={props => (
-              <ChangeSeats {...props} checkUser={checkUser} user={user} />
+              <ChangeSeatsContainer {...props} checkUser={checkUser} user={user} />
+            )}
+          />
+          <Route exact path="/change/menu" render={props => (
+              <ChangeMenuContainer {...props} checkUser={checkUser} user={user} />
             )}
           />
           <Route exact path="/error" render={props => (
               <ErrorPage {...props} checkUser={checkUser} user={user} />
-            )} />
+            )}
+          />
           <Route render={props => (
               <ErrorPage {...props} errorstatus='404' />
             )} />
