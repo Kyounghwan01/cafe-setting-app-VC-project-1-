@@ -7,7 +7,6 @@ var cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
 var mainRouter = require('./routes/main');
-// const viewRouter = require('./routes/view');
 var morgan = require('morgan');
 require('dotenv').config();
 const app = express();

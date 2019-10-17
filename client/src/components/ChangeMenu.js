@@ -5,72 +5,85 @@ import Footer from './Footer';
 import '../assets/style/ChangeMenu.scss';
 import axios from 'axios';
 import * as constants from '../constants/state';
-import { FaAngleDown, FaAngleRight } from "react-icons/fa";
+import MenuTree from '../components/MenuTree';
 
 export default class ChangeMenu extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
+    this.state = {
+      createModal: false
+    };
+  }
+  componentDidUpdate() {
+    console.log(this.props.category);
   }
 
-  render(){
-    return(
+  render() {
+    const url = `/api/cafes/menu/new/${this.props.tocken.substring(1)}`;
+    return (
       <div>
-        <Header
-          element={this.props.headerElement}
-          tocken={this.props.tocken}
-        />
+        <Header element={this.props.headerElement} tocken={this.props.tocken} />
         <div>
           메뉴 바꾸는 컴포넌트
-          {
-            this.props.listData ? <TreeNode node={this.props.listData}/> : null
-          }
+          {this.props.listData && this.props.tocken ? (
+            <div>
+              <button
+                onClick={() => {
+                  if (this.state.createModal) {
+                    this.setState({ createModal: false });
+                  } else {
+                    this.setState({
+                      createModal: {
+                        name: null,
+                        price: null,
+                        category: null
+                      }
+                    });
+                  }
+                }}
+              >
+                {this.state.createModal ? '취소' : '추가'}
+              </button>
+              {this.state.createModal ? (
+                <div>
+                  <form action={url} method="POST">
+                    <label>메뉴명</label>
+                    <input
+                      type="text"
+                      required
+                      autoFocus
+                      name="name"
+                      ref={this.name}
+                      placeholder="메뉴명을 입력해주세요"
+                    />
+                    <label>가격</label>
+                    <input
+                      type="number"
+                      required
+                      autoFocus
+                      name="price"
+                      ref={this.price}
+                      placeholder="가격을 숫자만 입력해주세요"
+                    />
+                    <label>카테고리</label>
+                    <input
+                      type="text"
+                      required
+                      autoFocus
+                      name="category"
+                      ref={this.category}
+                      placeholder="카테고리를 입력해주세요"
+                    />
+                    <input type="submit" value="바꾸기" />
+                  </form>
+                </div>
+              ) : null}
+              <MenuTree tocken={this.props.tocken} node={this.props.listData} />
+            </div>
+          ) : null}
         </div>
-        <Footer/>
+        <Footer />
       </div>
-    )
-  }
-}
-
-
-class TreeNode extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = props.node;
-  }
-
-  openList = () =>{
-    let newState = Object.assign({}, this.state);
-    newState.state = this.state.state === 'open' ? 'close' : 'open';
-    this.setState(newState);
-  }
-  
-  changeOpenClose = (list) => {
-    if(list && list.children && list.children.length > 0){
-      return list.state === 'open' ? 'open' : 'close';
-    }
-  }
-  
-  render(){
-    let list = this.state.children || [];
-    let children = list.map((n, idx)=><TreeNode node={n} key={idx}/>);
-    if(children.length > 0){
-      children = <ul>{children}</ul>
-    }
-    return (
-        <li className={this.changeOpenClose(this.state)}>
-          <i className="fa" onClick={this.openList}></i>
-          <label onClick={(e)=>{console.log(e.currentTarget)}}>
-            {this.state.label}
-            {
-              this.state.price ?
-              <div>
-                {this.state.price}
-                <button>수정</button>
-              </div> : null
-            }
-          </label>
-          {children}
-        </li>
-      );
+    );
   }
 }

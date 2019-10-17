@@ -6,6 +6,7 @@ import axios from 'axios';
 const ChangeMenuContainer = props => {
   const [arrangement, setArr] = useState(null);
   const [listData, setlistData] = useState(null);
+  const [category, setCategory] = useState(null);
 
   useEffect(() => {
     props.checkUser(props.location.search);
@@ -18,7 +19,7 @@ const ChangeMenuContainer = props => {
         setArr(res.data.cafeData.arrangemenet);
         let copyMenu = {};
         for (let i = 0; i < res.data.cafeData.menu.length; i++) {
-          const { name, price } = res.data.cafeData.menu[i];
+          const { name, price, _id } = res.data.cafeData.menu[i];
           if (
             Object.keys(copyMenu).indexOf(
               res.data.cafeData.menu[i].category
@@ -27,32 +28,37 @@ const ChangeMenuContainer = props => {
             copyMenu[res.data.cafeData.menu[i].category] = [
               {
                 label: name,
-                price
+                price,
+                id : _id
               }
             ];
           } else {
             copyMenu[res.data.cafeData.menu[i].category].push({
               label: name,
-              price
+              price,
+              id : _id
             });
           }
         }
 
         let copyData = [];
         for (let i = 0; i < Object.keys(copyMenu).length; i++) {
-          if (res.data.categoryData[i]._id === Object.keys(copyMenu)[i]) {
-            copyData.push({
-              label: res.data.categoryData[i].name,
-              children: copyMenu[Object.keys(copyMenu)[i]]
-            });
-          }
+          let findId = res.data.categoryData.findIndex(item => {
+            return item._id === Object.keys(copyMenu)[i];
+          });
+          copyData.push({
+            label: res.data.categoryData[findId].name,
+            children: copyMenu[Object.keys(copyMenu)[i]]
+          });
         }
+
         let listData = {
           label: 'menu-list',
           state: 'open',
           children: copyData
         };
         setlistData(listData);
+        setCategory(res.data.categoryData);
       }
     };
 
@@ -72,6 +78,7 @@ const ChangeMenuContainer = props => {
           tocken={props.location.search}
           arrangeMent={arrangement}
           listData={listData}
+          category={category}
         />
       )}
     </>

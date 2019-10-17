@@ -34,6 +34,22 @@ router.post('/seats/:id', verifyToken, choiceSeat);
 
 router.post('/extend/:id', verifyToken, extendTime);
 
-// router.get()
+router.post('/cafes/menu/:id', verifyToken, async (req, res, next) => {
+  const changeData = await Cafes.findOne({});
+  changeData.menu.map(el => {
+    if (el.id === req.body.id) {
+      el.name = req.body.name;
+      el.price = req.body.price;
+    }
+  });
+  await changeData.save();
+  res.send({ value: 'awdawd' });
+});
+
+router.post('/cafes/menu/new/:id', verifyToken, async(req, res, next)=>{
+  console.log(req.body);
+  res.redirect(`/${req.params.id}`);
+
+})
 
 module.exports = router;

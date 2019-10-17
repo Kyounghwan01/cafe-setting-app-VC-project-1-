@@ -15,7 +15,6 @@
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
-    "react-simple-tree-menu": "^1.1.6",
     "react-sortablejs": "^1.5.1",
     "redux": "^4.0.4",
     "sortablejs": "1.6.1"
