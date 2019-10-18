@@ -25,3 +25,4 @@ yarn-error.log*
 .vscode
 .react-sortablejs-master.zip
 yarn.lock
+.env

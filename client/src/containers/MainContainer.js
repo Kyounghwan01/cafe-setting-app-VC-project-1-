@@ -63,6 +63,7 @@ const MainContainer = props => {
         const res = await axios.get(
           `/api/view/${props.location.search.substring(1)}`
         );
+        //header에 Authorization키로 value : Bearer {TOKEN}
         setUserId(res.data.userData[0]._id);
         setArr(res.data.cafeData.arrangemenet);
         let count = 0;

@@ -53,7 +53,7 @@ router.post('/cafes/menu/new/:id', verifyToken, async (req, res, next) => {
   const cafes = await Cafes.findOne({});
   const category = await Category.find({});
   let price = Math.floor(req.body.price / 100) * 100;
-
+  console.log(req.body);
   let answer = -1;
   for (let i = 0; i < category.length; i++) {
     if (category[i].name.indexOf(req.body.category) !== -1) {
@@ -106,7 +106,7 @@ router.delete('/cafes/menu/:id', async (req, res, next) => {
       }
     }
     if (result) {
-      await Category.findOneAndDelete({ _id: result });
+      await Category.findByIdAndRemove({ _id: result });
     }
     await changeData.save();
     return res.status(200).send({ status: 'success' });

@@ -46,14 +46,13 @@ export default class ChangeMenu extends Component {
               </button>
               {this.state.createModal ? (
                 <div>
-                  <form action={url} method="POST">
+                  <form action={url} method="POST" >
                     <label>메뉴명</label>
                     <input
                       type="text"
                       required
                       autoFocus
                       name="name"
-                      ref={this.name}
                       placeholder="메뉴명을 입력해주세요"
                     />
                     <label>가격</label>
@@ -63,7 +62,6 @@ export default class ChangeMenu extends Component {
                       required
                       autoFocus
                       name="price"
-                      ref={this.price}
                       placeholder="가격을 100단위로 입력해주세요"
                     />
                     <label>카테고리</label>
@@ -72,7 +70,6 @@ export default class ChangeMenu extends Component {
                       required
                       autoFocus
                       name="category"
-                      ref={this.category}
                       placeholder="카테고리를 입력해주세요"
                     />
                     <input type="submit" value="생성" />
