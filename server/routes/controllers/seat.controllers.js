@@ -95,5 +95,5 @@ exports.extendTime = async (req, res, next) => {
     { $set: { arrangemenet: cafeData.arrangemenet } }
   );
 
-  res.status(200).send({ status: 'success' });
+  res.status(200).send({ status: 'success', hour : afterTwoHours });
 };

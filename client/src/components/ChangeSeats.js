@@ -173,6 +173,12 @@ class ChangeSeats extends Component {
                     <span>테이블</span>
                   </div>
                 </ul>
+                <ul>
+                  <div className="someone-seats" >
+                    <img src={constants.SEATS}/>
+                    <span>앉은 테이블</span>
+                  </div>
+                </ul>
               </div>
               <ol className="drag__solved-board">
                 {this.state.solved.map((piece, i) =>

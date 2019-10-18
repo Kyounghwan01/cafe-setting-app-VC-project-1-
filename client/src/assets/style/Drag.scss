@@ -127,3 +127,36 @@
   transform: scale(1.1);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
 }
+
+.someone-seats{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  img {
+    width: 50px;
+    border-radius: 5px;
+  }
+  span{
+    padding-top: 5px;
+    font-family: 'Sunflower', sans-serif;
+  }
+}
+
+
+.submit {
+  border: 1px solid grey;
+  display: inline-block;
+  padding: 13px 25px;
+  margin: 10px 0 30px 20px;
+  border-radius: 5px;
+  span {
+    font-size: 16px;
+    font-family: 'Sunflower', sans-serif;
+  }
+}
+.submit:hover {
+  cursor: pointer;
+  background-color: black;
+  color: white;
+  transition: 0.3s;
+}

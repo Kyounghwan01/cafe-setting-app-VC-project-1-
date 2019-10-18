@@ -18,6 +18,9 @@ const Category = require('../models/Category');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 var moment = require('moment');
+const aws = require('aws-sdk');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
 
 router.get('/view', sendCafeDataToAll);
 
@@ -43,17 +46,24 @@ router.post('/cafes/menu/:id', verifyToken, async (req, res, next) => {
     if (el.id === req.body.id) {
       el.name = req.body.name;
       el.price = price;
+      el.desc = req.body.desc
     }
   });
   await changeData.save();
   res.send({ value: 'awdawd' });
 });
 
-router.post('/cafes/menu/new/:id', verifyToken, async (req, res, next) => {
+aws.config.update({
+  secretAccessKey: process.env.AWS_SECRET_KEY,
+  accessKeyId: process.env.AWS_ACCESS_KEYID,
+  region: 'ap-northeast-2'
+});
+
+router.post('/cafes/menu/new/:id',upload,async (req, res, next) => {
   const cafes = await Cafes.findOne({});
   const category = await Category.find({});
   let price = Math.floor(req.body.price / 100) * 100;
-  console.log(req.body);
+
   let answer = -1;
   for (let i = 0; i < category.length; i++) {
     if (category[i].name.indexOf(req.body.category) !== -1) {
@@ -64,7 +74,8 @@ router.post('/cafes/menu/new/:id', verifyToken, async (req, res, next) => {
     cafes.menu.push({
       name: req.body.name,
       price: price,
-      category: category[answer]._id
+      category: category[answer]._id,
+      desc : req.body.desc
     });
     await cafes.save();
   } else {
@@ -76,11 +87,11 @@ router.post('/cafes/menu/new/:id', verifyToken, async (req, res, next) => {
     cafes.menu.push({
       name: req.body.name,
       price: price,
-      category: newCategory._id
+      category: newCategory._id,
+      desc : req.body.desc
     });
     await cafes.save();
   }
-  console.log("qwe");
   res.redirect(`/change/menu?${req.params.id}`);
 });
 

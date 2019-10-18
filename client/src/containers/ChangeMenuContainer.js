@@ -19,7 +19,7 @@ const ChangeMenuContainer = props => {
         setArr(res.data.cafeData.arrangemenet);
         let copyMenu = {};
         for (let i = 0; i < res.data.cafeData.menu.length; i++) {
-          const { name, price, _id } = res.data.cafeData.menu[i];
+          const { name, price, _id, desc } = res.data.cafeData.menu[i];
           if (
             Object.keys(copyMenu).indexOf(
               res.data.cafeData.menu[i].category
@@ -29,14 +29,16 @@ const ChangeMenuContainer = props => {
               {
                 label: name,
                 price,
-                id : _id
+                id : _id,
+                desc : desc
               }
             ];
           } else {
             copyMenu[res.data.cafeData.menu[i].category].push({
               label: name,
               price,
-              id : _id
+              id : _id,
+              desc : desc
             });
           }
         }
@@ -53,7 +55,7 @@ const ChangeMenuContainer = props => {
         }
 
         let listData = {
-          label: 'menu-list',
+          label: 'MENU',
           state: 'open',
           children: copyData
         };

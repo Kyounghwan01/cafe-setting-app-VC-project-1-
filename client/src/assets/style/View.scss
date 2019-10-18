@@ -10,14 +10,13 @@
 }
 .view-container {
   width: 100%;
-  // display: flex;
   border-top: 2px solid rgba(238, 238, 238, 0.9);
   .seats-container {
     width: 100%;
-    // border-right: 2px solid rgba(238,238,238,0.9);
+    padding-bottom: 20px;
     .seats-desc {
       width: 100%;
-      padding: 50px 0 0 0;
+      padding: 50px 0 ;
       text-align: center;
       span {
         font-family: 'Sunflower', sans-serif;
@@ -31,11 +30,11 @@
     }
   }
   .menu-container {
+    border-top: 2px solid rgba(238, 238, 238, 0.9);
     width: 100%;
-    // border-right: 2px solid rgba(238,238,238,0.9);
     .menu-desc {
       width: 100%;
-      padding: 50px 0 0 0;
+      padding: 50px 0 ;
       text-align: center;
       span {
         font-family: 'Sunflower', sans-serif;
@@ -46,6 +45,17 @@
       text-align: center;
       padding: 50px 0;
       border-bottom: 2px solid rgba(238, 238, 238, 0.9);
+      background-color: grey;
+      .category{
+        .category-desc{
+          padding: 10px;
+          span{
+            font-size: 30px;
+            font-family: 'Sunflower', sans-serif;
+            font-weight: bold;
+          }
+        }
+      }
     }
   }
 }
@@ -57,7 +67,7 @@
 .drag__solved-board {
   position: relative;
   background-size: cover;
-  margin: 20px auto;
+  margin: 0 auto;
   width: 570px;
   list-style-type: none;
   padding: 0;

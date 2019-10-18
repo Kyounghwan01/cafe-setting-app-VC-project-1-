@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const ChangeSeatsContainer = props => {
   const [arrangement, setArr] = useState(null);
-  const [category, setCategory] = useState([]);
+  //const [category, setCategory] = useState([]);
 
   useEffect(() => {
     props.checkUser(props.location.search);

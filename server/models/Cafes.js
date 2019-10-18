@@ -23,6 +23,9 @@ const cafeSchema = new Schema({
       category: {
         type: Schema.Types.ObjectId,
         required: true
+      },
+      desc:{
+        type : String
       }
     }
   ],

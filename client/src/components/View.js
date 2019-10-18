@@ -47,12 +47,21 @@ class View extends Component {
   }
 
   renderMenu = () => {
-    if (this.state.menuList) {
-      return this.state.menuList.map((el, index) => {
+    if (this.props.listData) {
+      return this.props.listData.map((el, index) => {
         return (
-          <div key={index}>
-            <div>{el.name}</div>
-            <div>{el.price}</div>
+          <div key={index} className="category">
+            <div className="category-desc">
+              <span>{el.category}</span>
+            </div>
+            {el.children.map((me, index) => {
+              return (
+                <div key={index} className="category-menu">
+                  <div><span>{me.name}</span></div>
+                  <div><span>{me.price}원</span></div>
+                </div>
+              );
+            })}
           </div>
         );
       });
@@ -93,7 +102,9 @@ class View extends Component {
   choiceSeats = e => {
     if (e.currentTarget.childNodes[0].getAttribute('type') === 'table') {
       let copyData = this.state.arrange;
-      const afterTwoHours = moment(Date.parse(new Date()) + 1000 * 60 * 120).format('YYYY-MM-DDTHH:mm');
+      const afterTwoHours = moment(
+        Date.parse(new Date()) + 1000 * 60 * 120
+      ).format('YYYY-MM-DDTHH:mm');
       const initSeats = {
         img: constants.SEATS,
         order: 1,

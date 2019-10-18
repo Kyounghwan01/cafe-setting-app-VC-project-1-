@@ -5,12 +5,10 @@ import Footer from './Footer';
 import * as constants from '../constants/state';
 import moment from 'moment';
 import axios from 'axios';
-//import banner from '../assets/img/bg1.png';
 
 class Main extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     this.state = {
       extendTime: { time: null, arrangeIndex: null }
     };
@@ -28,14 +26,13 @@ class Main extends Component {
                 type={piece.type}
                 src={constants.MY_SEATS}
                 onClick={e => {
-                  this.setState({
-                    extendTime: {
-                      time: this.props.seats[index].sittingTime,
-                      arrangeIndex: e.currentTarget.parentNode.getAttribute(
-                        'data-id'
-                      )
-                    }
-                  });
+                  if (!this.state.extendTime.time) {
+                    this.setState({
+                      extendTime: {
+                        time: this.props.seats[index].sittingTime,
+                        arrangeIndex: e.currentTarget.parentNode.getAttribute('data-id')}
+                    });
+                  }
                 }}
               />
             ) : (
@@ -53,28 +50,18 @@ class Main extends Component {
   }
 
   async extendTimes(that) {
-    const a = await axios.post(
+    const extendTimeResult = await axios.post(
       `/api/extend/${that.props.tocken.substring(1)}`,
       {
-        //시간연장
         index: this.state.extendTime.arrangeIndex
       }
     );
-    console.log(a);
+    this.setState({
+      extendTime: {
+        time: extendTimeResult.data.hour
+      }
+    });
   }
-
-  // submitData = async () => {
-  //   if (window.confirm('정말 저장하시겠습니까??')) {
-  //     try {
-  //       await axios.post(`/api/cafes/seats/${this.props.tocken.substring(1)}`, {
-  //         cafeArrange: this.state.solved
-  //       });
-  //       alert('저장되었습니다');
-  //     } catch (e) {
-  //       this.setState({ errorMessage: e.message });
-  //     }
-  //   }
-  // };
 
   render() {
     const orderRoute = `/view${this.props.tocken}`;
@@ -124,9 +111,7 @@ class Main extends Component {
                   .duration(time.diff(this.state.extendTime.time))
                   .asMinutes() > -50 ? (
                   <div
-                    onClick={() => {
-                      this.extendTimes(that);
-                    }}
+                    onClick={() => this.extendTimes(that)}
                   >
                     연장하기
                   </div>
@@ -146,9 +131,6 @@ class Main extends Component {
             </a>
           )}
         </div>
-        {/* <div className="main-banner">
-        <img src={banner} />
-      </div> */}
         <Footer />
       </div>
     );
