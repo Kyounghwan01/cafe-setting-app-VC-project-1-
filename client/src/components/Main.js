@@ -63,6 +63,8 @@ class Main extends Component {
     });
   }
 
+  // https://www.ediya.com/images/menu/bakery_visual.jpg
+
   render() {
     const orderRoute = `/view${this.props.tocken}`;
     const time = moment();

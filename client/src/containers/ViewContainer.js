@@ -6,7 +6,6 @@ import View from '../components/View';
 import axios from 'axios';
 
 const ViewContainer = props => {
-
   const [listData, setlistData] = useState(null);
 
   useEffect(() => {
@@ -20,7 +19,7 @@ const ViewContainer = props => {
       if (res.data.cafeData) {
         let copyMenu = {};
         for (let i = 0; i < res.data.cafeData.menu.length; i++) {
-          const { name, price, _id } = res.data.cafeData.menu[i];
+          const { name, price, _id, desc } = res.data.cafeData.menu[i];
           if (
             Object.keys(copyMenu).indexOf(
               res.data.cafeData.menu[i].category
@@ -30,14 +29,16 @@ const ViewContainer = props => {
               {
                 name: name,
                 price,
-                id : _id
+                id: _id,
+                desc: desc
               }
             ];
           } else {
             copyMenu[res.data.cafeData.menu[i].category].push({
               name: name,
               price,
-              id : _id
+              id: _id,
+              desc : desc
             });
           }
         }
@@ -52,23 +53,20 @@ const ViewContainer = props => {
             children: copyMenu[Object.keys(copyMenu)[i]]
           });
         }
-
-
         setlistData(copyData);
-        console.log(copyData);
       }
     };
 
     fetchData();
 
-    return()=>{
+    return () => {
       fetchData();
-    }
+    };
   }, [props.location.search]);
 
   return (
     <>
-      {props.user.checkUser ?(
+      {props.user.checkUser ? (
         <Redirect to="/" />
       ) : (
         <View

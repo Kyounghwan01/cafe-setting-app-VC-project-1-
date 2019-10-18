@@ -3,142 +3,10 @@ import '../assets/style/View.scss';
 import Header from './Header';
 import Footer from './Footer';
 import { TiShoppingCart } from 'react-icons/ti';
-import axios from 'axios';
-import moment from 'moment';
-import * as constants from '../constants/state';
+import SelectSeat from '../components/SelectSeat';
+import SelectMenu from '../components/SelectMenu';
 
-class View extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      arrange: [],
-      menuList: [],
-      userData: [],
-      initTable: {
-        img: constants.TABLE,
-        order: 1,
-        board: 'table',
-        type: 'table',
-        sittingTime: Date,
-        userId: null
-      }
-    };
-  }
-  componentDidMount() {
-    const fetchTableData = async () => {
-      const res = await axios.get(
-        `/api/view/${this.props.tocken.substring(1)}`
-      );
-      if (!res.data.cafeData) {
-        this.setState({ errorMessage: 'unauth' });
-      } else {
-        this.setState({
-          arrange: res.data.cafeData.arrangemenet,
-          menuList: res.data.cafeData.menu,
-          userData: res.data.userData[0]
-        });
-      }
-    };
-    fetchTableData();
-  }
-
-  componentDidUpdate() {
-    console.log(this.state.arrange);
-  }
-
-  renderMenu = () => {
-    if (this.props.listData) {
-      return this.props.listData.map((el, index) => {
-        return (
-          <div key={index} className="category">
-            <div className="category-desc">
-              <span>{el.category}</span>
-            </div>
-            {el.children.map((me, index) => {
-              return (
-                <div key={index} className="category-menu">
-                  <div><span>{me.name}</span></div>
-                  <div><span>{me.price}원</span></div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      });
-    }
-  };
-
-  renderPieceContainer(piece, index) {
-    return (
-      <li
-        className="seats-list"
-        key={index}
-        data-id={index}
-        onClick={e => {
-          this.choiceSeats(e);
-        }}
-      >
-        {piece ? (
-          piece.type === 'table' ? (
-            <img
-              alt="table"
-              className="table"
-              type={piece.type}
-              src={piece.img}
-            />
-          ) : (
-            <img
-              alt="wall"
-              className="wall"
-              type={piece.type}
-              src={piece.img}
-            />
-          )
-        ) : null}
-      </li>
-    );
-  }
-
-  choiceSeats = e => {
-    if (e.currentTarget.childNodes[0].getAttribute('type') === 'table') {
-      let copyData = this.state.arrange;
-      const afterTwoHours = moment(
-        Date.parse(new Date()) + 1000 * 60 * 120
-      ).format('YYYY-MM-DDTHH:mm');
-      const initSeats = {
-        img: constants.SEATS,
-        order: 1,
-        board: 'table',
-        type: 'seated',
-        sittingTime: afterTwoHours,
-        userId: this.state.userData._id
-      };
-
-      for (let i = 0; i < this.state.arrange.length; i++) {
-        if (
-          this.state.arrange[i] &&
-          this.state.arrange[i].userId === this.state.userData._id
-        ) {
-          copyData[i] = this.state.initTable;
-          this.setState({ arrange: copyData });
-        }
-      }
-
-      copyData[e.currentTarget.getAttribute('data-id')] = initSeats;
-      this.setState({ arrange: copyData });
-    }
-  };
-
-  submitSeat = async () => {
-    try {
-      await axios.post(`/api/seats/${this.props.tocken.substring(1)}`, {
-        cafeArrange: this.state.arrange
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
+export default class View extends Component {
   render() {
     return (
       <div>
@@ -147,31 +15,14 @@ class View extends Component {
         </div>
         <Header element={this.props.headerElement} tocken={this.props.tocken} />
         <div className="view-container">
-          <div className="seats-container">
-            <div className="seats-desc">
-              <span>Step 1. 앉을 자리를 선택해주세요.</span>
-            </div>
-            <ol className="drag__solved-board">
-              {this.state.arrange.map((piece, i) =>
-                this.renderPieceContainer(piece, i)
-              )}
-            </ol>
-            <div onClick={this.submitSeat}>자리 고정</div>
-          </div>
-          <div className="menu-container">
-            <div className="menu-desc">
-              <span>
-                Step 2. 메뉴를 고르시고 오른쪽 하단의 바구니 버튼을
-                클릭해주세요.
-              </span>
-            </div>
-            <div className="menu">{this.renderMenu()}</div>
-          </div>
+          <SelectSeat tocken={this.props.tocken} />
+          <SelectMenu
+            tocken={this.props.tocken}
+            listData={this.props.listData}
+          />
         </div>
         <Footer />
       </div>
     );
   }
 }
-
-export default View;

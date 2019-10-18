@@ -59,7 +59,7 @@ aws.config.update({
   region: 'ap-northeast-2'
 });
 
-router.post('/cafes/menu/new/:id',upload,async (req, res, next) => {
+router.post('/cafes/menu/new/:id',async (req, res, next) => {
   const cafes = await Cafes.findOne({});
   const category = await Category.find({});
   let price = Math.floor(req.body.price / 100) * 100;
