@@ -7,18 +7,15 @@ export default class SelectMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      choiceMenuCategory: 'caffee'
+      choiceMenuCategory: 'coffee'
     };
   }
 
   renderMenu = () => {
-    console.log(this.props.listData);
-    if(this.props.listData){
+    if (this.props.listData) {
       return this.props.listData.map((el, index) => {
-        if(el.category === this.state.choiceMenuCategory){
-          console.log(el);
-          return el.children.map((me, index)=>{
-            console.log(me);
+        if (el.category === this.state.choiceMenuCategory) {
+          return el.children.map((me, index) => {
             return (
               <div key={index} className="category-menu">
                 <div>
@@ -32,17 +29,17 @@ export default class SelectMenu extends Component {
                 </div>
               </div>
             );
-          })
+          });
         }
-    })};}
+      });
+    }
+  };
 
   renderCategory = () => {
-    console.log(this.props.listData);
     return this.props.listData.map((el, index) => {
       return (
         <div
           key={index}
-          className="category-desc"
           data-id={el.category}
           onClick={() => this.renderOtherMeny(el.category)}
         >
@@ -68,11 +65,16 @@ export default class SelectMenu extends Component {
           <div className="menu-selector">
             {this.props.listData ? (
               <>
-                <span>ALWAYS BESIDE YOU, {this.state.choiceMenuCategory}</span>
-                {this.renderCategory()}
+                <span>
+                  ALWAYS BESIDE YOU,{' '}
+                  <span>{this.state.choiceMenuCategory}</span>
+                </span>
+                <div className="category-desc">{this.renderCategory()}</div>
               </>
             ) : (
-              <div>잠시만 기다려 주세요</div>
+              <div className="loading">
+                <span>잠시만 기다려 주세요...</span>
+              </div>
             )}
           </div>
         </div>
