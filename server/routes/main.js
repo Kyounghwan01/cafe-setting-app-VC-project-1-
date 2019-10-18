@@ -80,6 +80,7 @@ router.post('/cafes/menu/new/:id', verifyToken, async (req, res, next) => {
     });
     await cafes.save();
   }
+  console.log("qwe");
   res.redirect(`/change/menu?${req.params.id}`);
 });
 
