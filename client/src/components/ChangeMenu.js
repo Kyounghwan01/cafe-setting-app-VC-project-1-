@@ -24,7 +24,7 @@ export default class ChangeMenu extends Component {
       <div>
         <Header element={this.props.headerElement} tocken={this.props.tocken} />
         <div>
-          메뉴 바꾸는 컴포넌트
+          가격의 100원 이하는 자동 내림 처리됩니다.
           {this.props.listData && this.props.tocken ? (
             <div>
               <button
@@ -59,11 +59,12 @@ export default class ChangeMenu extends Component {
                     <label>가격</label>
                     <input
                       type="number"
+                      step="100"
                       required
                       autoFocus
                       name="price"
                       ref={this.price}
-                      placeholder="가격을 숫자만 입력해주세요"
+                      placeholder="가격을 100단위로 입력해주세요"
                     />
                     <label>카테고리</label>
                     <input
@@ -74,7 +75,7 @@ export default class ChangeMenu extends Component {
                       ref={this.category}
                       placeholder="카테고리를 입력해주세요"
                     />
-                    <input type="submit" value="바꾸기" />
+                    <input type="submit" value="생성" />
                   </form>
                 </div>
               ) : null}

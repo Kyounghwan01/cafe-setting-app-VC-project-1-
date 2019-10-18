@@ -15,14 +15,33 @@ export default class MenuTree extends Component {
     console.log(this.props);
   }
 
-  submit = async () => {
-    const res = await axios.post(`/api/cafes/menu/${window.location.href.slice(34)}`,{
-      name : this.name.current.value,
-      price : this.price.current.value,
-      id : this.state.updateModal.id
-    })
-    console.log(res);
-  }
+  deleteMenu = async deleteId => {
+    await axios.delete(`/api/cafes/menu/${deleteId}`);
+    window.location.reload();
+  };
+
+  menuAndPriceChange = () => {
+    let price = Math.floor(this.price.current.value / 100) * 100;
+    if (
+      window.confirm(
+        `메뉴명 : ${this.name.current.value} 가격 : ${price} 이 맞나요?`
+      )
+    ) {
+      axios.post(`/api/cafes/menu/${window.location.href.slice(34)}`, {
+        name: this.name.current.value,
+        price: price,
+        id: this.state.updateModal.id
+      });
+      this.setState({
+        list: {
+          label: this.name.current.value,
+          price: price
+        }
+      });
+
+      alert('변경되었습니다');
+    }
+  };
 
   openList = () => {
     let newState = Object.assign({}, this.state.list);
@@ -50,7 +69,7 @@ export default class MenuTree extends Component {
             <div data-id={this.state.list.id}>
               <span className="price">{this.state.list.price}</span>
               <button
-                onClick={ () => {
+                onClick={() => {
                   if (this.state.updateModal) {
                     this.setState({ updateModal: false });
                   } else {
@@ -58,7 +77,7 @@ export default class MenuTree extends Component {
                       updateModal: {
                         name: this.state.list.label,
                         price: this.state.list.price,
-                        id : this.state.list.id
+                        id: this.state.list.id
                       }
                     });
                   }
@@ -66,27 +85,44 @@ export default class MenuTree extends Component {
               >
                 {this.state.updateModal ? '취소' : '수정'}
               </button>
+              <button
+                onClick={e => {
+                  if (window.confirm('정말 삭제하시겠습니까?')) {
+                    this.deleteMenu(
+                      e.currentTarget.parentNode.getAttribute('data-id')
+                    );
+                    alert('삭제되었습니다');
+                  }
+                }}
+              >
+                삭제
+              </button>
             </div>
           ) : null}
           {this.state.updateModal ? (
             <div>
-                <label>{this.state.updateModal.name}</label>
-                <input
-                  type="text"
-                  required
-                  autoFocus
-                  ref={this.name}
-                  defaultValue={this.state.updateModal.name}
-                />
-                <label>{this.state.updateModal.price}</label>
-                <input
-                  type="number"
-                  required
-                  autoFocus
-                  ref={this.price}
-                  defaultValue={this.state.updateModal.price}
-                />
-                <input type="submit" onClick={this.submit} value="바꾸기" />
+              <label>{this.state.updateModal.name}</label>
+              <input
+                type="text"
+                required
+                autoFocus
+                ref={this.name}
+                defaultValue={this.state.updateModal.name}
+              />
+              <label>{this.state.updateModal.price}</label>
+              <input
+                type="number"
+                step="100"
+                required
+                autoFocus
+                ref={this.price}
+                defaultValue={this.state.updateModal.price}
+              />
+              <input
+                type="submit"
+                onClick={this.menuAndPriceChange}
+                value="바꾸기"
+              />
             </div>
           ) : null}
         </label>
