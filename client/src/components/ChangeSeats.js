@@ -175,7 +175,7 @@ class ChangeSeats extends Component {
                 </ul>
                 <ul>
                   <div className="someone-seats" >
-                    <img src={constants.SEATS}/>
+                    <img alt="seat-table" src={constants.SEATS}/>
                     <span>앉은 테이블</span>
                   </div>
                 </ul>

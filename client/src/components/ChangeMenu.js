@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 import Header from './Header';
 import Footer from './Footer';
 import '../assets/style/ChangeMenu.scss';
-import * as constants from '../constants/state';
 import MenuTree from '../components/MenuTree';
 
 export default class ChangeMenu extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     const url = `/api/cafes/menu/new/${this.props.tocken.substring(1)}`;

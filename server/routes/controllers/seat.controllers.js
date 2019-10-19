@@ -2,7 +2,6 @@ const User = require('../../models/User');
 const Cafes = require('../../models/Cafes');
 const Category = require('../../models/Category');
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 var moment = require('moment');
 
 exports.changeSeats = async (req, res, next) => {
@@ -39,7 +38,6 @@ exports.sendCafeData = async (req, res, next) => {
 };
 
 exports.sendCafeDataToAll = async (req, res, next) => {
-  //개선 : 여기서는 보여주기만 하고 데이터를 넘기면 넘긴 데이터를 기반으로 시간체크해서 된 데이터를 프론트로 넘기는거
   try {
     const cafeData = await Cafes.findOne({});
 

@@ -91,15 +91,37 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
-      justify-content: space-between;
-      padding: 30px 200px;
+      justify-content: flex-start;
+      padding: 35px 210px;
       .category-menu {
-        background-color: whitesmoke;
+        border: 2px solid whitesmoke;
         margin: 10px;
         padding: 10px;
         width: 210px;
         height: 280px;
         border-radius: 5px;
+        .category-menu-name {
+          font-size: 20px;
+          font-weight: bold;
+          padding: 20px 0;
+          text-align: center;
+          border-bottom: 2px solid black;
+        }
+        .category-menu-price {
+          padding-top: 30px;
+          float: right;
+        }
+        .category-menu-desc {
+          padding-top: 30px;
+          word-break: keep-all;
+          font-family: 'Sunflower', sans-serif;
+        }
+      }
+      .category-menu:hover {
+        background: whitesmoke;
+        cursor: pointer;
+        transform: scale(1.02);
+        transition: 0.25s;
       }
     }
   }
@@ -128,12 +150,30 @@
   border: 1px solid #ddd;
   border-radius: 5px;
   margin: 3px;
-  .table {
+  .seat-number {
+    padding: 5px 5px;
+    position: absolute;
+    p{
+      font-size: 13px;
+    }
+  }
+  img {
     width: 50px;
     height: 50px;
     position: absolute;
     border-radius: 5px;
     cursor: pointer;
+  }
+  .table {
+    .table-image-conatiner{
+      img {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+    }
   }
   .wall {
     width: 50px;

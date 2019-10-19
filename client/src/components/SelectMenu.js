@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import * as constants from '../constants/state';
-import axios from 'axios';
 import '../assets/style/View.scss';
 
 export default class SelectMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      choiceMenuCategory: 'coffee'
+      choiceMenuCategory: 'tea'
     };
   }
 
@@ -17,19 +15,21 @@ export default class SelectMenu extends Component {
         if (el.category === this.state.choiceMenuCategory) {
           return el.children.map((me, index) => {
             return (
-              <div key={index} className="category-menu">
-                <div>
+              <div key={index} className="category-menu" onClick={() => console.log(me.id)}>
+                <div className="category-menu-name">
                   <span>{me.name}</span>
                 </div>
-                <div>
-                  <span>{me.price}원</span>
-                </div>
-                <div>
+                <div className="category-menu-desc">
                   <span>{me.desc}</span>
+                </div>
+                <div className="category-menu-price">
+                  <span>{me.price}₩</span>
                 </div>
               </div>
             );
           });
+        } else {
+          return null;
         }
       });
     }
