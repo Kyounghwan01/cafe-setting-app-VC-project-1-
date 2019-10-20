@@ -5,6 +5,8 @@ export const MY_SEATS = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhC
 
 export const TYPE_TABLE = 'table';
 export const TYPE_WALL = 'wall';
+export const TYPE_SOLVED = 'solved';
+export const TYPE_SEATED = 'seated';
 
 export const ROUTE_SIGN_IN = 'SIGN-IN';
 export const ROUTE_MAIN = 'MAIN';
@@ -13,3 +15,26 @@ export const ROUTE_LOG_OUT = 'LOG-OUT';
 export const ROUTE_ORDER = 'ORDER';
 export const ROUTE_CHANGE_SEATS = 'CHANGE-SEATS';
 export const ROUTE_CHANGE_MENU = 'CHANGE-MENU';
+
+export const INIT_TABLE = {
+  img : TABLE,
+  order: 1,
+  board: TYPE_TABLE,
+  type: TYPE_TABLE,
+  sittingTime: null,
+  userId: null
+}
+export const CHANGE_INIT_WALL_STATE=[{
+  img: WALL,
+  order: 0,
+  board: TYPE_WALL,
+  type: TYPE_WALL
+}]
+export const CHANGE_INIT_TABLE_STATE=[{
+  img: TABLE,
+  order: 1,
+  board: TYPE_TABLE,
+  type: TYPE_TABLE,
+  sittingTime: null,
+  userId: null
+}]

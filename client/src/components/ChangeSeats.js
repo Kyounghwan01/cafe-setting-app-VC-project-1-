@@ -11,24 +11,8 @@ class ChangeSeats extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      wall: [
-        {
-          img: constants.WALL,
-          order: 0,
-          board: constants.TYPE_WALL,
-          type: constants.TYPE_WALL
-        }
-      ],
-      table: [
-        {
-          img: constants.TABLE,
-          order: 1,
-          board: constants.TYPE_TABLE,
-          type: constants.TYPE_TABLE,
-          sittingTime: null,
-          userId: null
-        }
-      ],
+      wall: constants.CHANGE_INIT_WALL_STATE,
+      table: constants.CHANGE_INIT_TABLE_STATE,
       solved: [],
       errorMessage: null
     };
@@ -78,7 +62,7 @@ class ChangeSeats extends Component {
   }
 
   renderPieceContainer(piece, index, boardName) {
-    if (boardName === 'solved') {
+    if (boardName === constants.TYPE_SOLVED) {
       return (
         <li
           key={index}
@@ -158,7 +142,7 @@ class ChangeSeats extends Component {
                 <div className="drag-non-space">
                   <ul className="drag__wall-board">
                     {this.state.wall.map((piece, i) =>
-                      this.renderPieceContainer(piece, i, 'wall')
+                      this.renderPieceContainer(piece, i, constants.TYPE_WALL)
                     )}
                     <div>
                       <span>쓰지않는 공간</span>
@@ -167,7 +151,7 @@ class ChangeSeats extends Component {
                 </div>
                 <ul className="drag__table-board">
                   {this.state.table.map((piece, i) =>
-                    this.renderPieceContainer(piece, i, 'table')
+                    this.renderPieceContainer(piece, i, constants.TYPE_TABLE)
                   )}
                   <div>
                     <span>테이블</span>
@@ -182,7 +166,7 @@ class ChangeSeats extends Component {
               </div>
               <ol className="drag__solved-board">
                 {this.state.solved.map((piece, i) =>
-                  this.renderPieceContainer(piece, i, 'solved')
+                  this.renderPieceContainer(piece, i, constants.TYPE_SOLVED)
                 )}
               </ol>
               <div className="submit" onClick={this.submitData}>

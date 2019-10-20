@@ -4,7 +4,6 @@ import axios from 'axios';
 import moment from 'moment';
 import * as constants from '../constants/state';
 import { TiShoppingCart } from 'react-icons/ti';
-import ShppingCart from './ShoppingCart';
 import ShoppingCart from './ShoppingCart';
 
 export default class SelectOrder extends Component {
@@ -16,14 +15,7 @@ export default class SelectOrder extends Component {
       choiceMenuCategory: 'tea',
       orderList: { seatNumber: null, order: [], open: false },
       orderDetail: { order: null, open: false },
-      initTable: {
-        img: constants.TABLE,
-        order: 1,
-        board: 'table',
-        type: 'table',
-        sittingTime: Date,
-        userId: null
-      }
+      initTable: constants.INIT_TABLE
     };
   }
 
@@ -42,9 +34,6 @@ export default class SelectOrder extends Component {
       }
     };
     fetchTableData();
-  }
-  componentDidUpdate() {
-    console.log(this.state.orderDetail);
   }
 
   renderPieceContainer(piece, index) {
@@ -90,7 +79,7 @@ export default class SelectOrder extends Component {
     //자리 고르기
     if (
       e.currentTarget.childNodes[0].childNodes[0].getAttribute('type') ===
-      'table'
+      constants.TYPE_TABLE
     ) {
       let seatChangeToDB = this.state.arrange;
       let seatChangeToShoppingCart = this.state.orderList;
@@ -100,8 +89,8 @@ export default class SelectOrder extends Component {
       const initSeats = {
         img: constants.SEATS,
         order: 1,
-        board: 'table',
-        type: 'seated',
+        board: constants.TYPE_TABLE,
+        type: constants.TYPE_SEATED,
         sittingTime: afterTwoHours,
         userId: this.state.userData._id
       };
@@ -275,7 +264,6 @@ export default class SelectOrder extends Component {
             <div className="order-content">
               {orderDetail.order.name}
               {orderDetail.order.price}
-              {orderDetail.order.count}
               <input
                 type="number"
                 name="count"
@@ -315,6 +303,8 @@ export default class SelectOrder extends Component {
             <ShoppingCart
               order={this.state.orderList.order}
               seatNumber={this.state.orderList.seatNumber}
+              tocken={this.props.tocken}
+              cafeArrange={this.state.arrange}
             />
           </div>
         ) : null}

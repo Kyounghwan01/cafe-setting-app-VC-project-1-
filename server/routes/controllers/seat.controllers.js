@@ -72,8 +72,16 @@ exports.sendCafeDataToAll = async (req, res, next) => {
 
 exports.choiceSeat = async (req, res, next) => {
   try {
+    const email = jwt.verify(req.params.id, process.env.YOUR_SECRET_KEY);
+    const userData = await User.findOne({email : email});
     const cafes = await Cafes.findOne({});
+
     cafes.arrangemenet = req.body.cafeArrange;
+    cafes.order.push({user : userData._id, menu : req.body.order});
+
+    userData.order_history.push({menu : req.body.order});
+
+    await userData.save();
     await cafes.save();
     res.status(200).send({ status: 'success' });
   } catch (e) {

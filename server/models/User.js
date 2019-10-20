@@ -19,8 +19,13 @@ const userSchema = new Schema({
       },
       menu: [
         {
-          type: Schema.Types.ObjectId,
-          required: true
+          id: { type: Schema.Types.ObjectId, required: true },
+          name : {type : String, required: true},
+          price : {type : Number, required: true},
+          count: {
+            type: Number,
+            required: true
+          }
         }
       ]
     }
