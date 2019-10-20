@@ -15,7 +15,7 @@ export default class SelectOrder extends Component {
       choiceMenuCategory: 'tea',
       orderList: { seatNumber: null, order: [], open: false },
       orderDetail: { order: null, open: false },
-      initTable: constants.INIT_TABLE
+      initTable: constants.INIT_TABLE,
     };
   }
 
@@ -231,7 +231,6 @@ export default class SelectOrder extends Component {
               this.renderPieceContainer(piece, i)
             )}
           </ol>
-          <div onClick={this.submitSeat}>자리 고정</div>
         </div>
         <div className="menu-container">
           <div className="menu-desc">

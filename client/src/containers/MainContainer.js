@@ -1,4 +1,5 @@
 import React, { useEffect, useReducer, useState } from 'react';
+import { Redirect } from 'react-router-dom';
 import Main from '../components/Main';
 import { withRouter } from 'react-router-dom';
 import { userReducer, initialState } from '../reducers';
@@ -11,6 +12,7 @@ const MainContainer = props => {
   const [arrangement, setArr] = useState(null);
   const [leftSeat, setCount] = useState(0);
   const [userId, setUserId] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +66,9 @@ const MainContainer = props => {
           `/api/view/${props.location.search.substring(1)}`
         );
         //header에 Authorization키로 value : Bearer {TOKEN}
+        if (res.data.error) {
+          return setError(res.data.error);
+        }
         setUserId(res.data.userData[0]._id);
         setArr(res.data.cafeData.arrangemenet);
         let count = 0;
@@ -88,16 +93,25 @@ const MainContainer = props => {
 
   return (
     <>
-      {arrangement ? (
-        <Main
-          headerElement={user.headerElement}
-          tocken={props.location.search}
-          seats={arrangement}
-          leftSeat={leftSeat}
-          userId={userId}
-        />
+      {error ? (
+        <Redirect to={{
+          pathname : "/error",
+          state : 'unauthorized'
+        }} />
       ) : (
-        <></>
+        <>
+          {arrangement ? (
+            <Main
+              headerElement={user.headerElement}
+              tocken={props.location.search}
+              seats={arrangement}
+              leftSeat={leftSeat}
+              userId={userId}
+            />
+          ) : (
+            <></>
+          )}
+        </>
       )}
     </>
   );

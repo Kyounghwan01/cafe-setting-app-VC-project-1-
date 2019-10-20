@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import '../assets/style/ShoppingCart.scss';
 import axios from 'axios';
 
@@ -11,7 +12,7 @@ export default class ShoppingCart extends Component {
   }
 
   componentDidMount() {
-    const {order, seatNumber} = this.props;
+    const { order, seatNumber } = this.props;
     console.log(this.props);
     if (order) {
       let price = 0;
@@ -23,21 +24,23 @@ export default class ShoppingCart extends Component {
   }
 
   submitSeat = async () => {
-    const {order, seatNumber, tocken, cafeArrange} = this.props;
+    const { order, seatNumber, tocken, cafeArrange } = this.props;
     if (order.length && seatNumber) {
       //cafe의 배치 스키마 패치하는 함수
       try {
-        await axios.post(`/api/seats/${tocken.substring(1)}`, {
+        const res = await axios.post(`/api/seats/${tocken.substring(1)}`, {
           cafeArrange: cafeArrange,
-          order : order
+          order: order
         });
-        //주인에게는 id인 메뉴, 이름 가 몇개인지
-        //사용자에게는 id인 메뉴, 이름가 몇개인지
+        if (res.data.status === 'success') {
+          alert('주문 성공하였습니다.');
+          window.location = `/${tocken}`;
+        }
       } catch (e) {
         console.log(e);
       }
     } else {
-      alert('먼저 메뉴와 좌석을 선택해주세요')
+      alert('먼저 메뉴와 좌석을 선택해주세요');
     }
   };
 

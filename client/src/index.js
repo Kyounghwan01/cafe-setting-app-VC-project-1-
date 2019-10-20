@@ -31,7 +31,9 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route exact path="/" component={MainContainer} />
+          <Route exact path="/" render={props => (
+              <MainContainer {...props} />
+            )}/>
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
           <Route

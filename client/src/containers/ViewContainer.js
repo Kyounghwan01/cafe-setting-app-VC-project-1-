@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
-// import { userReducer, initialState } from '../reducers';
-// import * as dispatchFunction from '../actions';
 import View from '../components/View';
 import axios from 'axios';
 
