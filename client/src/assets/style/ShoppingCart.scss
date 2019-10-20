@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis|Noto+Sans+KR|Shadows+Into+Light|Sunflower:300&display=swap');
+
+.shopping-cart-container {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .shopping-cart-desc {
+    display: flex;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 50px;
+    font-weight: bold;
+    font-family: 'Sunflower', sans-serif;
+    font-size: 20px;
+  }
+  .select-seat {
+    display: flex;
+    p {
+      padding: 10px 20px 10px 20px;
+      border: 3px solid whitesmoke;
+      line-height: 24px;
+    }
+    span {
+      padding: 10px 20px 10px 20px;
+      font-size: 18px;
+      border: 3px solid whitesmoke;
+      text-align: center;
+      width: 180px;
+    }
+  }
+  .order-container {
+    padding-top: 60px;
+    display: flex;
+  }
+
+  // .select-seat {
+  //   display: flex;
+  //   p {
+  //     padding: 10px 20px 10px 20px;
+  //     border: 3px solid whitesmoke;
+  //     line-height: 24px;
+  //   }
+  //   span {
+  //     padding: 10px 20px 10px 20px;
+  //     font-size: 18px;
+  //     border: 3px solid whitesmoke;
+  //     text-align: center;
+  //     width: 180px;
+  //     font-weight: bold;
+  //   }
+  // }
+
+
+  .payment {
+    width: 70px;
+    border: 1px solid black;
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    span{
+      font-size: 15px;
+      font-weight: bold;
+      font-family: 'Sunflower', sans-serif;
+    }
+  }
+  .payment:hover{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+}

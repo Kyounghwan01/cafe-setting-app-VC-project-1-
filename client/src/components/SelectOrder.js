@@ -4,6 +4,8 @@ import axios from 'axios';
 import moment from 'moment';
 import * as constants from '../constants/state';
 import { TiShoppingCart } from 'react-icons/ti';
+import ShppingCart from './ShoppingCart';
+import ShoppingCart from './ShoppingCart';
 
 export default class SelectOrder extends Component {
   constructor(props) {
@@ -12,7 +14,8 @@ export default class SelectOrder extends Component {
       arrange: [],
       userData: [],
       choiceMenuCategory: 'tea',
-      orderList : {seatNumber : Number, order : []},
+      orderList: { seatNumber: null, order: [], open: false },
+      orderDetail: { order: null, open: false },
       initTable: {
         img: constants.TABLE,
         order: 1,
@@ -40,11 +43,12 @@ export default class SelectOrder extends Component {
     };
     fetchTableData();
   }
-  componentDidUpdate(){
-    console.log(this.state.orderList);
+  componentDidUpdate() {
+    console.log(this.state.orderDetail);
   }
 
   renderPieceContainer(piece, index) {
+    //자리 렌더링
     return (
       <li
         className="seats-list"
@@ -68,12 +72,14 @@ export default class SelectOrder extends Component {
               </div>
             </div>
           ) : (
-            <img
-              alt="wall"
-              className="wall"
-              type={piece.type}
-              src={piece.img}
-            />
+            <div>
+              <img
+                alt="wall"
+                className="wall"
+                type={piece.type}
+                src={piece.img}
+              />
+            </div>
           )
         ) : null}
       </li>
@@ -81,8 +87,13 @@ export default class SelectOrder extends Component {
   }
 
   choiceSeats = e => {
-    if (e.currentTarget.childNodes[0].childNodes[0].getAttribute('type') === 'table') {
-      let copyData = this.state.arrange;
+    //자리 고르기
+    if (
+      e.currentTarget.childNodes[0].childNodes[0].getAttribute('type') ===
+      'table'
+    ) {
+      let seatChangeToDB = this.state.arrange;
+      let seatChangeToShoppingCart = this.state.orderList;
       const afterTwoHours = moment(
         Date.parse(new Date()) + 1000 * 60 * 120
       ).format('YYYY-MM-DDTHH:mm');
@@ -100,16 +111,24 @@ export default class SelectOrder extends Component {
           this.state.arrange[i] &&
           this.state.arrange[i].userId === this.state.userData._id
         ) {
-          copyData[i] = this.state.initTable;
-          this.setState({ arrange: copyData });
+          seatChangeToDB[i] = this.state.initTable;
+          this.setState({ arrange: seatChangeToDB });
         }
       }
-      copyData[e.currentTarget.getAttribute('data-id')] = initSeats;
-      this.setState({ arrange: copyData, orderList : {seatNumber : e.currentTarget.getAttribute('data-id')} });
+      seatChangeToDB[e.currentTarget.getAttribute('data-id')] = initSeats;
+      seatChangeToShoppingCart.seatNumber = e.currentTarget.getAttribute(
+        'data-id'
+      );
+
+      this.setState({
+        arrange: seatChangeToDB,
+        orderList: seatChangeToShoppingCart
+      });
     }
   };
 
   submitSeat = async () => {
+    //cafe의 배치 스키마 패치하는 함수
     try {
       await axios.post(`/api/seats/${this.props.tocken.substring(1)}`, {
         cafeArrange: this.state.arrange
@@ -119,7 +138,32 @@ export default class SelectOrder extends Component {
     }
   };
 
+  OpenShoppingCart = () => {
+    //고객 쇼핑카트 오픈
+    let copyData = this.state.orderList;
+    copyData.open = !copyData.open;
+    this.setState({ orderList: copyData });
+  };
+
+  orderPushToShoppingCart = data => {
+    //주문 디테일 화면에서 선택한 숫자만큼 장바구니로 전송
+    let dupCheck = false;
+    let copyData = this.state.orderList;
+    copyData.order.forEach(el => {
+      if (el.id === data.id) {
+        dupCheck = true;
+        el.count = data.count;
+      }
+    });
+    if (!dupCheck) {
+      copyData.order.push(data);
+      this.setState({ orderList: copyData });
+    }
+    this.setState({ orderDetail: { open: false } });
+  };
+
   renderMenu = () => {
+    //메뉴 렌더링
     if (this.props.listData) {
       return this.props.listData.map((el, index) => {
         if (el.category === this.state.choiceMenuCategory) {
@@ -128,7 +172,19 @@ export default class SelectOrder extends Component {
               <div
                 key={index}
                 className="category-menu"
-                onClick={() => console.log(me.id)}
+                onClick={() =>
+                  this.setState({
+                    orderDetail: {
+                      open: true,
+                      order: {
+                        id: me.id,
+                        name: me.name,
+                        price: me.price,
+                        count: 1
+                      }
+                    }
+                  })
+                }
               >
                 <div className="category-menu-name">
                   <span>{me.name}</span>
@@ -150,12 +206,13 @@ export default class SelectOrder extends Component {
   };
 
   renderCategory = () => {
+    //카테고리 렌더링
     return this.props.listData.map((el, index) => {
       return (
         <div
           key={index}
           data-id={el.category}
-          onClick={() => this.renderOtherMeny(el.category)}
+          onClick={() => this.setState({ choiceMenuCategory: el.category })}
         >
           <span>{el.category}</span>
         </div>
@@ -163,15 +220,18 @@ export default class SelectOrder extends Component {
     });
   };
 
-  renderOtherMeny = category => {
-    this.setState({ choiceMenuCategory: category });
+  handleCountChange = e => {
+    let copyData = this.state.orderDetail;
+    copyData.order.count = e.target.value;
+    this.setState({ orderDetail: copyData });
   };
 
   render() {
+    const { orderDetail } = this.state;
     return (
       <div className="view-container">
         <div className="seats-container">
-          <div className="shopping-cart">
+          <div className="shopping-cart" onClick={this.OpenShoppingCart}>
             <TiShoppingCart size="50" />
           </div>
           <div className="seats-desc">
@@ -195,7 +255,7 @@ export default class SelectOrder extends Component {
               {this.props.listData ? (
                 <>
                   <span>
-                    ALWAYS BESIDE YOU,{' '}
+                    ALWAYS BESIDE YOU,
                     <span>{this.state.choiceMenuCategory}</span>
                   </span>
                   <div className="category-desc">{this.renderCategory()}</div>
@@ -209,6 +269,55 @@ export default class SelectOrder extends Component {
           </div>
           <div className="menu">{this.renderMenu()}</div>
         </div>
+        {orderDetail.open ? (
+          <div className="order-list">
+            orderlist
+            <div className="order-content">
+              {orderDetail.order.name}
+              {orderDetail.order.price}
+              {orderDetail.order.count}
+              <input
+                type="number"
+                name="count"
+                required
+                min="0"
+                onChange={this.handleCountChange}
+                defaultValue="1"
+              />
+              <div>
+                총가격 : {orderDetail.order.price * orderDetail.order.count}
+              </div>
+            </div>
+            <div className="btn-group">
+              <div
+                onClick={() => this.setState({ orderDetail: { open: false } })}
+              >
+                닫기
+              </div>
+              <div
+                onClick={() =>
+                  this.orderPushToShoppingCart({
+                    id: orderDetail.order.id,
+                    name: orderDetail.order.name,
+                    price: orderDetail.order.price,
+                    count: orderDetail.order.count
+                  })
+                }
+              >
+                담기
+              </div>
+            </div>
+          </div>
+        ) : null}
+
+        {this.state.orderList.open ? (
+          <div className="order-list">
+            <ShoppingCart
+              order={this.state.orderList.order}
+              seatNumber={this.state.orderList.seatNumber}
+            />
+          </div>
+        ) : null}
       </div>
     );
   }

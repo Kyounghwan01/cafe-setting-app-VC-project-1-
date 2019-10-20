@@ -8,6 +8,13 @@
   bottom: 20px;
   right: 30px;
 }
+.shopping-cart:hover {
+  cursor: pointer;
+}
+.shopping-cart:active {
+  transform: scale(0.9);
+  transition: 0.25s;
+}
 .view-container {
   width: 100%;
   border-top: 2px solid rgba(238, 238, 238, 0.9);
@@ -123,6 +130,10 @@
         transform: scale(1.02);
         transition: 0.25s;
       }
+      .category-menu:active {
+        transform: scale(0.9);
+        transition: 0.25s;
+      }
     }
   }
 }
@@ -153,7 +164,7 @@
   .seat-number {
     padding: 5px 5px;
     position: absolute;
-    p{
+    p {
       font-size: 13px;
     }
   }
@@ -165,7 +176,7 @@
     cursor: pointer;
   }
   .table {
-    .table-image-conatiner{
+    .table-image-conatiner {
       img {
         width: 50px;
         height: 50px;
@@ -181,4 +192,14 @@
     position: absolute;
     border-radius: 5px;
   }
+}
+
+.order-list {
+  position: fixed;
+  width: 50%;
+  height: 600px;
+  background-color: rgba(238, 238, 238, 0.9);
+  border-radius: 10px;
+  top: 10%;
+  left: 25%;
 }
