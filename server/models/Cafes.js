@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const moment = require('moment')
+require('moment-timezone');
+moment.tz.setDefault("Asia/Seoul");
 
 const cafeSchema = new Schema({
   owner: {
@@ -48,8 +50,7 @@ const cafeSchema = new Schema({
         }
       ],
       created_at: {
-        type: Date,
-        default: moment().format('YYYY-MM-DDTHH:mm')
+        type: String,
       },
       complete : {type : Boolean, default : false}
     }

@@ -12,8 +12,7 @@ export default class ShoppingCart extends Component {
   }
 
   componentDidMount() {
-    const { order, seatNumber } = this.props;
-    console.log(this.props);
+    const { order } = this.props;
     if (order) {
       let price = 0;
       order.map(el => {

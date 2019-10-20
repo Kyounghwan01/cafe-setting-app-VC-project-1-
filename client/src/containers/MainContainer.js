@@ -12,9 +12,12 @@ const MainContainer = props => {
   const [arrangement, setArr] = useState(null);
   const [leftSeat, setCount] = useState(0);
   const [userId, setUserId] = useState(null);
+  const [orderList, setOrder] = useState(null);
   const [error, setError] = useState(null);
+  const [admin, checkAdmin] = useState(false);
 
   useEffect(() => {
+    //header.js에 들어가는 header element 구성
     const fetchData = async () => {
       if (props.location.search) {
         try {
@@ -22,6 +25,7 @@ const MainContainer = props => {
             `/api/${props.location.search.substring(1)}`
           );
           if (res.data.admin) {
+            checkAdmin(true);
             return await dispatch(
               dispatchFunction.setHeaderElement([
                 'CHANGE-SEATS',
@@ -47,6 +51,7 @@ const MainContainer = props => {
 
     const fetchArr = async () => {
       if (!props.location.search) {
+        //토큰 없는 사람
         const res = await axios.get('/api/view');
         if (res.data.cafeData) {
           setArr(res.data.cafeData.arrangemenet);
@@ -62,15 +67,19 @@ const MainContainer = props => {
           setCount(count);
         }
       } else {
+        //토큰 있는 사람
         const res = await axios.get(
           `/api/view/${props.location.search.substring(1)}`
         );
         //header에 Authorization키로 value : Bearer {TOKEN}
         if (res.data.error) {
+          //토큰은 있는데 잘못된 토큰일 경우
           return setError(res.data.error);
         }
+        setOrder(res.data.cafeData.order);
         setUserId(res.data.userData[0]._id);
         setArr(res.data.cafeData.arrangemenet);
+        //남은 테이블 수 계산
         let count = 0;
         for (let i = 0; i < res.data.cafeData.arrangemenet.length; i++) {
           if (
@@ -107,6 +116,8 @@ const MainContainer = props => {
               seats={arrangement}
               leftSeat={leftSeat}
               userId={userId}
+              checkAdmin={admin}
+              orderList={orderList}
             />
           ) : (
             <></>

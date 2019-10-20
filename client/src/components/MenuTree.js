@@ -17,8 +17,12 @@ export default class MenuTree extends Component {
   }
 
   deleteMenu = async deleteId => {
-    await axios.delete(`/api/cafes/menu/${deleteId}`);
-    window.location.reload();
+    const res = await axios.delete(`/api/cafes/menu/${deleteId}`);
+    if(res.data.status === 'success'){
+      window.location.reload();
+    } else {
+      alert('삭제 오류 관리자에게 문의하세요')
+    }
   };
 
   menuAndPriceChange = () => {

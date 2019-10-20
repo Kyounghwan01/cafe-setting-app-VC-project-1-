@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../assets/style/Main.scss';
 import Header from './Header';
 import Footer from './Footer';
+import OrderList from './OrderList';
 import * as constants from '../constants/state';
 import moment from 'moment';
 import axios from 'axios';
@@ -14,7 +15,11 @@ class Main extends Component {
     };
   }
 
+  componentDidMount() {
+    console.log(this.props);
+  }
   renderPieceContainer(piece, index, boardName) {
+    //테이블 맵 렌더
     if (boardName === 'solved') {
       return (
         <li className="seat-list" key={index} data-id={index}>
@@ -30,7 +35,10 @@ class Main extends Component {
                     this.setState({
                       extendTime: {
                         time: this.props.seats[index].sittingTime,
-                        arrangeIndex: e.currentTarget.parentNode.getAttribute('data-id')}
+                        arrangeIndex: e.currentTarget.parentNode.getAttribute(
+                          'data-id'
+                        )
+                      }
                     });
                   }
                 }}
@@ -50,6 +58,7 @@ class Main extends Component {
   }
 
   async extendTimes(that) {
+    //2시간 연장 db, state 변경
     const extendTimeResult = await axios.post(
       `/api/extend/${that.props.tocken.substring(1)}`,
       {
@@ -62,8 +71,6 @@ class Main extends Component {
       }
     });
   }
-
-  // https://www.ediya.com/images/menu/bakery_visual.jpg
 
   render() {
     const orderRoute = `/view${this.props.tocken}`;
@@ -80,10 +87,15 @@ class Main extends Component {
           <Header element={this.props.headerElement} />
         )}
         <div className="main-banner">
-          <img
-            alt="banner"
-            src="http://www.coffeebeankorea.com/data/banner/%EB%A9%94%EC%9D%B8_3.jpg"
-          />
+          {/* admin일 경우 주문 목록 보이기, 아니면 banner 사진 */}
+          {this.props.checkAdmin ? (
+            <OrderList orderList={this.props.orderList} tocken={this.props.tocken}/>
+          ) : (
+            <img
+              alt="banner"
+              src="http://www.coffeebeankorea.com/data/banner/%EB%A9%94%EC%9D%B8_3.jpg"
+            />
+          )}
         </div>
         <div className="content">
           <ol className="seat">
@@ -97,6 +109,8 @@ class Main extends Component {
               오늘은 자리가&nbsp;&nbsp;
               <span className="leftseat-count">{this.props.leftSeat}</span>
               &nbsp;&nbsp;개 있어요! <br />
+              주문 하신 테이블은 <br />
+              파란색 네모입니다
               <br />
             </span>
             {this.state.extendTime.time ? (
@@ -112,11 +126,7 @@ class Main extends Component {
                 {moment
                   .duration(time.diff(this.state.extendTime.time))
                   .asMinutes() > -50 ? (
-                  <div
-                    onClick={() => this.extendTimes(that)}
-                  >
-                    연장하기
-                  </div>
+                  <div onClick={() => this.extendTimes(that)}>연장하기</div>
                 ) : null}
               </div>
             ) : null}

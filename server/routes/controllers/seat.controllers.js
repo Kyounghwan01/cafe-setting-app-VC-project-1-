@@ -37,6 +37,14 @@ exports.sendCafeData = async (req, res, next) => {
   }
 };
 
+// function momentNewDate() {
+// 	var nowDate =  moment().tz("Asia/Seoul").format();
+
+// 	nowDate = new Date(nowDate);
+
+// 	return nowDate;
+// }
+
 exports.sendCafeDataToAll = async (req, res, next) => {
   try {
     const cafeData = await Cafes.findOne({});
@@ -77,7 +85,9 @@ exports.choiceSeat = async (req, res, next) => {
     const cafes = await Cafes.findOne({});
 
     cafes.arrangemenet = req.body.cafeArrange;
-    cafes.order.push({user : userData._id, menu : req.body.order});
+    //order에 정보틀리면 에러 보내라
+    cafes.order.push({user : userData._id, menu : req.body.order, created_at : 
+      moment().format('YYYY-MM-DDTHH:mm')});
 
     userData.order_history.push({menu : req.body.order});
 
