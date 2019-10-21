@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import ChangeMenu from '../components/ChangeMenu';
+import * as PAGE from '../constants/state';
 import axios from 'axios';
 
 const ChangeMenuContainer = props => {
@@ -76,7 +77,7 @@ const ChangeMenuContainer = props => {
         <Redirect to="/" />
       ) : (
         <ChangeMenu
-          headerElement={['MAIN', 'CHANGE-SEATS', 'ORDER/SEATS', 'LOG-OUT']}
+          headerElement={[PAGE.ROUTE_MAIN, PAGE.ROUTE_CHANGE_SEATS, PAGE.ROUTE_MY_PAGE, PAGE.ROUTE_LOG_OUT]}
           tocken={props.location.search}
           arrangeMent={arrangement}
           listData={listData}

@@ -28,19 +28,20 @@ const MainContainer = props => {
             checkAdmin(true);
             return await dispatch(
               dispatchFunction.setHeaderElement([
-                'CHANGE-SEATS',
-                'CHANGE-MENU',
-                'ADMIN',
-                'LOG-OUT'
+                constants.ROUTE_CHANGE_SEATS,
+                constants.ROUTE_CHANGE_MENU,
+                constants.ROUTE_ADMIN,
+                constants.ROUTE_MY_PAGE,
+                constants.ROUTE_LOG_OUT
               ])
             );
           }
           return await dispatch(
             dispatchFunction.setHeaderElement([
-              'ORDER',
+              constants.ROUTE_ORDER,
               res.data.email,
-              'LOG-OUT',
-              'ABOUT'
+              constants.ROUTE_MY_PAGE,
+              constants.ROUTE_LOG_OUT
             ])
           );
         } catch (e) {

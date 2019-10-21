@@ -1,0 +1,51 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis|Noto+Sans+KR|Shadows+Into+Light|Sunflower:300&display=swap');
+.my-page-container{
+  background-color: #fff;
+  padding: 30px 30%;
+  border-top: 3px solid whitesmoke;
+  .loading{
+    text-align: center;
+    padding: 100px;
+  }
+  .my-page-desc {
+    width: inherit;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 30px;
+    span{
+      font-family: 'Sunflower', sans-serif;
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+  .my-page-content {
+    background-color: whitesmoke;
+    border-radius: 10px;
+    padding: 10px;
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      font-family: 'Sunflower', sans-serif;
+      thead{
+        tr{
+          td{
+            text-align: center;
+            border-bottom: 1px solid black;
+            padding: 10px;
+          }
+        }
+      }
+      tbody{
+        td:not(:nth-child(2)) {
+          text-align: center;
+          border-bottom: 1px solid black;
+        }
+        td:nth-child(2){
+          width: 200px;
+          padding: 15px;
+          border-bottom: 1px solid black;
+        }
+      }
+    }
+  }
+}

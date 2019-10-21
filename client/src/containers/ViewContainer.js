@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import View from '../components/View';
 import axios from 'axios';
+import * as PAGE from  '../constants/state';
 
 const ViewContainer = props => {
   const [listData, setlistData] = useState(null);
@@ -68,7 +69,7 @@ const ViewContainer = props => {
         <Redirect to="/" />
       ) : (
         <View
-          headerElement={['MAIN', 'LOG-OUT', 'ABOUT']}
+          headerElement={[PAGE.ROUTE_MAIN, PAGE.ROUTE_MY_PAGE, PAGE.ROUTE_LOG_OUT]}
           tocken={props.location.search}
           listData={listData}
         />

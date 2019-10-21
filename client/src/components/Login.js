@@ -2,6 +2,7 @@ import React from 'react';
 import '../assets/style/Main.scss';
 import Header from './Header';
 import Footer from './Footer';
+import * as PAGE from '../constants/state';
 
 const Login = () => {
   const errorMessage = () => {
@@ -15,7 +16,7 @@ const Login = () => {
 
   return (
     <div className="Login-container">
-      <Header element={['MAIN', 'SIGN-UP', 'ABOUT']} />
+      <Header element={[PAGE.ROUTE_MAIN, PAGE.ROUTE_SIGN_UP]} />
       <div className="sign-container">
         <div className="sign-title">
           <span>로그인</span>

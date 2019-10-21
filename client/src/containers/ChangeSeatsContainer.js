@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter, Redirect } from 'react-router-dom';
 import ChangeSeats from '../components/ChangeSeats';
 import axios from 'axios';
+import * as PAGE from '../constants/state';
 
 const ChangeSeatsContainer = props => {
   const [arrangement, setArr] = useState(null);
@@ -29,7 +30,7 @@ const ChangeSeatsContainer = props => {
         <Redirect to="/" />
       ) : (
         <ChangeSeats
-          headerElement={['MAIN', 'CHANGE-MENU', 'ORDER/SEATS', 'LOG-OUT']}
+          headerElement={[PAGE.ROUTE_MAIN, PAGE.ROUTE_CHANGE_MENU, PAGE.ROUTE_MY_PAGE, PAGE.ROUTE_LOG_OUT]}
           tocken={props.location.search}
           arrangeMent={arrangement}
         />

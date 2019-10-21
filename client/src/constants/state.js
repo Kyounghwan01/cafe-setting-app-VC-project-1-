@@ -15,6 +15,8 @@ export const ROUTE_LOG_OUT = 'LOG-OUT';
 export const ROUTE_ORDER = 'ORDER';
 export const ROUTE_CHANGE_SEATS = 'CHANGE-SEATS';
 export const ROUTE_CHANGE_MENU = 'CHANGE-MENU';
+export const ROUTE_MY_PAGE = 'MY-PAGE';
+export const ROUTE_ADMIN = 'ADMIN'
 
 export const INIT_TABLE = {
   img : TABLE,

@@ -10,6 +10,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MainContainer from '../src/containers/MainContainer';
 import Login from '../src/components/Login';
 import Signup from '../src/components/Signup';
+import Mypage from '../src/components/MyPage';
 import ChangeMenuContainer from '../src/containers/ChangeMenuContainer';
 import ViewContainer from '../src/containers/ViewContainer';
 import ChangeSeatsContainer from '../src/containers/ChangeSeatsContainer';
@@ -36,6 +37,10 @@ const App = () => {
             )}/>
           <Route exact path="/login" component={Login} />
           <Route exact path="/signup" component={Signup} />
+          <Route exact path="/mypage" render={props => (
+              <Mypage {...props} checkUser={checkUser} user={user} />
+            )}
+            />
           <Route
             exact
             path="/view"

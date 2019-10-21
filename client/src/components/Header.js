@@ -13,12 +13,12 @@ const Header = props => {
           <span>It's my seat</span>
         </div>
         <div className="header-list">
-          {props.element.map((ele, i) => {
-            switch (ele) {
+          {props.element.map((types, i) => {
+            switch (types) {
               case PAGE.ROUTE_SIGN_IN:
                 return (
                   <a href="/login" key={i}>
-                    <span>{ele}</span>
+                    <span>{types}</span>
                   </a>
                 );
               case PAGE.ROUTE_MAIN:
@@ -28,44 +28,51 @@ const Header = props => {
                 }
                 return (
                   <a href={mainRoute} key={i}>
-                    <span>{ele}</span>
+                    <span>{types}</span>
                   </a>
                 );
               case PAGE.ROUTE_SIGN_UP:
                 return (
                   <a href="/signup" key={i}>
-                    <span>{ele}</span>
+                    <span>{types}</span>
                   </a>
                 );
               case PAGE.ROUTE_LOG_OUT:
                 return (
                   <a href="/" key={i}>
-                    <span>{ele}</span>
+                    <span>{types}</span>
                   </a>
                 );
               case PAGE.ROUTE_ORDER:
                 const orderRoute = `/view${props.tocken}`;
                 return (
                   <a href={orderRoute} key={i}>
-                    <span>{ele}</span>
+                    <span>{types}</span>
                   </a>
                 );
               case PAGE.ROUTE_CHANGE_SEATS:
                 const changeSeatsRoute = `/change/seats${props.tocken}`;
                 return (
                   <a href={changeSeatsRoute} key={i}>
-                    <span>{ele}</span>
+                    <span>{types}</span>
                   </a>
                 );
               case PAGE.ROUTE_CHANGE_MENU:
                 const changeMenuRoute = `/change/menu${props.tocken}`;
                 return (
                   <a href={changeMenuRoute} key={i}>
-                    <span>{ele}</span>
+                    <span>{types}</span>
                   </a>
                 );
+              case PAGE.ROUTE_MY_PAGE:
+              const myPageRoute = `/mypage${props.tocken}`;
+              return (
+                <a href={myPageRoute} key={i}>
+                  <span>{types}</span>
+                </a>
+              );
               default:
-                return <span key={i}>{ele}</span>;
+                return <span key={i}>{types}</span>;
             }
           })}
         </div>

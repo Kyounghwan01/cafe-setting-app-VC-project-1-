@@ -25,7 +25,7 @@ export default class OrderList extends Component {
             <tr>
               <td>고객</td>
               <td>주문시간</td>
-              <td>메뉴</td>
+              <td>메뉴 / 수량</td>
               <td></td>
             </tr>
           </thead>

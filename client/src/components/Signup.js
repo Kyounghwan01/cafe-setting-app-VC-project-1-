@@ -2,6 +2,7 @@ import React from 'react';
 import '../assets/style/Main.scss';
 import Header from './Header';
 import Footer from './Footer';
+import * as PAGE from '../constants/state';
 
 const Signup = props => {
   console.log(props);
@@ -17,7 +18,7 @@ const Signup = props => {
 
   return (
     <div className="Signup-container">
-      <Header element={['MAIN', 'SIGN-IN', 'ABOUT']} />
+      <Header element={[PAGE.ROUTE_MAIN, PAGE.ROUTE_SIGN_IN]} />
       <div className="sign-container">
         <div className="sign-title">
           <span>회원가입</span>
