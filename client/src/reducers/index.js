@@ -2,9 +2,10 @@ import { combineReducers } from 'redux';
 import * as type from '../constants/ActionTypes';
 
 export const initialState = {
-  headerElement : ['SIGN-IN', 'SIGN-UP', 'ABOUT'],
-  checkUser : null,
+  headerElement : ['SIGN-IN', 'SIGN-UP'],
+  checkUser : false,
   seatsArr:null,
+  test : null
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -19,12 +20,15 @@ export const userReducer = (state = initialState, action) => {
       console.log(action.seatsArr)
       return {seatsArr:action.seatsArr}
     }
+    case type.TEST_FUNC:{
+      console.log(action);
+      return (state.test = action.test)
+    }
     default: {
       return state;
     }
   }
 };
-
 
 const reducers = combineReducers({
   userData: userReducer

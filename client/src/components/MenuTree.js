@@ -13,7 +13,7 @@ export default class MenuTree extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
   }
 
   deleteMenu = async deleteId => {
@@ -82,6 +82,7 @@ export default class MenuTree extends Component {
                   <p>{this.state.updateModal.name}</p>
                   <input
                     className="input-name"
+                    name='name'
                     type="text"
                     required
                     ref={this.name}

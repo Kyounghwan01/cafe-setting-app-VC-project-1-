@@ -16,7 +16,7 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
+//    console.log(this.props);
   }
   renderPieceContainer(piece, index, boardName) {
     //테이블 맵 렌더

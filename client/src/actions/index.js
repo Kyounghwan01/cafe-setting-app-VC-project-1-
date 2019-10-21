@@ -10,6 +10,11 @@ export const checkUserOuth = checkUser => ({
   checkUser
 });
 
+export const testFunc = (test) => ({
+  type : type.TEST_FUNC,
+  test
+});
+
 export const seats = seatsArr => ({
   type: type.SEATS,
   seatsArr
