@@ -114,7 +114,7 @@ class Main extends Component {
               <br />
             </span>
             {this.state.extendTime.time ? (
-              <div>
+              <div className='extend-time-container'>
                 <span>
                   {this.state.extendTime.time.slice(11)} 까지 이용 가능합니다
                   <br />
@@ -126,7 +126,7 @@ class Main extends Component {
                 {moment
                   .duration(time.diff(this.state.extendTime.time))
                   .asMinutes() > -50 ? (
-                  <div onClick={() => this.extendTimes(that)}>연장하기</div>
+                  <div className="extend-time" onClick={() => this.extendTimes(that)}><span>연장하기</span></div>
                 ) : null}
               </div>
             ) : null}

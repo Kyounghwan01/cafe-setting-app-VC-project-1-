@@ -15,16 +15,6 @@ describe('reducer func test', () => {
 
       expect(userReducer(initialState.checkUser, types.checkUserOuth(true)))
       .toEqual({'checkUser' : true})
-
-
     });
-    // it('sendMessage action test', () => {
-    //   expect(
-    //     sendMessage(
-    //       initalState.chatMessage,
-    //       types.receiveMessage('nkh', 'hello')
-    //     )
-    //   ).toEqual([{ username: 'nkh', message: 'hello' }]);
-    // });
   });
 });

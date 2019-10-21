@@ -14,6 +14,7 @@ const ChangeSeatsContainer = props => {
       const res = await axios.get(
         `/api/view/${props.location.search.substring(1)}`
       );
+      console.log(res);
       if (res.data.cafeData) {
         setArr(res.data.cafeData.arrangemenet);
       }
@@ -22,7 +23,7 @@ const ChangeSeatsContainer = props => {
     return () => {
       fetchData();
     };
-  }, []);
+  }, [props]);
 
   return (
     <>

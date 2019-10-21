@@ -27,6 +27,27 @@
         font-family: 'Sunflower', sans-serif;
         font-size: 20px;
       }
+      .extend-time-container{
+        .extend-time {
+          width: 60px;
+          height: 20px;
+          border: 1px solid black;
+          border-radius: 5px;
+          font-weight: bold;
+          background: none;
+          text-align: center;
+          margin: 0 auto;
+          span{
+            font-size: 15px;
+          }
+        }
+        .extend-time:hover{
+          background-color: black;
+          color: white;
+          transition: 0.3s;
+          cursor: pointer;
+        }
+      }
       .leftseat-count {
         font-size: 30px;
         font-weight: bold;

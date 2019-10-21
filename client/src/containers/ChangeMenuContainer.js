@@ -69,7 +69,7 @@ const ChangeMenuContainer = props => {
     return () => {
       fetchData();
     };
-  }, []);
+  }, [props]);
 
   return (
     <>
