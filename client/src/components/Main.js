@@ -89,7 +89,7 @@ class Main extends Component {
         <div className="main-banner">
           {/* admin일 경우 주문 목록 보이기, 아니면 banner 사진 */}
           {this.props.checkAdmin ? (
-            <OrderList orderList={this.props.orderList} tocken={this.props.tocken}/>
+            <OrderList orderList={this.props.orderList} userId={this.props.userId} tocken={this.props.tocken}/>
           ) : (
             <img
               alt="banner"

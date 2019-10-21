@@ -1,59 +1,73 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import '../assets/style/OrderList.scss';
 
 export default class OrderList extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      order : null
-    }
-  }
-  componentDidMount() {
-    console.log(this.props);
-  }
 
-  changeComplete = async (menuId) => {
-    const res = await axios.post(`/api/cafes/complete/${this.props.tocken.substring(1)}`,{
-      complete : true,
-      id : menuId
-    });
-    console.log(res)
-  }
+  changeComplete = async menuId => {
+    const res = await axios.post(
+      `/api/cafes/complete/${this.props.tocken.substring(1)}`,
+      {
+        complete: true,
+        id: menuId
+      }
+    );
+    if (res.data.status === 'success') {
+      window.location.reload();
+    }
+  };
 
   renderOrderList = () => {
     if (this.props.orderList) {
-      return this.props.orderList.map((el, index) => {
-        return (
-          <div key={index}>
-            {el.complete ? null : (
-              <>
-                <div>
-                  <span>고객 : {el.user}</span>
-                </div>
-                <div>
-                  <span>주문시간 : {el.created_at.slice(11)}</span>
-                </div>
-                <div>
-                  <span>주문 메뉴</span>
-                  {el.menu.map((menu, index) => {
-                    return (
-                      <li key={index}>
-                        <span>{menu.name}</span>
-                      </li>
-                    );
-                  })}
-                  <button onClick={()=>this.changeComplete(el._id)}>
-                    <span>완료버튼</span>
-                  </button>
-                </div>
-              </>
-            )}
-          </div>
-        );
-      });
+      return (
+        <table>
+          <thead>
+            <tr>
+              <td>고객</td>
+              <td>주문시간</td>
+              <td>메뉴</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            {this.props.orderList.map((el, index) => {
+              return (
+                <tr key={index}>
+                  {el.complete ? null : (
+                    <>
+                      <td>{el.user_name}</td>
+                      <td>{el.created_at.slice(11)}</td>
+                      <td>
+                        {el.menu.map((menu, index) => {
+                          return (
+                            <li key={index}>
+                              <span>{menu.name}</span>
+                              <span> / {menu.count}개</span>
+                            </li>
+                          );
+                        })}
+                      </td>
+                      <td>
+                        <div className="complete" onClick={() => this.changeComplete(el._id)}>
+                          <span>완료</span>
+                        </div>
+                      </td>
+                    </>
+                  )}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      );
     }
   };
   render() {
-    return <div>{this.renderOrderList()}</div>;
+    return (
+      <div className="order-container">
+        <div className="order-desc">주문 목록</div>
+        <div className="order-content">{this.renderOrderList()}</div>
+      </div>
+    );
   }
 }

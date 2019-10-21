@@ -37,14 +37,6 @@ exports.sendCafeData = async (req, res, next) => {
   }
 };
 
-// function momentNewDate() {
-// 	var nowDate =  moment().tz("Asia/Seoul").format();
-
-// 	nowDate = new Date(nowDate);
-
-// 	return nowDate;
-// }
-
 exports.sendCafeDataToAll = async (req, res, next) => {
   try {
     const cafeData = await Cafes.findOne({});
@@ -79,6 +71,7 @@ exports.sendCafeDataToAll = async (req, res, next) => {
 };
 
 exports.choiceSeat = async (req, res, next) => {
+  console.log(req.body);
   try {
     const email = jwt.verify(req.params.id, process.env.YOUR_SECRET_KEY);
     const userData = await User.findOne({email : email});
@@ -86,7 +79,7 @@ exports.choiceSeat = async (req, res, next) => {
 
     cafes.arrangemenet = req.body.cafeArrange;
     //order에 정보틀리면 에러 보내라
-    cafes.order.push({user : userData._id, menu : req.body.order, created_at : 
+    cafes.order.push({user : userData._id, user_name : userData.email, menu : req.body.order, created_at : 
       moment().format('YYYY-MM-DDTHH:mm')});
 
     userData.order_history.push({menu : req.body.order});

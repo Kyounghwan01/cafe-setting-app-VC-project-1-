@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Dosis|Noto+Sans+KR|Shadows+Into+Light|Sunflower:300&display=swap');
 
 .shopping-cart-container {
-  padding: 30px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -10,48 +10,83 @@
     height: 20px;
     justify-content: center;
     align-items: center;
-    padding-bottom: 50px;
+    padding-bottom: 30px;
     font-weight: bold;
     font-family: 'Sunflower', sans-serif;
     font-size: 20px;
   }
   .select-seat {
     display: flex;
+    padding: 10px;
+    width: 50%;
+    border-radius: 10px;
+    background-color: #fff;
+    margin-bottom: 20px;
     p {
+      font-family: 'Sunflower', sans-serif;
       padding: 10px 20px 10px 20px;
-      border: 3px solid whitesmoke;
+      border-bottom: 1px solid grey;
+      border-right: 1px solid grey;
       line-height: 24px;
     }
     span {
+      font-family: 'Sunflower', sans-serif;
       padding: 10px 20px 10px 20px;
       font-size: 18px;
-      border: 3px solid whitesmoke;
+      border-bottom: 1px solid grey;
       text-align: center;
       width: 180px;
     }
   }
-  .order-container {
-    padding-top: 60px;
-    display: flex;
+  .order-content {
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    table {
+      text-align: center;
+      width: 100%;
+      div{
+        text-align: center;
+      }
+      td:not(:last-child) {
+        font-family: 'Sunflower', sans-serif;
+        border-bottom: 1px solid grey;
+        border-right: 1px solid grey;
+        padding: 10px;
+        width: 100px;
+      }
+      td:last-child {
+        font-family: 'Sunflower', sans-serif;
+        border-bottom: 1px solid grey;
+        padding: 10px;
+        width: 100px;
+      }
+      td {
+        input {
+          width: 30px;
+          text-align: center;
+        }
+        input:focus {
+          outline: none;
+        }
+      }
+    }
   }
 
-  // .select-seat {
-  //   display: flex;
-  //   p {
-  //     padding: 10px 20px 10px 20px;
-  //     border: 3px solid whitesmoke;
-  //     line-height: 24px;
-  //   }
-  //   span {
-  //     padding: 10px 20px 10px 20px;
-  //     font-size: 18px;
-  //     border: 3px solid whitesmoke;
-  //     text-align: center;
-  //     width: 180px;
-  //     font-weight: bold;
-  //   }
-  // }
-
+  .total-price{
+    padding: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Sunflower', sans-serif;
+    span:last-child{
+      font-size: 20px;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+  }
 
   .payment {
     width: 70px;

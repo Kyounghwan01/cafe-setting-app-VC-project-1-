@@ -15,7 +15,7 @@ export default class SelectOrder extends Component {
       choiceMenuCategory: 'tea',
       orderList: { seatNumber: null, order: [], open: false },
       orderDetail: { order: null, open: false },
-      initTable: constants.INIT_TABLE,
+      initTable: constants.INIT_TABLE
     };
   }
 
@@ -146,7 +146,9 @@ export default class SelectOrder extends Component {
     });
     if (!dupCheck) {
       copyData.order.push(data);
-      this.setState({ orderList: copyData });
+      this.setState({ orderList: copyData }, function() {
+        console.log(this.state.orderList);
+      });
     }
     this.setState({ orderDetail: { open: false } });
   };
@@ -169,7 +171,7 @@ export default class SelectOrder extends Component {
                         id: me.id,
                         name: me.name,
                         price: me.price,
-                        count: 1
+                        count: 0
                       }
                     }
                   })
@@ -218,6 +220,7 @@ export default class SelectOrder extends Component {
   render() {
     const { orderDetail } = this.state;
     return (
+      //메인페이지
       <div className="view-container">
         <div className="seats-container">
           <div className="shopping-cart" onClick={this.OpenShoppingCart}>
@@ -257,47 +260,70 @@ export default class SelectOrder extends Component {
           </div>
           <div className="menu">{this.renderMenu()}</div>
         </div>
+
         {orderDetail.open ? (
-          <div className="order-list">
-            orderlist
+          <div className="order-list-container">
+            <div className="order-list-desc">주문 상세 내용</div>
             <div className="order-content">
-              {orderDetail.order.name}
-              {orderDetail.order.price}
-              <input
-                type="number"
-                name="count"
-                required
-                min="0"
-                onChange={this.handleCountChange}
-                defaultValue="1"
-              />
-              <div>
-                총가격 : {orderDetail.order.price * orderDetail.order.count}
-              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <td>상품정보</td>
+                    <td>판매금액</td>
+                    <td>수량</td>
+                    <td>주문금액</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{orderDetail.order.name}</td>
+                    <td>{orderDetail.order.price}₩</td>
+                    <td>
+                      <input
+                        type="number"
+                        name="count"
+                        required
+                        min="0"
+                        onChange={this.handleCountChange}
+                        defaultValue="0"
+                      />
+                      개
+                    </td>
+                    <td>
+                      {orderDetail.order.price * orderDetail.order.count}₩
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
             <div className="btn-group">
               <div
-                onClick={() => this.setState({ orderDetail: { open: false } })}
-              >
-                닫기
-              </div>
-              <div
-                onClick={() =>
+                onClick={() => {
+                  if (orderDetail.order.count < 1) {
+                    return alert('수량을 1개 이상으로 선택해주세요');
+                  }
                   this.orderPushToShoppingCart({
                     id: orderDetail.order.id,
                     name: orderDetail.order.name,
                     price: orderDetail.order.price,
                     count: orderDetail.order.count
-                  })
-                }
+                  });
+                  return alert('주문하신 내역이 장바구니에 담겼습니다');
+                }}
               >
-                담기
+                <span>담기</span>
+              </div>
+              <div
+                onClick={() => this.setState({ orderDetail: { open: false } })}
+              >
+                <span>닫기</span>
               </div>
             </div>
           </div>
         ) : null}
 
         {this.state.orderList.open ? (
+          //쇼핑카트 오픈
           <div className="order-list">
             <ShoppingCart
               order={this.state.orderList.order}

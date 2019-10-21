@@ -38,6 +38,9 @@ const cafeSchema = new Schema({
         type: Schema.Types.ObjectId,
         required: true
       },
+      user_name : {
+        type : String
+      },
       menu: [
         {
           id: { type: Schema.Types.ObjectId, required: true },

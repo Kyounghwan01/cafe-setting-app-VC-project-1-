@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
 import '../assets/style/ShoppingCart.scss';
 import axios from 'axios';
 
@@ -12,6 +11,7 @@ export default class ShoppingCart extends Component {
   }
 
   componentDidMount() {
+    console.log(this.props);
     const { order } = this.props;
     if (order) {
       let price = 0;
@@ -56,23 +56,40 @@ export default class ShoppingCart extends Component {
             <span>자리선택해주세요</span>
           )}
         </div>
-        {order.length ? (
-          order.map((el, index) => {
-            return (
-              <div key={index} className="order-container">
-                <span>{el.name}</span>
-                <span>{el.price} x </span>
-                <span>{el.count} = </span>
-                <span>{el.price * el.count} </span>
-              </div>
-            );
-          })
-        ) : (
-          <div className="order-container">
-            <span>메뉴를 선택해주세요</span>
-          </div>
-        )}
-        <div>total price : {this.state.totalPrice}₩</div>
+        <div className="order-content">
+          <table>
+            <thead>
+              <tr>
+                <td>상품정보</td>
+                <td>판매금액</td>
+                <td>수량</td>
+                <td>주문금액</td>
+              </tr>
+            </thead>
+            <tbody>
+              {order.length ? (
+                order.map((el, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{el.name}</td>
+                      <td>{el.price}₩</td>
+                      <td>{el.count}</td>
+                      <td>{el.price * el.count}₩</td>
+                    </tr>
+                  );
+                })
+              ) : (
+                <td colSpan="4">메뉴를 선택해 주세요</td>
+              )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="total-price">
+          <span>총 주문 금액 : </span>
+          <span>{this.state.totalPrice}₩</span>
+        </div>
+
         <div className="payment" onClick={this.submitSeat}>
           <span>결제</span>
         </div>
