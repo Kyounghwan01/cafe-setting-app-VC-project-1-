@@ -6,7 +6,6 @@ import * as PAGE from '../constants/state';
 
 const ChangeSeatsContainer = props => {
   const [arrangement, setArr] = useState(null);
-  //const [category, setCategory] = useState([]);
 
   useEffect(() => {
     props.checkUser(props.location.search);
