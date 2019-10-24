@@ -13,6 +13,8 @@ const Signup = props => {
       return <span className="error-message">중복된 id입니다</span>;
     } else if (query === 'wrongpassword') {
       return <span className="error-message">패스워드가 틀렸습니다</span>;
+    } else if (query === 'badrequest'){
+      return <span className="error-message">정보가 입력되지 않은 곳이 있습니다</span>;
     }
   };
 

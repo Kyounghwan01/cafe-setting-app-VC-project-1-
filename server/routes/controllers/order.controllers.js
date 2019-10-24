@@ -96,5 +96,5 @@ exports.changeMenuNameAndPrice = async (req, res, next) => {
     }
   });
   await changeData.save();
-  res.send({ value: 'awdawd' });
+  res.send({ value: 'success' });
 };

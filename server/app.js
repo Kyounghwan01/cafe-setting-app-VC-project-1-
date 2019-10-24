@@ -11,18 +11,15 @@ var morgan = require('morgan');
 require('dotenv').config();
 const app = express();
 
-
 const Cafes = require('./models/Cafes');
 const Category = require('./models/Category');
-
-
 
 const port = process.env.PORT || 3001;
 
 mongoose.connect(process.env.DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: false,
-  useCreateIndex : true
+  useCreateIndex: true
 });
 const db = mongoose.connection;
 db.on('error', console.error);
@@ -40,25 +37,14 @@ app.use(cookieParser());
 app.use(
   session({
     secret: process.env.YOUR_SECRET_KEY,
-    cookie: {maxAge: 1000 * 60 * 60 * 24 * 7},
+    cookie: { maxAge: 1000 * 60 * 60 * 24 * 7 },
     resave: false,
     saveUninitialized: true
   })
 );
 
-
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'ejs');
-
-
 app.use(morgan('dev'));
-
-// app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/api', mainRouter);
-// app.use('/api/view', viewRouter);
 
 // app.post('/newCafemenu', async function (req, res, next) {
 //   const test = await Cafes.findOne({});
@@ -66,32 +52,29 @@ app.use('/api', mainRouter);
 //   await test.save();
 //   res.send({})
 // })
-// {	
-	
+// {
+
 // 	"menu" : [{
 // 		"name" : "sergeg",
-// 		"price":4000, 
+// 		"price":4000,
 // 		"category":"5da17722791127279b3ea9f9"
 // 	}]
 // }
 
 //카페추가
-app.post('/newCafemenu', async function (req, res, next) {
+app.post('/newCafemenu', async function(req, res, next) {
   const newCategory = new Cafes(req.body);
   newCategory.save();
-  res.send({})
-})
-// {	
+  res.send({});
+});
+// {
 // 	"name" : "nkhCafe",
 // 	"menu" : [{
 // 		"name" : "sergeg",
-// 		"price":4000, 
+// 		"price":4000,
 // 		"category":"5da17722791127279b3ea9f9"
 // 	}]
 // }
-
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

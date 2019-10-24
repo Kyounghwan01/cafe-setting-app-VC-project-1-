@@ -24,6 +24,9 @@ exports.login = async (req, res, next) => {
 };
 
 exports.signup = async (req, res, next) => {
+  if(!req.body.password || !req.body.email || !req.body.password2){
+    return res.status(400).redirect('/signup?error=badrequest');
+  }
   try {
     const checkDupName = await User.find({ email: req.body.email });
     if (checkDupName.length) {
@@ -37,7 +40,7 @@ exports.signup = async (req, res, next) => {
       email: req.body.email,
       password: hash
     });
-    return res.status(200).redirect('/login');
+    return res.status(302).redirect('/login');
   } catch (error) {
     if (error.name === 'CastError') {
       return next();

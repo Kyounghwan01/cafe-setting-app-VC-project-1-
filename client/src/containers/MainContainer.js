@@ -77,6 +77,7 @@ const MainContainer = props => {
           //토큰은 있는데 잘못된 토큰일 경우
           return setError(res.data.error);
         }
+        // if(res.data.cofeData)
         setOrder(res.data.cafeData.order);
         setUserId(res.data.userData[0]._id);
         setArr(res.data.cafeData.arrangemenet);
