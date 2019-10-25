@@ -14,7 +14,6 @@ const ViewContainer = props => {
       const res = await axios.get(
         `/api/view/${props.location.search.substring(1)}`
       );
-      console.log(res);
 
       if (res.data.cafeData) {
         let copyMenu = {};
@@ -62,7 +61,7 @@ const ViewContainer = props => {
     return () => {
       fetchData();
     };
-  }, [props]);
+  }, [props.location]);
 
   return (
     <>

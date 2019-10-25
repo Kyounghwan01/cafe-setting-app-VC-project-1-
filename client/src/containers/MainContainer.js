@@ -100,7 +100,7 @@ const MainContainer = props => {
       fetchArr();
       fetchData();
     };
-  }, [props.location]);
+  }, []);
 
   return (
     <>

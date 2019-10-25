@@ -11,7 +11,6 @@ exports.changeComplete = async (req, res, next) => {
       el.complete = true;
     }
   });
-  console.log(changeData.order);
   await changeData.save();
   res.send({ status: 'success' });
 };
@@ -86,7 +85,6 @@ exports.makeNewMenu = async (req, res, next) => {
 
 exports.changeMenuNameAndPrice = async (req, res, next) => {
   let price = Math.floor(req.body.price / 100) * 100;
-  console.log("???",req.body);
   const changeData = await Cafes.findOne({});
   changeData.menu.map(el => {
     if (el.id === req.body.id) {

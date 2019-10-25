@@ -41,12 +41,33 @@ class Main extends Component {
                 }}
               />
             ) : (
-              <img
-                className="other"
-                alt={constants.TYPE_WALL}
-                type={piece.type}
-                src={piece.img}
-              />
+              <div>
+                {this.props.checkAdmin ? (
+                  <img
+                    className="other"
+                    alt={constants.TYPE_WALL}
+                    type={piece.type}
+                    src={piece.img}
+                    onClick={e => {
+                      this.setState({
+                        extendTime: {
+                          time: this.props.seats[index].sittingTime,
+                          arrangeIndex: e.currentTarget.parentNode.getAttribute(
+                            'data-id'
+                          )
+                        }
+                      });
+                    }}
+                  />
+                ) : (
+                  <img
+                    className="other"
+                    alt={constants.TYPE_WALL}
+                    type={piece.type}
+                    src={piece.img}
+                  />
+                )}
+              </div>
             )
           ) : null}
         </li>
@@ -86,7 +107,11 @@ class Main extends Component {
         <div className="main-banner">
           {/* admin일 경우 주문 목록 보이기, 아니면 banner 사진 */}
           {this.props.checkAdmin ? (
-            <OrderList orderList={this.props.orderList} userId={this.props.userId} tocken={this.props.tocken}/>
+            <OrderList
+              orderList={this.props.orderList}
+              userId={this.props.userId}
+              tocken={this.props.tocken}
+            />
           ) : (
             <img
               alt="banner"
@@ -111,20 +136,41 @@ class Main extends Component {
               <br />
             </span>
             {this.state.extendTime.time ? (
-              <div className='extend-time-container'>
+              <div className="extend-time-container">
                 <span>
                   {this.state.extendTime.time.slice(11)} 까지 이용 가능합니다
                   <br />
                 </span>
-                <span>
-                  이용 종료시간 50분 전부터 <br />
-                  2시간씩 연장 가능 합니다
-                </span>
-                {moment
-                  .duration(time.diff(this.state.extendTime.time))
-                  .asMinutes() > -50 ? (
-                  <div className="extend-time" onClick={() => this.extendTimes(that)}><span>연장하기</span></div>
-                ) : null}
+                {this.props.checkAdmin ? (
+                  <div>
+                    <span>
+                      2시간씩 연장 가능 합니다
+                    </span>
+                    <div
+                      className="extend-time"
+                      onClick={() => this.extendTimes(that)}
+                    >
+                      <span>연장하기</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <span>
+                      이용 종료시간 30분 전부터 <br />
+                      2시간씩 연장 가능 합니다
+                    </span>
+                    {moment
+                      .duration(time.diff(this.state.extendTime.time))
+                      .asMinutes() > -30 ? (
+                      <div
+                        className="extend-time"
+                        onClick={() => this.extendTimes(that)}
+                      >
+                        <span>연장하기</span>
+                      </div>
+                    ) : null}
+                  </div>
+                )}
               </div>
             ) : null}
           </div>

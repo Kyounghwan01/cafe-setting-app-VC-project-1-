@@ -16,7 +16,6 @@
 - [Test](#Test)
 - [Deployment & Continuous Integration](#Deployment-&-Continuous-Integration)
 - [Project Control](#Project-Control)
-- [Version Control](#Version-Control)
 - [Challenges](#Challenges)
 - [Things To Do](#Things-To-Do)
 - [Sincere Thanks](#Sincere-Thanks)
@@ -83,10 +82,21 @@ yarn run dev
 - Component Unit Test (Jest, Enzyme)
 - server Test (Jest)
 
+## Deployment & Continuous Integration
+
+### Client
+
+- Netlify CI를 통한 배포 자동화
+
+### Server
+- AWS Elastic beanstalk를 통해 서비스 배포
+- CircleCI를 통한 배포 자동화
+
 ## Project Control
 
 - Git Branch 활용
 - Trello 활용한 Task Management
+
 
 ## Challenges
 
