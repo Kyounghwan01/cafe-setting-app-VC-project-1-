@@ -16,7 +16,7 @@ const Category = require('./models/Category');
 
 const port = process.env.PORT || 3001;
 
-mongoose.connect(process.env.DB_URL, {
+mongoose.connect(process.env.TEST_DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: false,
   useCreateIndex: true
@@ -64,12 +64,6 @@ app.use('/api', mainRouter);
 //카페추가
 app.post('/newCafemenu', async function(req, res, next) {
   const newCategory = new Cafes(req.body);
-  newCategory.save();
-  res.send({});
-});
-
-app.post('/makecate', async function(req, res, next) {
-  const newCategory = new Category(req.body);
   newCategory.save();
   res.send({});
 });

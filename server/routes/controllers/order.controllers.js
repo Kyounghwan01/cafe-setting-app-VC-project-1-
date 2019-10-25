@@ -86,7 +86,7 @@ exports.makeNewMenu = async (req, res, next) => {
 
 exports.changeMenuNameAndPrice = async (req, res, next) => {
   let price = Math.floor(req.body.price / 100) * 100;
-
+  console.log("???",req.body);
   const changeData = await Cafes.findOne({});
   changeData.menu.map(el => {
     if (el.id === req.body.id) {
@@ -96,5 +96,5 @@ exports.changeMenuNameAndPrice = async (req, res, next) => {
     }
   });
   await changeData.save();
-  res.send({ value: 'success' });
+  res.status(200).send({ value: 'success' });
 };

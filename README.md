@@ -1,136 +1,120 @@
 # It's my seat!
 
-## Development
+## Intorduction
 
-- client : react, redux, react-router
-- server : mongodb, nodeJS, express, socket.io
-- deploy : netlify, aws
+- **It's my seat** 은 사용자가 자리를 찾지 않고 카페의 자리를 결제 전에 등록하여 이용하는 웹입니다.
+- 저는 이번 프로젝트의 컨셉으로 새로운 기술(mapbox, 구글 머신러닝 등등)을 활용하지 않고 지난 부트캠프 기간동안 배운 스킬들을 다시 사용하는 것으로 잡았습니다. 그에 따라 지난 과제들에서 활용한 것들이 있지만 좀 더 완성도 있는 코드를 구현하는 것을 목표로 하였습니다.
 
-## Prerequisites
+<!-- <img height="500" alt="example" src="./runmate.gif"> -->
 
-- [React](https://reactjs-kr.firebaseapp.com/) - latest
-- [react-router](https://reacttraining.com/react-router/web/guides/quick-start) - latest
-- [redux](https://redux.js.org/) - latest
-- [Node.js](https://nodejs.org/en/download/) - latest
-- [express](https://expressjs.com/ko/) - latest
-- [mongodb](https://www.mongodb.com) - latest
-- [socket.io](https://socket.io/) - ^2.3.0
-- [axios](https://www.npmjs.com/package/axios) - latest
-- [passport.js](http://www.passportjs.org/) - ^0.4.0
+## Content
 
+- [Requirements](#Requirements)
+- [Installation](#Installation)
+- [Features](#Features)
+- [Skills](#Skills)
+- [Test](#Test)
+- [Deployment & Continuous Integration](#Deployment-&-Continuous-Integration)
+- [Project Control](#Project-Control)
+- [Version Control](#Version-Control)
+- [Challenges](#Challenges)
+- [Things To Do](#Things-To-Do)
+- [Sincere Thanks](#Sincere-Thanks)
 
-## 사용자
+## Requirements
 
-## TODO
+- 웹 사용을 권장합니다.
+- admin 계정의 경우 회원가입을 하신후 db에서 admin을 `true`로 바꿔주셔야합니다.
+- admin당 1개의 cafe를 가정 하였습니다.
 
-### 1. 계정 페이지
+## Installation
 
-#### 1-1. 로그인 페이지
+```javascript
+git clone https://github.com/Kyounghwan01/cafe-setting-app-VC-project-1-.git
+cd client
+yarn install
 
-- 로컬 회원가입 및 로그인 또는 google 소셜 로그인을 사용해야 합니다.
-- 로그인 성공하면 메인 페이지로 이동해야 합니다.
-- 로그인은 하루 동안 유지 됩니다.
-- 로그인이 실패하면 로그인 페이지로 다시 돌아와야 합니다.
-- 로그인 하지 않은 사용자는 로그인, 회원가입 페이지 이외 어떤 페이지도 방문할 수 없습니다.
+cd ..
+cd server
+yarn install
+yarn run dev
+```
 
-#### 1-2. 회원가입 페이지
+## Features
 
-- 사용자는 ID, passward, 이름을 입력합니다.
-- ID는 email 형식으로 입력하며 중복시 중복 알림을 띄웁니다.
-- passward는 중복체크 하여 다를시 두 passward가 다름을 알립니다.
-- 회원가입 완료시 로그인 페이지로 이동합니다.
+- JSON Web Token Authentication
+- 회원가입
+- 로그아웃
+- 사용자 주문 내역 페이지
+- 카페 메뉴 및 배치도 가져와서 자리 설정 및 메뉴 선정 기능
+- 결재 후 본인 자리 확인 및 잔여시간 확인 기능
+- 잔여시간 30분 이전, 잔여시간 2시간 추가 기능
+- 잔여시간 초과시 자동 자리 초기화
 
-#### Resoures
+### admin
+- 카페 내부 배치도 수정 기능
+- 카페 메뉴 수정 기능
+- 주문 내역 확인 및 주문 처리 완료 기능
 
-- [React](https://reactjs-kr.firebaseapp.com/)
-- [passport.js](http://www.passportjs.org/)
-- [express](https://expressjs.com/ko/)
-- [cookie-session](https://expressjs.com/en/resources/middleware/cookie-session.html)
-- [express-session](https://expressjs.com/en/resources/middleware/session.html)
-- [connect-flash](https://www.npmjs.com/package/connect-flash)
+## Skills
+### Client-Side
 
-### 2. 메인 페이지
+- ES2015+
+- React
+- React Hooks
+- React Router
+- Redux
+- Scss
 
-#### 2-1. 좌석
+### Server-Side
 
-- 현재 고객이 앉거나 앉지 않은 의자 배치현황을 보여줘야 합니다.
-- 의자에 앉은 고객을 클릭시 카페 이용 만료시간을 보여줘야 합니다.
-- 이용 시간 만료시 자동으로 고객이 없는 의자 표시로 바뀌어야 합니다.
-- 남은 의자의 갯수를 알려줘야 합니다.
-- 좌석 선택시 메뉴를 선택하지 않았다면 메뉴선택 화면으로 이동해야 합니다.
-- 메뉴를 선택하고 좌석을 선택했다면 결제화면으로 이동해야 합니다.
-
-#### Resoures
-
-- [axios](https://www.npmjs.com/package/axios)
-- [ajax](https://developer.mozilla.org/ko/docs/Web/Guide/AJAX/Getting_Started)
-
-#### 2-2. 메뉴
-
-- 카페 메뉴와 잔여좌석을 보여줘야합니다.
-- 좌석을 선택하고, 메뉴를 선택하면 좌하단에 선택사항을 보어줘야합니다.
-- 결제 버튼을 누르면 결제창으로 이동합니다.
-
-#### 2-3 결제
-
-- 결제가 완료되면 좌석이 확정 및 관리자에게 주문이 들어가야 합니다.
-- 좌석 만료의 초기값은 2시간 입니다.
-- 결제 자체에 대한 과정은 생략합니다.
-
+- Node.js
+- Express
+- ES2015+
+- JSON Web Token Authentication
+- MongoDB
+- Mongoose
+- Atlas
 
 
-## 관리자
+## Test
 
-## TODO
+- Reducer Unit Test (Jest)
+- Component Unit Test (Jest, Enzyme)
+- server Test (Jest)
 
-### 1. 주문확인
+## Project Control
 
-- 들어온 주문을 확인해야 합니다.
-- 주문에는 주문자, 주문 메뉴명, 주문 시간 (몇 분전), 완료 버튼이 있어야 합니다.
-- 완료 버튼 클릭시 주문은 사라져야 합니다.
+- Git Branch 활용
+- Trello 활용한 Task Management
 
-#### Resources
+## Challenges
 
-- [React](https://reactjs-kr.firebaseapp.com/)
-- [socket.io](https://socket.io/)
-- [mongodb](https://www.mongodb.com/)
+- npm 모듈을 사용하지 않고 온전히 자바스크립트로 메뉴를 보여 줄때 쓰인 **트리 구조**, 자리를 선택하거나, 주인이 자리 배치를 수정할 때 쓰인 **드래그 앤 드롭**을 구현하는데 시간이 많이 걸렸습니다.
 
-### 2. 배치현황
+### 드래그 앤 드롭 구현
+- `li` tag의 `onDragOver`, `onDrop`, `onDoubleClick` 속성을 중심으로 구현하였습니다.
+- 카페 구조는 100개의 `li` tag로 구성되고, 각 `li`는 `data-id` 값으로 0부터 100까지의 숫자를 가집니다. 이 `data-id`를 활용하여 `getAttribute('data-id')`에 값이 있으면 changeSeat를 하였습니다.
+- `onDragOver`는 `preventDefault()`만 사용하고, `li`를 변경해도 화면이 바뀌지 않도록 하였습니다.
+- `onDrop`하면 위에서 말한 100개의 `li` 중 하나가 호출되며 그 `li`에 벽 또는 테이블이라는 속성이 들어갑니다.
+- `onDoubleClick` 하면 `getAttribute('data-id')`값이 있을 경우 위에서 `onDrop`을 통해 얻은 벽 또는 테이블이라는 속성을 제거합니다.
 
-- 현재 고객이 앉거나 앉지 않은 의자 배치 현황을 보여줘야 합니다.
-- 앉은 고객을 클릭시 카페 이용 만료시간을 보여줘야 합니다.
-- 관리자는 카페 이용 만료 시간을 연장할 수 있습니다.
-- 이용 시간 만료시 자동으로 의자는 고객이 없는 의자 바뀌어야 합니다.
-- 남은 의자의 갯수를 알려줘야 합니다.
+### 트리구조 구현
+- 부트스트랩을 쓰지 않고, `li` tag에 `className`을 함수를 통해 유동적으로 관리하면서 `open`, `close`로 state를 관리하였습니다.
+- 트리구조의 list는
+```{label : coffee, children : [{name : '아이스아메리카노, price : 3000}, ...]}``` 구조로 만들었고 세부내역으로 들어갈때 `children` 속성을 `this.state.list`에 넣어 세부내역이 보여지도록 하였습니다
 
-### 3. 배치조정
+기본 JavaScript에 더 집중했던 프로젝트였습니다.
 
-- 카페 의자의 배치를 조정해야합니다.
-- 카페 구조 범위 조절이 가능해야 합니다. (10x10, 13x13 등등...)
+## Things To Do
 
-#### Resources
+- n x n으로 자리 설정 기능
+- 소셜로그인 기능
+- 로컬 로그인 시 이메일 인증 후 회원가입
+- server test
 
-- [react-dnd](https://react-dnd.github.io/)
-- [react-sortablejs](https://www.npmjs.com/package/react-sortablejs)
 
-### 4. 메뉴 조정
 
-- 관리자는 메뉴를 바꿀 수 있어야 합니다.
+## Sincere Thanks
 
-### 3. Extra
-
-#### 3.1 이메인 인증 후 회원가입
-
-- 사용자는 이메일 인증 후 회원가입이 가능합니다
-
-#### Resources
-
-- [nodemailer](https://victorydntmd.tistory.com/113)
-
-#### 3.2 관리자와 사용자간 실시간 대화
-
-- 관리자는 사용자와 웹을 통해 대화하여 좌석 만료시간을 늘려야 합니다.
-
-#### Resources
-
-- [socket.io](https://socket.io/)
+[Ken Huh](https://github.com/Ken123777) / Vanilla Coding

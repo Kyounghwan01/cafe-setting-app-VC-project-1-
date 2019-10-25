@@ -2,7 +2,6 @@ import React from 'react';
 import { configure, mount } from 'enzyme';
 import MyPage from '../MyPage';
 import Adapter from 'enzyme-adapter-react-16';
-import expectExport from 'expect';
 
 configure({ adapter: new Adapter() });
 

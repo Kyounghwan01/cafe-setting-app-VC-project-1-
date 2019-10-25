@@ -13,7 +13,7 @@ export default class MenuTree extends Component {
     };
   }
   componentDidMount() {
-    // console.log(this.props);
+    console.log(this.props);
   }
 
   deleteMenu = async deleteId => {

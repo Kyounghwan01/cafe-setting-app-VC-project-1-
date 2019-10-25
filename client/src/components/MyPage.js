@@ -13,7 +13,7 @@ export default class MyPage extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props);
+    //console.log(this.props);
     const fetchData = async () => {
       const res = await axios.get(
         `/api/view/${window.location.href.slice(29)}`
@@ -24,7 +24,7 @@ export default class MyPage extends Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.myData);
+    //console.log(this.state.myData);
   }
 
   render() {

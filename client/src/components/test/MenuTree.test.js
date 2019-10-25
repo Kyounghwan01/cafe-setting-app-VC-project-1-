@@ -28,6 +28,7 @@ describe('renders without crashing', () => {
   let deleteMenu = jest.fn();
   let wrapper;
   wrapper = mount(<MenuTree tocken={tocken} node={node} deleteMenu={deleteMenu}/>);
+  const spy = jest.spyOn(wrapper.instance(), 'deleteMenu');
 
   it('should have element', () => {
     expect(wrapper.exists('span')).toEqual(true);
@@ -43,8 +44,10 @@ describe('renders without crashing', () => {
     expect(text).toEqual(['MENU', 'cake', 'greenTea']);
 
     expect(wrapper.find('div[className="delete"]').length).toBe(1);
-    //wrapper.find('div[className="delete"]').simulate('click');
-    // expect(deleteMenu).toHaveBeenCalled();
-    console.log(wrapper.debug());
+    
+    // wrapper.find('div[className="delete"]').simulate('click');
+    // expect(spy).toHaveBeenCalled();
+
+    //console.log(wrapper.debug());
   });
 });

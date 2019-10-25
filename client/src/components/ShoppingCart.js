@@ -11,7 +11,7 @@ export default class ShoppingCart extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
     const { order } = this.props;
     if (order) {
       let price = 0;
