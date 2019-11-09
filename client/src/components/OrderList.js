@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import '../assets/style/OrderList.scss';
 
 export default class OrderList extends Component {
 
   changeComplete = async menuId => {
     const res = await axios.post(
-      `/api/cafes/complete/${this.props.tocken.substring(1)}`,
+      `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/cafes/complete/${this.props.tocken.substring(1)}`,
       {
         complete: true,
         id: menuId
@@ -71,3 +72,9 @@ export default class OrderList extends Component {
     );
   }
 }
+
+OrderList.propTypes = {
+  tocken: PropTypes.string.isRequired,
+  userId : PropTypes.string.isRequired,
+  orderList : PropTypes.array.isRequired
+};

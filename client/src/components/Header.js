@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from "prop-types";
 import '../assets/style/Main.scss';
 import logo from '../assets/img/logo.png';
 import * as PAGE from '../constants/state';
@@ -81,3 +82,8 @@ const Header = props => {
   );
 };
 export default Header;
+
+Header.propTypes={
+  element : PropTypes.array.isRequired,
+  tocken : PropTypes.string
+}

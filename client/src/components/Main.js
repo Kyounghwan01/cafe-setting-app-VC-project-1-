@@ -6,6 +6,7 @@ import OrderList from './OrderList';
 import * as constants from '../constants/state';
 import moment from 'moment';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 class Main extends Component {
   constructor(props) {
@@ -78,7 +79,7 @@ class Main extends Component {
   async extendTimes(that) {
     //2시간 연장 db, state 변경
     const extendTimeResult = await axios.post(
-      `/api/extend/${that.props.tocken.substring(1)}`,
+      `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/extend/${that.props.tocken.substring(1)}`,
       {
         index: this.state.extendTime.arrangeIndex
       }
@@ -143,9 +144,7 @@ class Main extends Component {
                 </span>
                 {this.props.checkAdmin ? (
                   <div>
-                    <span>
-                      2시간씩 연장 가능 합니다
-                    </span>
+                    <span>2시간씩 연장 가능 합니다</span>
                     <div
                       className="extend-time"
                       onClick={() => this.extendTimes(that)}
@@ -193,3 +192,13 @@ class Main extends Component {
 }
 
 export default Main;
+
+Main.propTypes = {
+  headerElement: PropTypes.array.isRequired,
+  tocken: PropTypes.string,
+  seats: PropTypes.array.isRequired,
+  leftSeat: PropTypes.number.isRequired,
+  orderList: PropTypes.array,
+  checkAdmin: PropTypes.bool.isRequired,
+  userId: PropTypes.string
+};

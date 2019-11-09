@@ -2,7 +2,6 @@ import React from 'react';
 import { configure, mount } from 'enzyme';
 import ShoppingCart from '../ShoppingCart';
 import Adapter from 'enzyme-adapter-react-16';
-import { wrap } from 'module';
 
 configure({ adapter: new Adapter() });
 
@@ -29,18 +28,14 @@ describe('renders without crashing', () => {
   let seatNumber = '25';
   let tocken =
     '?eyJhbGciOiJIUzI1NiJ9.MkAy.d_qbeutN2iXsAY6uMXHYd7ea-UkW-1ED8qK_ANae9NU';
-  let submitSeat = jest.fn(() => true);
   let wrapper;
   wrapper = mount(
     <ShoppingCart
       tocken={tocken}
       seatNumber={seatNumber}
       order={orderWithMenu}
-      submitSeat={submitSeat}
     />
   );
-  const spy = jest.spyOn(wrapper.instance(), 'submitSeat');
-  wrapper.update();
 
   it('If not have a seat number and order, must return the following text', () => {
     expect(wrapper.find('tbody > tr > td').map(node => node.text())).toEqual([
@@ -56,9 +51,11 @@ describe('renders without crashing', () => {
     expect(wrapper.find('span').map(node => node.text())[0]).toEqual('25');
   });
   it('called button', () => {
-    expect(wrapper.find('div[className="payment"]').text()).toEqual("결제");
-    // wrapper.find('div[className="payment"]').simulate('click');
-    // expect(spy).toHaveBeenCalled();
-    // expect(submitSeat).toHaveBeenCalled();
-  })
+    expect(wrapper.find('div[className="payment"]').text()).toEqual('결제');
+    wrapper.instance().submitSeat = jest.fn();
+    wrapper.instance().forceUpdate();
+
+    wrapper.find('.payment').simulate('click');
+    expect(wrapper.instance().submitSeat).toHaveBeenCalled();
+  });
 });

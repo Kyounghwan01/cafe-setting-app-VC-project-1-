@@ -24,7 +24,7 @@ const App = () => {
     if (!search) {
       return dispatch(dispatchFunction.checkUserOuth('unauthorized'));
     }
-    const res = await axios.get(`/api/view/${search.substring(1)}`);
+    const res = await axios.get(`http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/view/${search.substring(1)}`);
     return await dispatch(dispatchFunction.checkUserOuth(res.data.error));
   };
 

@@ -25,12 +25,19 @@ describe('renders without crashing', () => {
   };
   let tocken =
     '?eyJhbGciOiJIUzI1NiJ9.MkAy.d_qbeutN2iXsAY6uMXHYd7ea-UkW-1ED8qK_ANae9NU';
-  let deleteMenu = jest.fn();
-  let wrapper;
-  wrapper = mount(<MenuTree tocken={tocken} node={node} deleteMenu={deleteMenu}/>);
-  const spy = jest.spyOn(wrapper.instance(), 'deleteMenu');
 
-  it('should have element', () => {
+
+  let wrapper;
+  wrapper = mount(<MenuTree tocken={tocken} node={node} />);
+  //const spy = jest.spyOn(wrapper.instance(), 'deleteMenu');
+
+  // let deleteMenu = jest.fn();
+  // deleteMenu.mockReturnValueOnce(new Promise((res, rej) => res()));
+  // wrapper.instance().deleteMenu = deleteMenu;
+
+
+
+  it('should have element', async () => {
     expect(wrapper.exists('span')).toEqual(true);
     expect(wrapper.exists('div')).toEqual(true);
     expect(wrapper.exists('li')).toEqual(true);
@@ -44,9 +51,12 @@ describe('renders without crashing', () => {
     expect(text).toEqual(['MENU', 'cake', 'greenTea']);
 
     expect(wrapper.find('div[className="delete"]').length).toBe(1);
+    let deleteMenu = jest.fn();
+  deleteMenu.mockReturnValueOnce(new Promise((res, rej) => res()));
+  wrapper.instance().deleteMenu = deleteMenu;
     
-    // wrapper.find('div[className="delete"]').simulate('click');
-    // expect(spy).toHaveBeenCalled();
+    wrapper.find('div[className="delete"]').simulate('click');
+    await expect( wrapper.instance().deleteMenu).toHaveBeenCalled();
 
     //console.log(wrapper.debug());
   });

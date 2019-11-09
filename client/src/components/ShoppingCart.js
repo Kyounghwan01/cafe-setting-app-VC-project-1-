@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import '../assets/style/ShoppingCart.scss';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 export default class ShoppingCart extends Component {
@@ -8,10 +9,10 @@ export default class ShoppingCart extends Component {
     this.state = {
       totalPrice: 0
     };
+    this.submitSeat = this.submitSeat.bind(this);
   }
 
   componentDidMount() {
-    // console.log(this.props);
     const { order } = this.props;
     if (order) {
       let price = 0;
@@ -22,12 +23,12 @@ export default class ShoppingCart extends Component {
     }
   }
 
-  submitSeat = async () => {
+  async submitSeat ()  {
     const { order, seatNumber, tocken, cafeArrange } = this.props;
     if (order.length && seatNumber) {
       //cafe의 배치 스키마 패치하는 함수
       try {
-        const res = await axios.post(`/api/seats/${tocken.substring(1)}`, {
+        const res = await axios.post(`http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/seats/${tocken.substring(1)}`, {
           cafeArrange: cafeArrange,
           order: order
         });
@@ -97,3 +98,10 @@ export default class ShoppingCart extends Component {
     );
   }
 }
+
+ShoppingCart.propTypes = {
+  cafeArrange : PropTypes.array.isRequired,
+  order : PropTypes.array.isRequired,
+  seatNumber : PropTypes.string.isRequired,
+  tocken : PropTypes.string.isRequired,
+};

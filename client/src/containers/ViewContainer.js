@@ -12,7 +12,7 @@ const ViewContainer = props => {
 
     const fetchData = async () => {
       const res = await axios.get(
-        `/api/view/${props.location.search.substring(1)}`
+        `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/view/${props.location.search.substring(1)}`
       );
 
       if (res.data.cafeData) {

@@ -13,7 +13,7 @@ const ChangeMenuContainer = props => {
     props.checkUser(props.location.search);
     const fetchData = async () => {
       const res = await axios.get(
-        `/api/view/${props.location.search.substring(1)}`
+        `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/view${props.location.search.substring(1)}`
       );
 
       if (res.data.cafeData) {
@@ -69,7 +69,7 @@ const ChangeMenuContainer = props => {
     return () => {
       fetchData();
     };
-  }, [props]);
+  }, []);
 
   return (
     <>

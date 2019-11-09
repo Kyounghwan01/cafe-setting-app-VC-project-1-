@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../assets/style/View.scss';
 import axios from 'axios';
 import moment from 'moment';
+import PropTypes from 'prop-types';
 import * as constants from '../constants/state';
 import { TiShoppingCart } from 'react-icons/ti';
 import ShoppingCart from './ShoppingCart';
@@ -22,7 +23,7 @@ export default class SelectOrder extends Component {
   componentDidMount() {
     const fetchTableData = async () => {
       const res = await axios.get(
-        `/api/view/${this.props.tocken.substring(1)}`
+        `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/view/${this.props.tocken.substring(1)}`
       );
       if (!res.data.cafeData) {
         this.setState({ errorMessage: 'unauth' });
@@ -119,7 +120,7 @@ export default class SelectOrder extends Component {
   submitSeat = async () => {
     //cafe의 배치 스키마 패치하는 함수
     try {
-      await axios.post(`/api/seats/${this.props.tocken.substring(1)}`, {
+      await axios.post(`http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/seats/${this.props.tocken.substring(1)}`, {
         cafeArrange: this.state.arrange
       });
     } catch (e) {
@@ -146,9 +147,7 @@ export default class SelectOrder extends Component {
     });
     if (!dupCheck) {
       copyData.order.push(data);
-      this.setState({ orderList: copyData }, function() {
-        console.log(this.state.orderList);
-      });
+      this.setState({ orderList: copyData });
     }
     this.setState({ orderDetail: { open: false } });
   };
@@ -337,3 +336,8 @@ export default class SelectOrder extends Component {
     );
   }
 }
+
+SelectOrder.propTypes = {
+  tocken: PropTypes.string.isRequired,
+  listData: PropTypes.array
+};

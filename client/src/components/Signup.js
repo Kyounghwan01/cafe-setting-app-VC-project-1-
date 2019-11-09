@@ -4,8 +4,7 @@ import Header from './Header';
 import Footer from './Footer';
 import * as PAGE from '../constants/state';
 
-const Signup = props => {
-  console.log(props);
+const Signup = () => {
 
   const errorMessage = () => {
     let query = new URL(document.location).searchParams.get('error');
@@ -34,7 +33,7 @@ const Signup = props => {
             <span>이메일과 비밀번호를 입력해주세요.</span>
           </div>
           <div>{errorMessage()}</div>
-          <form className="form-signin" action="/api/signup" method="POST">
+          <form className="form-signin" action="http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/signup" method="POST">
             <div className="group">
               <input
                 type="email"

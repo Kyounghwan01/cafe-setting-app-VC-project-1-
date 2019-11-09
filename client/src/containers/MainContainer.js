@@ -22,7 +22,7 @@ const MainContainer = props => {
       if (props.location.search) {
         try {
           const res = await axios.get(
-            `/api/${props.location.search.substring(1)}`
+            `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/${props.location.search.substring(1)}`
           );
           if (res.data.admin) {
             checkAdmin(true);
@@ -53,7 +53,7 @@ const MainContainer = props => {
     const fetchArr = async () => {
       if (!props.location.search) {
         //토큰 없는 사람
-        const res = await axios.get('/api/view');
+        const res = await axios.get('http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/view');
         if (res.data.cafeData) {
           setArr(res.data.cafeData.arrangemenet);
           let count = 0;
@@ -70,7 +70,7 @@ const MainContainer = props => {
       } else {
         //토큰 있는 사람
         const res = await axios.get(
-          `/api/view/${props.location.search.substring(1)}`
+          `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/view/${props.location.search.substring(1)}`
         );
         //header에 Authorization키로 value : Bearer {TOKEN}
         if (res.data.error) {

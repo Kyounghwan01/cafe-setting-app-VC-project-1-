@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 
 export default class MenuTree extends Component {
@@ -11,13 +12,11 @@ export default class MenuTree extends Component {
       list: props.node,
       updateModal: false
     };
-  }
-  componentDidMount() {
-    console.log(this.props);
+    this.deleteMenu = this.deleteMenu.bind(this);
   }
 
-  deleteMenu = async deleteId => {
-    const res = await axios.delete(`/api/cafes/menu/${deleteId}`);
+  async deleteMenu(deleteId){
+    const res = await axios.delete(`http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/cafes/menu/${deleteId}`);
     if(res.data.status === 'success'){
       window.location.reload();
     } else {
@@ -136,12 +135,12 @@ export default class MenuTree extends Component {
               <div
                 className="delete"
                 onClick={e => {
-                  if (window.confirm('정말 삭제하시겠습니까?')) {
+                  //if (window.confirm('정말 삭제하시겠습니까?')) {
                     this.deleteMenu(
                       e.currentTarget.parentNode.getAttribute('data-id')
                     );
                     alert('삭제되었습니다');
-                  }
+                  //}
                 }}
               >
                 <span>삭제</span>
@@ -154,3 +153,8 @@ export default class MenuTree extends Component {
     );
   }
 }
+
+MenuTree.propTypes = {
+  tocken: PropTypes.string,
+  node : PropTypes.object.isRequired
+};

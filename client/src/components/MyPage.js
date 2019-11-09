@@ -13,18 +13,13 @@ export default class MyPage extends Component {
     };
   }
   componentDidMount() {
-    //console.log(this.props);
     const fetchData = async () => {
       const res = await axios.get(
-        `/api/view/${window.location.href.slice(29)}`
+        `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/view/${window.location.href.slice(29)}`
       );
       this.setState({ myData: res.data.userData[0] });
     };
     fetchData();
-  }
-
-  componentDidUpdate() {
-    //console.log(this.state.myData);
   }
 
   render() {
