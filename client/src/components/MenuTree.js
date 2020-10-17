@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import axios from 'axios';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import axios from "axios";
 
 export default class MenuTree extends Component {
   constructor(props) {
@@ -15,14 +15,16 @@ export default class MenuTree extends Component {
     this.deleteMenu = this.deleteMenu.bind(this);
   }
 
-  async deleteMenu(deleteId){
-    const res = await axios.delete(`http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/cafes/menu/${deleteId}`);
-    if(res.data.status === 'success'){
+  async deleteMenu(deleteId) {
+    const res = await axios.delete(
+      `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/cafes/menu/${deleteId}`
+    );
+    if (res.data.status === "success") {
       window.location.reload();
     } else {
-      alert('삭제 오류 관리자에게 문의하세요')
+      alert("삭제 오류 관리자에게 문의하세요");
     }
-  };
+  }
 
   menuAndPriceChange = () => {
     let price = Math.floor(this.price.current.value / 100) * 100;
@@ -45,23 +47,24 @@ export default class MenuTree extends Component {
         }
       });
 
-      alert('변경되었습니다');
+      alert("변경되었습니다");
     }
   };
 
   openList = () => {
     let newState = Object.assign({}, this.state.list);
-    newState.state = this.state.list.state === 'open' ? 'close' : 'open';
+    newState.state = this.state.list.state === "open" ? "close" : "open";
     this.setState({ list: newState });
   };
   changeOpenClose = list => {
     if (list && list.children && list.children.length > 0) {
-      return list.state === 'open' ? 'open' : 'close';
+      return list.state === "open" ? "open" : "close";
     }
   };
 
   render() {
     let list = this.state.list.children || [];
+    console.log(list);
     let children = list.map((n, idx) => <MenuTree node={n} key={idx} />);
     if (children.length > 0) {
       children = <ul>{children}</ul>;
@@ -81,7 +84,7 @@ export default class MenuTree extends Component {
                   <p>{this.state.updateModal.name}</p>
                   <input
                     className="input-name"
-                    name='name'
+                    name="name"
                     type="text"
                     required
                     ref={this.name}
@@ -104,12 +107,12 @@ export default class MenuTree extends Component {
                     defaultValue={this.state.updateModal.desc}
                   />
                   <div>
-                  <input
-                    className="input-submit"
-                    type="submit"
-                    onClick={this.menuAndPriceChange}
-                    value="변경"
-                  />
+                    <input
+                      className="input-submit"
+                      type="submit"
+                      onClick={this.menuAndPriceChange}
+                      value="변경"
+                    />
                   </div>
                 </div>
               ) : null}
@@ -130,16 +133,16 @@ export default class MenuTree extends Component {
                   }
                 }}
               >
-                <span>{this.state.updateModal ? '취소' : '수정'}</span>
+                <span>{this.state.updateModal ? "취소" : "수정"}</span>
               </div>
               <div
                 className="delete"
                 onClick={e => {
                   //if (window.confirm('정말 삭제하시겠습니까?')) {
-                    this.deleteMenu(
-                      e.currentTarget.parentNode.getAttribute('data-id')
-                    );
-                    alert('삭제되었습니다');
+                  this.deleteMenu(
+                    e.currentTarget.parentNode.getAttribute("data-id")
+                  );
+                  alert("삭제되었습니다");
                   //}
                 }}
               >
@@ -156,5 +159,5 @@ export default class MenuTree extends Component {
 
 MenuTree.propTypes = {
   tocken: PropTypes.string,
-  node : PropTypes.object.isRequired
+  node: PropTypes.object.isRequired
 };

@@ -1,14 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Header from './Header';
-import Footer from './Footer';
-import '../assets/style/ChangeMenu.scss';
-import MenuTree from '../components/MenuTree';
+import Header from "./Header";
+import Footer from "./Footer";
+import "../assets/style/ChangeMenu.scss";
+import MenuTree from "../components/MenuTree";
 
 export default class ChangeMenu extends Component {
-
   render() {
-    const url = `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/cafes/menu/new/${this.props.tocken.substring(1)}`;
+    const url = `http://itsmyseatvcserver-env.drc3wmhbci.ap-northeast-2.elasticbeanstalk.com/api/cafes/menu/new/${this.props.tocken.substring(
+      1
+    )}`;
     return (
       <div>
         <Header element={this.props.headerElement} tocken={this.props.tocken} />
@@ -75,7 +76,11 @@ export default class ChangeMenu extends Component {
             <div className="list-container">
               <MenuTree tocken={this.props.tocken} node={this.props.listData} />
             </div>
-          ) : <div className='loading'><span>잠시만 기다려 주세요 ...</span></div>}
+          ) : (
+            <div className="loading">
+              <span>잠시만 기다려 주세요 ...</span>
+            </div>
+          )}
         </div>
         <Footer />
       </div>
@@ -83,10 +88,10 @@ export default class ChangeMenu extends Component {
   }
 }
 
-ChangeMenu.propTypes={
-  arrangeMent : PropTypes.array,
-  category : PropTypes.array,
-  headerElement : PropTypes.array.isRequired,
-  listData : PropTypes.object,
-  tocken : PropTypes.string.isRequired,
-}
+ChangeMenu.propTypes = {
+  arrangeMent: PropTypes.array,
+  category: PropTypes.array,
+  headerElement: PropTypes.array.isRequired,
+  listData: PropTypes.object,
+  tocken: PropTypes.string.isRequired
+};
